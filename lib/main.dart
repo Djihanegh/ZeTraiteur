@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/presentation/home/home_screen.dart';
-
+import './presentation/pages/panier/panier_screen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
 
-      home: HomeScreen(),
+      home: Panier(),
     );
   }
 }
