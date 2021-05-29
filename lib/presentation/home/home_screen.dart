@@ -46,26 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned.fill(
-                top: 0,
-                child: Stack(
+              top: 0,
+              child:
+                  /*Stack(
                   children: [
-                    Positioned.fill(
-                        top: 180,
-                        bottom: 130,
-                        right: 55,
-                        left: 55,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                            color: Colors.white,
-                          ),
-                          height: 250,
-                        )),
-                    Positioned.fill( top: 0,  child: CarouselWithIndicatorDemo(), ),
                     
-                  ],
-                )),
+                    Positioned.fill( top: 0,  child:*/
+                  CarouselWithIndicatorDemo(),
+            ),
+
+            // ],
+            //  )
+            //  ),
           ],
         ));
   }
