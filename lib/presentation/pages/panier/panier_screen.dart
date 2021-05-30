@@ -37,25 +37,42 @@ class _PanierState extends State<Panier> {
             padding: EdgeInsets.only(top: 20, right: 290),
             child: Text("Repas:"),
           ),
-          Expanded(child: 
-           ListView.builder(
-             
-             itemCount: 3,
-             itemBuilder: (context, index) {
-         return Column(children: [
-        
-        ListTile(
-            title: Text('Commande classique'),
-            subtitle: Text('Ingredients'),
-            trailing: Icon(Icons.mode_edit),
-          ),
-         Padding(
-            padding: EdgeInsets.only( right: 20), child:   Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [SizedBox(), Text("800 DA ")],
-          ) )
-          ],);
-        }))
+          Expanded(
+              child: ListView.builder(
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text('Commande classique'),
+                          subtitle: Text('Ingredients'),
+                          trailing: Icon(Icons.mode_edit),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(right: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [SizedBox(), Text("800 DA ")],
+                            ))
+                      ],
+                    );
+                  })),
+
+                  Column(children: [
+                    Row(children: [
+
+                    ],)
+                    ,
+                    Row(children: [
+
+                    ],),
+                    Row(children: [
+
+                    ],),
+                    Row(children: [
+                      
+                    ],)
+                  ],)
         ]));
   }
 }
