@@ -13,6 +13,8 @@ class LabeledTextFormField extends StatelessWidget {
   final String? error;
   final TextInputType keyboardType;
   final Function onChanged;
+  final Function onEdit;
+
   final Function validator;
 
   LabeledTextFormField(
@@ -27,6 +29,7 @@ class LabeledTextFormField extends StatelessWidget {
     this.error,
     this.keyboardType,
     this.onChanged,
+    this.onEdit,
     this.validator,
   ) : super(key: key);
 
@@ -43,33 +46,42 @@ class LabeledTextFormField extends StatelessWidget {
                 //? TextStyle(color: Colors.grey[100])
                 Theme.of(context).textTheme.bodyText2,
           ),
-          TextFormField(
-            keyboardType: keyboardType,
-            obscureText: obscureText ?? false,
-            controller: controller,
-            enabled: enabled ?? true,
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: TextStyle(
-                fontSize: 16,
-                color: //isDark
-                    //? Colors.white.withOpacity(0.5)
-                    Colors.grey.withOpacity(0.5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextFormField(
+                keyboardType: keyboardType,
+                obscureText: obscureText ?? false,
+                controller: controller,
+                enabled: enabled ?? true,
+                decoration: InputDecoration(
+                  hintText: hintText,
+                  hintStyle: TextStyle(
+                    fontSize: 16,
+                    color: //isDark
+                        //? Colors.white.withOpacity(0.5)
+                        Colors.grey.withOpacity(0.5),
+                  ),
+                  errorText: error ?? null,
+                ),
+                style: TextStyle(
+                  fontSize: 16,
+                  color:
+                      //isDark ? Colors.white.withOpacity(0.87) :
+                      Color(0xff575757),
+                ),
+                initialValue: initialValue,
+                cursorColor: kColorPrimary,
+                cursorWidth: 1,
+                //onChanged: onChanged,
+                //validator: validator,
               ),
-              errorText: error ?? null,
-            ),
-            style: TextStyle(
-              fontSize: 16,
-              color:
-                  //isDark ? Colors.white.withOpacity(0.87) :
-                  Color(0xff575757),
-            ),
-            initialValue: initialValue,
-            cursorColor: kColorPrimary,
-            cursorWidth: 1,
-            //onChanged: onChanged,
-            //validator: validator,
-          ),
+              Icon(
+                Icons.mode_edit,
+                color: kColorPrimary,
+              )
+            ],
+          )
         ],
       ),
     );
