@@ -24,14 +24,14 @@ class _PanierState extends State<Panier> {
             child: ListTile(
                 title: Text("Lieu de livraison"),
                 subtitle: TextField(),
-                trailing: Icon(Icons.mode_edit)),
+                trailing: Icon(Icons.mode_edit  , color: kColorPrimary,)),
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, right: 0),
             child: ListTile(
                 title: Text("Numero de telephone"),
                 subtitle: TextField(),
-                trailing: Icon(Icons.mode_edit)),
+                trailing: Icon(Icons.mode_edit, color: kColorPrimary,)),
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, right: 290),
@@ -46,7 +46,7 @@ class _PanierState extends State<Panier> {
                         ListTile(
                           title: Text('Commande classique'),
                           subtitle: Text('Ingredients'),
-                          trailing: Icon(Icons.mode_edit),
+                          trailing: Icon(Icons.mode_edit, color: kColorPrimary,),
                         ),
                         Padding(
                             padding: EdgeInsets.only(right: 20),
