@@ -20,20 +20,6 @@ class _PanierState extends State<Panier> {
           ),
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          /*Padding(
-            padding: EdgeInsets.only(top: 20, right: 0),
-            child: ListTile(
-                title: Text("Lieu de livraison"),
-                subtitle: TextField(),
-                trailing: Icon(Icons.mode_edit  , color: kColorPrimary,)),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20, right: 0),
-            child: ListTile(
-                title: Text("Numero de telephone"),
-                subtitle: TextField(),
-                trailing: Icon(Icons.mode_edit, color: kColorPrimary,)),
-          ),*/
           LabeledTextFormField(
             title: "Lieu de livraison",
             enabled: true,
