@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class Panier extends StatefulWidget {
@@ -19,7 +20,7 @@ class _PanierState extends State<Panier> {
           ),
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Padding(
+          /*Padding(
             padding: EdgeInsets.only(top: 20, right: 0),
             child: ListTile(
                 title: Text("Lieu de livraison"),
@@ -32,6 +33,15 @@ class _PanierState extends State<Panier> {
                 title: Text("Numero de telephone"),
                 subtitle: TextField(),
                 trailing: Icon(Icons.mode_edit, color: kColorPrimary,)),
+          ),*/
+          LabeledTextFormField(
+            title: "Lieu de livraison",
+            enabled: true,
+          ),
+          LabeledTextFormField(
+            title: "Numero de telephone",
+            enabled: true,
+            keyboardType: TextInputType.phone,
           ),
           Padding(
             padding: EdgeInsets.only(top: 20, right: 290),
@@ -46,7 +56,10 @@ class _PanierState extends State<Panier> {
                         ListTile(
                           title: Text('Commande classique'),
                           subtitle: Text('Ingredients'),
-                          trailing: Icon(Icons.mode_edit, color: kColorPrimary,),
+                          trailing: Icon(
+                            Icons.mode_edit,
+                            color: kColorPrimary,
+                          ),
                         ),
                         Padding(
                             padding: EdgeInsets.only(right: 20),
@@ -57,22 +70,22 @@ class _PanierState extends State<Panier> {
                       ],
                     );
                   })),
-
-                  Column(children: [
-                    Row(children: [
-
-                    ],)
-                    ,
-                    Row(children: [
-
-                    ],),
-                    Row(children: [
-
-                    ],),
-                    Row(children: [
-                      
-                    ],)
-                  ],)
+          Column(
+            children: [
+              Row(
+                children: [],
+              ),
+              Row(
+                children: [],
+              ),
+              Row(
+                children: [],
+              ),
+              Row(
+                children: [],
+              )
+            ],
+          )
         ]));
   }
 }

@@ -3,22 +3,21 @@ import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 
 class LabeledTextFormField extends StatelessWidget {
-  final String title;
+  final String? title;
   final double? padding;
-  final TextEditingController controller;
-  final String hintText;
-  final String initialValue;
+  final TextEditingController? controller;
+  final String? hintText;
+  final String? initialValue;
   final bool? obscureText;
   final bool? enabled;
   final String? error;
-  final TextInputType keyboardType;
-  final Function onChanged;
-  final Function onEdit;
+  final TextInputType? keyboardType;
+  final Function? onChanged;
+  final Function? onEdit;
 
-  final Function validator;
+  final Function? validator;
 
-  LabeledTextFormField(
-    Key key,
+  LabeledTextFormField({
     this.title,
     this.padding,
     this.controller,
@@ -31,14 +30,15 @@ class LabeledTextFormField extends StatelessWidget {
     this.onChanged,
     this.onEdit,
     this.validator,
-  ) : super(key: key);
+  }); //: super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: padding ?? 20),
+      padding: EdgeInsets.only(top: padding ?? 20, left: 18, right: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Text(
             '$title:',
@@ -49,36 +49,52 @@ class LabeledTextFormField extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextFormField(
-                keyboardType: keyboardType,
-                obscureText: obscureText ?? false,
-                controller: controller,
-                enabled: enabled ?? true,
-                decoration: InputDecoration(
-                  hintText: hintText,
-                  hintStyle: TextStyle(
-                    fontSize: 16,
-                    color: //isDark
-                        //? Colors.white.withOpacity(0.5)
-                        Colors.grey.withOpacity(0.5),
-                  ),
-                  errorText: error ?? null,
+              Expanded(
+                  flex: 6,
+                  child: TextFormField(
+                    keyboardType: keyboardType,
+                    obscureText: obscureText ?? false,
+                    controller: controller,
+                    enabled: enabled ?? true,
+                    decoration: InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: kColorPrimary),
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: kColorPrimary),
+                      ),
+                      hintText: hintText,
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        color: //isDark
+                            //? Colors.white.withOpacity(0.5)
+                            Colors.grey.withOpacity(0.5),
+                      ),
+                      errorText: error ?? null,
+                    ),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color:
+                          //isDark ? Colors.white.withOpacity(0.87) :
+                          Color(0xff575757),
+                    ),
+                    initialValue: initialValue,
+                    cursorColor: kColorPrimary,
+                    cursorWidth: 1,
+
+                    //onChanged: onChanged,
+                    //validator: validator,
+                  )),
+              Expanded(
+                child: Icon(
+                  Icons.mode_edit,
+                  color: kColorPrimary,
                 ),
-                style: TextStyle(
-                  fontSize: 16,
-                  color:
-                      //isDark ? Colors.white.withOpacity(0.87) :
-                      Color(0xff575757),
-                ),
-                initialValue: initialValue,
-                cursorColor: kColorPrimary,
-                cursorWidth: 1,
-                //onChanged: onChanged,
-                //validator: validator,
-              ),
-              Icon(
-                Icons.mode_edit,
-                color: kColorPrimary,
               )
             ],
           )
