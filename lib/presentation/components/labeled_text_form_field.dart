@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/constants.dart';
 
@@ -44,7 +45,8 @@ class LabeledTextFormField extends StatelessWidget {
             '$title:',
             style: //isDark
                 //? TextStyle(color: Colors.grey[100])
-                Theme.of(context).textTheme.bodyText2,
+                 GoogleFonts.lato(
+                              fontWeight: FontWeight.w400, fontSize: 16)
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
