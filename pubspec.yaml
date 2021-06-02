@@ -77,26 +77,26 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: fonts/Poppins/
+        - asset: assets/fonts/Poppins/Poppins-Black.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
     - family: ArabDances
       fonts:
-        - asset: fonts/ArabDances.ttf
+        - asset: assets/fonts/ArabDances.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
     - family: ArabicMagic
       fonts:
-        - asset: fonts/ArabicMagic.ttf
+        - asset: assets/fonts/ArabicMagic.ttf
     - family: MrDafoe
       fonts:
-        - asset: fonts/MrDafoe-Regular.ttf 
+        - asset: assets/fonts/MrDafoe-Regular.ttf 
     - family: SAMAN
       fonts:
-        - asset: fonts/SAMAN__.ttf
+        - asset: assets/fonts/SAMAN.ttf
     - family: SUMDUMGO
       fonts:
-        - asset: fonts/SUMDUMGO.TTF
+        - asset: assets/fonts/SUMDUMGO.ttf
 
 
   # For details regarding fonts from package dependencies,
