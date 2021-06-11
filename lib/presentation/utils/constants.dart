@@ -8,6 +8,7 @@ const kRedHexa = '0xFFff0000';
 const kGreenHexa = '0xFF0b8544';
 const kBleuHexa = '0xFF0b2385';
 const kYellowHexa = '0xFFe4eb2f';
+const kLightGrey = Color(0xFFFCF5F5);
 var textStyle = GoogleFonts.lato(
   textStyle: TextStyle(color: Colors.white, letterSpacing: .5, fontSize: 20),
 );
