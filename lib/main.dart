@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
+import 'package:ze_traiteur/presentation/pages/splash/splash_screen.dart';
+import 'package:ze_traiteur/presentation/pages/welcome/welcome_screen.dart';
 
 import 'presentation/pages/menu/menu_screen.dart';
 import 'presentation/pages/shoppingcart/your_shopping_cart_screen.dart';

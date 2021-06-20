@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
+import 'package:ze_traiteur/presentation/pages/shoppingcart/your_shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class Panier extends StatefulWidget {
@@ -144,7 +145,12 @@ class _PanierState extends State<Panier> {
                     height: 40,
                     width: double.infinity,
                     child: TextButton(
-                        onPressed: null,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => YourShoppingCartScreen()),
+                          );
+                        },
                         child: Text("Passer ma commande",
                             style: GoogleFonts.lato(
                               color: Colors.white,

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chopper/chopper.dart';
 import 'package:ze_traiteur/domain/entities/user.dart';
 import 'package:http/io_client.dart' as http ;
+import 'package:ze_traiteur/infrastructure/core/converter.dart';
 import 'package:ze_traiteur/infrastructure/core/interceptor.dart';
 
 part 'api_service.chopper.dart';
@@ -17,6 +18,12 @@ abstract class ZeTraiteurApiService extends ChopperService {
   @Post(path: 'clients/')
   Future<Response<Map<String, dynamic>>> register(
     @body User user,
+  );
+
+  @Get(path: 'menus/')
+  Future<Response<Map<String, dynamic>>> getAllMenus(
+    
+    @Query('page') int page,
   );
 
   /*@Put(path: 'users/password')

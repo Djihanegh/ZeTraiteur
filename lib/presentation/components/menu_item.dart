@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
+import 'package:ze_traiteur/presentation/pages/menu/menu_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 final List<MenuItem> imgList = [
@@ -31,8 +32,67 @@ final List<MenuItem> imgList = [
       kOrangeHexa),
 ];
 
-final List<Widget> imageSliders = imgList
-    .map((item) => Container(
+
+
+Widget widget(String? img, String? color) => Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      color: Color(int.parse(color ?? "")),
+    ),
+    height: 350,
+    child: Container(
+        child: Container(
+            width: 220,
+            height: 50,
+            margin: EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            ),
+            child: Container(
+              width: 230,
+              height: 60,
+              margin: EdgeInsets.all(5.0),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  child: Stack(
+                    children: <Widget>[
+                      Image.network(
+                        img ?? '',
+                        fit: BoxFit.cover,
+                        width: 1000.0,
+                        height: 1000.0,
+                      ),
+                    ],
+                  )),
+            ))));
+
+class CarouselWithIndicatorDemo extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _CarouselWithIndicatorState();
+  }
+}
+
+class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
+  int _current = 0;
+  String color = kRedHexa;
+  
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> imageSliders = imgList
+    .map((item) => 
+    
+    GestureDetector(
+      onTap: (){
+
+         Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => MenuScreen()),
+  );
+      },
+      
+      child : Container(
         child: Container(
             width: 220,
             height: 50,
@@ -55,29 +115,14 @@ final List<Widget> imageSliders = imgList
                         width: 1000.0,
                         height: 1000.0,
                       ),
-                      
-                      
                     ],
                   )),
-            ))))
+            )))))
     .toList();
-
-class CarouselWithIndicatorDemo extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _CarouselWithIndicatorState();
-  }
-}
-
-class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
-  int _current = 0;
-  String color = kRedHexa;
-  @override
-  Widget build(BuildContext context) {
     return //Column(children: [
 
         Stack(children: [
-      Positioned.fill(
+       Positioned.fill(
           top: 180,
           bottom: 130,
           right: 55,
@@ -92,7 +137,17 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
 
       Positioned.fill(
           top: 0,
-          child: CarouselSlider(
+         // bottom: 210,
+         // left: 60,
+          child: /*ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: imgList.length,
+              itemBuilder: (BuildContext context, index) {
+                return widget(imgList[index].imageUrl, imgList[index].color);
+              })*/
+              
+              
+      CarouselSlider(
             items: imageSliders,
             options: CarouselOptions(
                 height: 200,
@@ -108,15 +163,14 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                   });
                 }),
           )),
-            Positioned.fill(
-                        top: 430,
-                        left: 80,
-                        child: 
-                    Text(
-                          imgList[_current].name ?? '',
-                          style: TextStyle(fontSize: 30),
-                        ),
-            )
+      Positioned.fill(
+        top: 430,
+        left: 80,
+        child: Text(
+          imgList[_current].name ?? '',
+          style: TextStyle(fontSize: 30),
+        ),
+      )
     ]);
 
     // Text('Nom Menu'),
