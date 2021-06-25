@@ -19,7 +19,7 @@ class MenuFacade implements IMenuFacade {
       print(result.base.statusCode);
       if (result.body != null) {
         pages++;
-        return right(result.body);
+        return right(result.body!);
       } else {
         pages = 0;
         return left(ServerFailure.apiFailure(msg: result.error.toString()));

@@ -25,19 +25,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
   Stream<MenuState> mapEventToState(
     MenuEvent event,
   ) async* {
-    yield*
-        /*yield state.copyWith(
-      newsFailureOrSuccess: none(),
-    );
-
-    final failureOrSuccess = await _newsFacade.getNews();
-
-    yield state.copyWith(
-      newsFailureOrSuccess: optionOf(failureOrSuccess),
-
-        
-    );*/
-        event.map(getAllMenus: (e) async* {
+    yield* event.map(getAllMenus: (e) async* {
       yield* _performGetAllMenus(
         e.page,
         _menuFacade.getAllMenus,

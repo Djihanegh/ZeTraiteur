@@ -20,11 +20,26 @@ MenuItem _$MenuItemFromJson(Map<String, dynamic> json) {
 class _$MenuItemTearOff {
   const _$MenuItemTearOff();
 
-  _MenuItem call(String? imageUrl, String? name, String? color) {
+  _MenuItem call(
+      String? image,
+      String? name,
+      String? color,
+      int id,
+      @JsonKey(name: 'audio_file_name') String? audioFileName,
+      bool? available,
+      @JsonKey(name: 'font_name') String? fontName,
+      int? price,
+      List<dynamic>? sections) {
     return _MenuItem(
-      imageUrl,
+      image,
       name,
       color,
+      id,
+      audioFileName,
+      available,
+      fontName,
+      price,
+      sections,
     );
   }
 
@@ -38,9 +53,17 @@ const $MenuItem = _$MenuItemTearOff();
 
 /// @nodoc
 mixin _$MenuItem {
-  String? get imageUrl => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get color => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'audio_file_name')
+  String? get audioFileName => throw _privateConstructorUsedError;
+  bool? get available => throw _privateConstructorUsedError;
+  @JsonKey(name: 'font_name')
+  String? get fontName => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
+  List<dynamic>? get sections => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +75,16 @@ mixin _$MenuItem {
 abstract class $MenuItemCopyWith<$Res> {
   factory $MenuItemCopyWith(MenuItem value, $Res Function(MenuItem) then) =
       _$MenuItemCopyWithImpl<$Res>;
-  $Res call({String? imageUrl, String? name, String? color});
+  $Res call(
+      {String? image,
+      String? name,
+      String? color,
+      int id,
+      @JsonKey(name: 'audio_file_name') String? audioFileName,
+      bool? available,
+      @JsonKey(name: 'font_name') String? fontName,
+      int? price,
+      List<dynamic>? sections});
 }
 
 /// @nodoc
@@ -65,14 +97,20 @@ class _$MenuItemCopyWithImpl<$Res> implements $MenuItemCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? imageUrl = freezed,
+    Object? image = freezed,
     Object? name = freezed,
     Object? color = freezed,
+    Object? id = freezed,
+    Object? audioFileName = freezed,
+    Object? available = freezed,
+    Object? fontName = freezed,
+    Object? price = freezed,
+    Object? sections = freezed,
   }) {
     return _then(_value.copyWith(
-      imageUrl: imageUrl == freezed
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String?,
       name: name == freezed
           ? _value.name
@@ -82,6 +120,30 @@ class _$MenuItemCopyWithImpl<$Res> implements $MenuItemCopyWith<$Res> {
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as String?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      audioFileName: audioFileName == freezed
+          ? _value.audioFileName
+          : audioFileName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      available: available == freezed
+          ? _value.available
+          : available // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      fontName: fontName == freezed
+          ? _value.fontName
+          : fontName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sections: sections == freezed
+          ? _value.sections
+          : sections // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
     ));
   }
 }
@@ -91,7 +153,16 @@ abstract class _$MenuItemCopyWith<$Res> implements $MenuItemCopyWith<$Res> {
   factory _$MenuItemCopyWith(_MenuItem value, $Res Function(_MenuItem) then) =
       __$MenuItemCopyWithImpl<$Res>;
   @override
-  $Res call({String? imageUrl, String? name, String? color});
+  $Res call(
+      {String? image,
+      String? name,
+      String? color,
+      int id,
+      @JsonKey(name: 'audio_file_name') String? audioFileName,
+      bool? available,
+      @JsonKey(name: 'font_name') String? fontName,
+      int? price,
+      List<dynamic>? sections});
 }
 
 /// @nodoc
@@ -105,14 +176,20 @@ class __$MenuItemCopyWithImpl<$Res> extends _$MenuItemCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? imageUrl = freezed,
+    Object? image = freezed,
     Object? name = freezed,
     Object? color = freezed,
+    Object? id = freezed,
+    Object? audioFileName = freezed,
+    Object? available = freezed,
+    Object? fontName = freezed,
+    Object? price = freezed,
+    Object? sections = freezed,
   }) {
     return _then(_MenuItem(
-      imageUrl == freezed
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String?,
       name == freezed
           ? _value.name
@@ -122,6 +199,30 @@ class __$MenuItemCopyWithImpl<$Res> extends _$MenuItemCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as String?,
+      id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      audioFileName == freezed
+          ? _value.audioFileName
+          : audioFileName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      available == freezed
+          ? _value.available
+          : available // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      fontName == freezed
+          ? _value.fontName
+          : fontName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sections == freezed
+          ? _value.sections
+          : sections // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
     ));
   }
 }
@@ -129,42 +230,86 @@ class __$MenuItemCopyWithImpl<$Res> extends _$MenuItemCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MenuItem implements _MenuItem {
-  _$_MenuItem(this.imageUrl, this.name, this.color);
+  _$_MenuItem(
+      this.image,
+      this.name,
+      this.color,
+      this.id,
+      @JsonKey(name: 'audio_file_name') this.audioFileName,
+      this.available,
+      @JsonKey(name: 'font_name') this.fontName,
+      this.price,
+      this.sections);
 
   factory _$_MenuItem.fromJson(Map<String, dynamic> json) =>
       _$_$_MenuItemFromJson(json);
 
   @override
-  final String? imageUrl;
+  final String? image;
   @override
   final String? name;
   @override
   final String? color;
+  @override
+  final int id;
+  @override
+  @JsonKey(name: 'audio_file_name')
+  final String? audioFileName;
+  @override
+  final bool? available;
+  @override
+  @JsonKey(name: 'font_name')
+  final String? fontName;
+  @override
+  final int? price;
+  @override
+  final List<dynamic>? sections;
 
   @override
   String toString() {
-    return 'MenuItem(imageUrl: $imageUrl, name: $name, color: $color)';
+    return 'MenuItem(image: $image, name: $name, color: $color, id: $id, audioFileName: $audioFileName, available: $available, fontName: $fontName, price: $price, sections: $sections)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _MenuItem &&
-            (identical(other.imageUrl, imageUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.imageUrl, imageUrl)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.color, color) ||
-                const DeepCollectionEquality().equals(other.color, color)));
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.audioFileName, audioFileName) ||
+                const DeepCollectionEquality()
+                    .equals(other.audioFileName, audioFileName)) &&
+            (identical(other.available, available) ||
+                const DeepCollectionEquality()
+                    .equals(other.available, available)) &&
+            (identical(other.fontName, fontName) ||
+                const DeepCollectionEquality()
+                    .equals(other.fontName, fontName)) &&
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.sections, sections) ||
+                const DeepCollectionEquality()
+                    .equals(other.sections, sections)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(imageUrl) ^
+      const DeepCollectionEquality().hash(image) ^
       const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(color);
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(audioFileName) ^
+      const DeepCollectionEquality().hash(available) ^
+      const DeepCollectionEquality().hash(fontName) ^
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(sections);
 
   @JsonKey(ignore: true)
   @override
@@ -178,17 +323,39 @@ class _$_MenuItem implements _MenuItem {
 }
 
 abstract class _MenuItem implements MenuItem {
-  factory _MenuItem(String? imageUrl, String? name, String? color) =
-      _$_MenuItem;
+  factory _MenuItem(
+      String? image,
+      String? name,
+      String? color,
+      int id,
+      @JsonKey(name: 'audio_file_name') String? audioFileName,
+      bool? available,
+      @JsonKey(name: 'font_name') String? fontName,
+      int? price,
+      List<dynamic>? sections) = _$_MenuItem;
 
   factory _MenuItem.fromJson(Map<String, dynamic> json) = _$_MenuItem.fromJson;
 
   @override
-  String? get imageUrl => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
   @override
   String? get color => throw _privateConstructorUsedError;
+  @override
+  int get id => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'audio_file_name')
+  String? get audioFileName => throw _privateConstructorUsedError;
+  @override
+  bool? get available => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'font_name')
+  String? get fontName => throw _privateConstructorUsedError;
+  @override
+  int? get price => throw _privateConstructorUsedError;
+  @override
+  List<dynamic>? get sections => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$MenuItemCopyWith<_MenuItem> get copyWith =>
