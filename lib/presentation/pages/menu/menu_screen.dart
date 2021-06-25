@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class MenuScreen extends StatefulWidget {
+   final MenuItem menuItem;
+
+  const MenuScreen({Key? key, required this.menuItem}) : super(key: key);
   @override
   _MenuScreenState createState() => _MenuScreenState();
 }

@@ -21,6 +21,12 @@ class _$MenuEventTearOff {
       page,
     );
   }
+
+  IndexChanged indexChanged(int index) {
+    return IndexChanged(
+      index,
+    );
+  }
 }
 
 /// @nodoc
@@ -28,33 +34,31 @@ const $MenuEvent = _$MenuEventTearOff();
 
 /// @nodoc
 mixin _$MenuEvent {
-  int get page => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int page) getAllMenus,
+    required TResult Function(int index) indexChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? getAllMenus,
+    TResult Function(int index)? indexChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(GetAllMenus value) getAllMenus,
+    required TResult Function(IndexChanged value) indexChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetAllMenus value)? getAllMenus,
+    TResult Function(IndexChanged value)? indexChanged,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $MenuEventCopyWith<MenuEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -62,7 +66,6 @@ mixin _$MenuEvent {
 abstract class $MenuEventCopyWith<$Res> {
   factory $MenuEventCopyWith(MenuEvent value, $Res Function(MenuEvent) then) =
       _$MenuEventCopyWithImpl<$Res>;
-  $Res call({int page});
 }
 
 /// @nodoc
@@ -72,26 +75,13 @@ class _$MenuEventCopyWithImpl<$Res> implements $MenuEventCopyWith<$Res> {
   final MenuEvent _value;
   // ignore: unused_field
   final $Res Function(MenuEvent) _then;
-
-  @override
-  $Res call({
-    Object? page = freezed,
-  }) {
-    return _then(_value.copyWith(
-      page: page == freezed
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class $GetAllMenusCopyWith<$Res> implements $MenuEventCopyWith<$Res> {
+abstract class $GetAllMenusCopyWith<$Res> {
   factory $GetAllMenusCopyWith(
           GetAllMenus value, $Res Function(GetAllMenus) then) =
       _$GetAllMenusCopyWithImpl<$Res>;
-  @override
   $Res call({int page});
 }
 
@@ -160,6 +150,7 @@ class _$GetAllMenus with DiagnosticableTreeMixin implements GetAllMenus {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int page) getAllMenus,
+    required TResult Function(int index) indexChanged,
   }) {
     return getAllMenus(page);
   }
@@ -168,6 +159,7 @@ class _$GetAllMenus with DiagnosticableTreeMixin implements GetAllMenus {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int page)? getAllMenus,
+    TResult Function(int index)? indexChanged,
     required TResult orElse(),
   }) {
     if (getAllMenus != null) {
@@ -180,6 +172,7 @@ class _$GetAllMenus with DiagnosticableTreeMixin implements GetAllMenus {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(GetAllMenus value) getAllMenus,
+    required TResult Function(IndexChanged value) indexChanged,
   }) {
     return getAllMenus(this);
   }
@@ -188,6 +181,7 @@ class _$GetAllMenus with DiagnosticableTreeMixin implements GetAllMenus {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetAllMenus value)? getAllMenus,
+    TResult Function(IndexChanged value)? indexChanged,
     required TResult orElse(),
   }) {
     if (getAllMenus != null) {
@@ -200,11 +194,132 @@ class _$GetAllMenus with DiagnosticableTreeMixin implements GetAllMenus {
 abstract class GetAllMenus implements MenuEvent {
   const factory GetAllMenus(int page) = _$GetAllMenus;
 
-  @override
   int get page => throw _privateConstructorUsedError;
-  @override
   @JsonKey(ignore: true)
   $GetAllMenusCopyWith<GetAllMenus> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $IndexChangedCopyWith<$Res> {
+  factory $IndexChangedCopyWith(
+          IndexChanged value, $Res Function(IndexChanged) then) =
+      _$IndexChangedCopyWithImpl<$Res>;
+  $Res call({int index});
+}
+
+/// @nodoc
+class _$IndexChangedCopyWithImpl<$Res> extends _$MenuEventCopyWithImpl<$Res>
+    implements $IndexChangedCopyWith<$Res> {
+  _$IndexChangedCopyWithImpl(
+      IndexChanged _value, $Res Function(IndexChanged) _then)
+      : super(_value, (v) => _then(v as IndexChanged));
+
+  @override
+  IndexChanged get _value => super._value as IndexChanged;
+
+  @override
+  $Res call({
+    Object? index = freezed,
+  }) {
+    return _then(IndexChanged(
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$IndexChanged with DiagnosticableTreeMixin implements IndexChanged {
+  const _$IndexChanged(this.index);
+
+  @override
+  final int index;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'MenuEvent.indexChanged(index: $index)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'MenuEvent.indexChanged'))
+      ..add(DiagnosticsProperty('index', index));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is IndexChanged &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(index);
+
+  @JsonKey(ignore: true)
+  @override
+  $IndexChangedCopyWith<IndexChanged> get copyWith =>
+      _$IndexChangedCopyWithImpl<IndexChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int page) getAllMenus,
+    required TResult Function(int index) indexChanged,
+  }) {
+    return indexChanged(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int page)? getAllMenus,
+    TResult Function(int index)? indexChanged,
+    required TResult orElse(),
+  }) {
+    if (indexChanged != null) {
+      return indexChanged(index);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetAllMenus value) getAllMenus,
+    required TResult Function(IndexChanged value) indexChanged,
+  }) {
+    return indexChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetAllMenus value)? getAllMenus,
+    TResult Function(IndexChanged value)? indexChanged,
+    required TResult orElse(),
+  }) {
+    if (indexChanged != null) {
+      return indexChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class IndexChanged implements MenuEvent {
+  const factory IndexChanged(int index) = _$IndexChanged;
+
+  int get index => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $IndexChangedCopyWith<IndexChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -213,11 +328,13 @@ class _$MenuStateTearOff {
   const _$MenuStateTearOff();
 
   _MenuState call(
-      {required Option<Either<ServerFailure, Map<String, dynamic>>>
+      {required int index,
+      required Option<Either<ServerFailure, Map<String, dynamic>>>
           menusFailureOrSuccess,
       String? error,
       int? nextPageKey}) {
     return _MenuState(
+      index: index,
       menusFailureOrSuccess: menusFailureOrSuccess,
       error: error,
       nextPageKey: nextPageKey,
@@ -230,6 +347,7 @@ const $MenuState = _$MenuStateTearOff();
 
 /// @nodoc
 mixin _$MenuState {
+  int get index => throw _privateConstructorUsedError;
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get menusFailureOrSuccess => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
@@ -245,8 +363,8 @@ abstract class $MenuStateCopyWith<$Res> {
   factory $MenuStateCopyWith(MenuState value, $Res Function(MenuState) then) =
       _$MenuStateCopyWithImpl<$Res>;
   $Res call(
-      {Option<Either<ServerFailure, Map<String, dynamic>>>
-          menusFailureOrSuccess,
+      {int index,
+      Option<Either<ServerFailure, Map<String, dynamic>>> menusFailureOrSuccess,
       String? error,
       int? nextPageKey});
 }
@@ -261,11 +379,16 @@ class _$MenuStateCopyWithImpl<$Res> implements $MenuStateCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? index = freezed,
     Object? menusFailureOrSuccess = freezed,
     Object? error = freezed,
     Object? nextPageKey = freezed,
   }) {
     return _then(_value.copyWith(
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
       menusFailureOrSuccess: menusFailureOrSuccess == freezed
           ? _value.menusFailureOrSuccess
           : menusFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -289,8 +412,8 @@ abstract class _$MenuStateCopyWith<$Res> implements $MenuStateCopyWith<$Res> {
       __$MenuStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Option<Either<ServerFailure, Map<String, dynamic>>>
-          menusFailureOrSuccess,
+      {int index,
+      Option<Either<ServerFailure, Map<String, dynamic>>> menusFailureOrSuccess,
       String? error,
       int? nextPageKey});
 }
@@ -306,11 +429,16 @@ class __$MenuStateCopyWithImpl<$Res> extends _$MenuStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? index = freezed,
     Object? menusFailureOrSuccess = freezed,
     Object? error = freezed,
     Object? nextPageKey = freezed,
   }) {
     return _then(_MenuState(
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
       menusFailureOrSuccess: menusFailureOrSuccess == freezed
           ? _value.menusFailureOrSuccess
           : menusFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -331,8 +459,13 @@ class __$MenuStateCopyWithImpl<$Res> extends _$MenuStateCopyWithImpl<$Res>
 
 class _$_MenuState with DiagnosticableTreeMixin implements _MenuState {
   const _$_MenuState(
-      {required this.menusFailureOrSuccess, this.error, this.nextPageKey});
+      {required this.index,
+      required this.menusFailureOrSuccess,
+      this.error,
+      this.nextPageKey});
 
+  @override
+  final int index;
   @override
   final Option<Either<ServerFailure, Map<String, dynamic>>>
       menusFailureOrSuccess;
@@ -343,7 +476,7 @@ class _$_MenuState with DiagnosticableTreeMixin implements _MenuState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MenuState(menusFailureOrSuccess: $menusFailureOrSuccess, error: $error, nextPageKey: $nextPageKey)';
+    return 'MenuState(index: $index, menusFailureOrSuccess: $menusFailureOrSuccess, error: $error, nextPageKey: $nextPageKey)';
   }
 
   @override
@@ -351,6 +484,7 @@ class _$_MenuState with DiagnosticableTreeMixin implements _MenuState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'MenuState'))
+      ..add(DiagnosticsProperty('index', index))
       ..add(DiagnosticsProperty('menusFailureOrSuccess', menusFailureOrSuccess))
       ..add(DiagnosticsProperty('error', error))
       ..add(DiagnosticsProperty('nextPageKey', nextPageKey));
@@ -360,6 +494,8 @@ class _$_MenuState with DiagnosticableTreeMixin implements _MenuState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _MenuState &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)) &&
             (identical(other.menusFailureOrSuccess, menusFailureOrSuccess) ||
                 const DeepCollectionEquality().equals(
                     other.menusFailureOrSuccess, menusFailureOrSuccess)) &&
@@ -373,6 +509,7 @@ class _$_MenuState with DiagnosticableTreeMixin implements _MenuState {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(index) ^
       const DeepCollectionEquality().hash(menusFailureOrSuccess) ^
       const DeepCollectionEquality().hash(error) ^
       const DeepCollectionEquality().hash(nextPageKey);
@@ -385,11 +522,14 @@ class _$_MenuState with DiagnosticableTreeMixin implements _MenuState {
 
 abstract class _MenuState implements MenuState {
   const factory _MenuState(
-      {required Option<Either<ServerFailure, Map<String, dynamic>>>
+      {required int index,
+      required Option<Either<ServerFailure, Map<String, dynamic>>>
           menusFailureOrSuccess,
       String? error,
       int? nextPageKey}) = _$_MenuState;
 
+  @override
+  int get index => throw _privateConstructorUsedError;
   @override
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get menusFailureOrSuccess => throw _privateConstructorUsedError;

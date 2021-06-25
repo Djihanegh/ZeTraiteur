@@ -17,7 +17,6 @@ part 'menu_state.dart';
 @injectable
 class MenuBloc extends Bloc<MenuEvent, MenuState> {
   final IMenuFacade _menuFacade;
-  static const _pageSize = 20;
 
   MenuBloc(this._menuFacade) : super(MenuState.initial());
 
@@ -30,7 +29,9 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
         e.page,
         _menuFacade.getAllMenus,
       );
-    });
+    }, indexChanged: (e) async* { 
+      yield state.copyWith(index: e.index);
+     });
   }
 
   Stream<MenuState> _performGetAllMenus(
@@ -51,4 +52,6 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
       menusFailureOrSuccess: optionOf(failureOrSuccess),
     );
   }
+
+  
 }

@@ -3,6 +3,7 @@ part of 'menu_bloc.dart';
 @freezed
 class MenuState with _$MenuState {
   const factory MenuState({
+    required int index,
     required
         Option<Either<ServerFailure, Map<String, dynamic>>>
             menusFailureOrSuccess,
@@ -12,5 +13,6 @@ class MenuState with _$MenuState {
 
   factory MenuState.initial() => MenuState(
         menusFailureOrSuccess: none(),
+        index: 0
       );
 }
