@@ -10,8 +10,6 @@ import '../../injection.dart';
 import 'menu_item_image.dart';
 import 'no_internet.dart';
 
-
-
 class CarouselWithIndicatorDemo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -21,7 +19,7 @@ class CarouselWithIndicatorDemo extends StatefulWidget {
 
 class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   String color = kRedHexa;
-  late List<MenuItem> menus = [];
+  late List menus = [];
   late ScrollController _scrollController;
   late MenuBloc _menuBloc;
   bool _loading = true;
@@ -73,6 +71,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                   if (success['results'].isNotEmpty) {
                     setState(() {
                       menus.addAll(success['results']);
+                      print(menus);
                     });
                   }
                   setState(() {
@@ -114,26 +113,26 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
             height: 250,
           )),
       Positioned.fill(
-          top: 200,
-          bottom: 160,
-          left: 85,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            controller: _scrollController,
-            physics: AlwaysScrollableScrollPhysics(),
-            itemCount: menus.length,
-            itemBuilder: (context, index) {
-              _menuBloc.add(MenuEvent.indexChanged(index));
-              return MenuItemImage(menuItem:menus[index]);
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                width: 30,
-              );
-            },
-          )
+        top: 200,
+        bottom: 160,
+        left: 85,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          controller: _scrollController,
+          physics: AlwaysScrollableScrollPhysics(),
+          itemCount: menus.length,
+          itemBuilder: (context, indexx) {
+            return MenuItemImage(menuItem: MenuItem.fromJson(menus[indexx]));
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              width: 50,
+            );
+          },
+        ),
+      ),
 
-          /* child:  CarouselSlider(
+      /* child:  CarouselSlider(
             ScrollController: _scrollController,
             items: menu,
             options: CarouselOptions(
@@ -152,15 +151,12 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                   });
                 }),
           )*/
-          ),
-      Positioned.fill(
+
+      /*  Positioned.fill(
         top: 430,
         left: 80,
-        child: Text(
-          menus[state.index].name ?? '',
-          style: TextStyle(fontSize: 30),
-        ),
-      )
+        child:
+      )*/
     ]);
   }
 

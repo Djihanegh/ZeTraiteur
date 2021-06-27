@@ -16,7 +16,9 @@ _$_MenuItem _$_$_MenuItemFromJson(Map<String, dynamic> json) {
     json['available'] as bool?,
     json['font_name'] as String?,
     json['price'] as int?,
-    json['sections'] as List<dynamic>?,
+    (json['sections'] as List<dynamic>?)
+        ?.map((e) => Section.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 

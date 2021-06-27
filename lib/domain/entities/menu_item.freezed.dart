@@ -29,7 +29,7 @@ class _$MenuItemTearOff {
       bool? available,
       @JsonKey(name: 'font_name') String? fontName,
       int? price,
-      List<dynamic>? sections) {
+      List<Section>? sections) {
     return _MenuItem(
       image,
       name,
@@ -63,7 +63,7 @@ mixin _$MenuItem {
   @JsonKey(name: 'font_name')
   String? get fontName => throw _privateConstructorUsedError;
   int? get price => throw _privateConstructorUsedError;
-  List<dynamic>? get sections => throw _privateConstructorUsedError;
+  List<Section>? get sections => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -84,7 +84,7 @@ abstract class $MenuItemCopyWith<$Res> {
       bool? available,
       @JsonKey(name: 'font_name') String? fontName,
       int? price,
-      List<dynamic>? sections});
+      List<Section>? sections});
 }
 
 /// @nodoc
@@ -143,7 +143,7 @@ class _$MenuItemCopyWithImpl<$Res> implements $MenuItemCopyWith<$Res> {
       sections: sections == freezed
           ? _value.sections
           : sections // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<Section>?,
     ));
   }
 }
@@ -162,7 +162,7 @@ abstract class _$MenuItemCopyWith<$Res> implements $MenuItemCopyWith<$Res> {
       bool? available,
       @JsonKey(name: 'font_name') String? fontName,
       int? price,
-      List<dynamic>? sections});
+      List<Section>? sections});
 }
 
 /// @nodoc
@@ -222,7 +222,7 @@ class __$MenuItemCopyWithImpl<$Res> extends _$MenuItemCopyWithImpl<$Res>
       sections == freezed
           ? _value.sections
           : sections // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<Section>?,
     ));
   }
 }
@@ -263,7 +263,7 @@ class _$_MenuItem implements _MenuItem {
   @override
   final int? price;
   @override
-  final List<dynamic>? sections;
+  final List<Section>? sections;
 
   @override
   String toString() {
@@ -332,7 +332,7 @@ abstract class _MenuItem implements MenuItem {
       bool? available,
       @JsonKey(name: 'font_name') String? fontName,
       int? price,
-      List<dynamic>? sections) = _$_MenuItem;
+      List<Section>? sections) = _$_MenuItem;
 
   factory _MenuItem.fromJson(Map<String, dynamic> json) = _$_MenuItem.fromJson;
 
@@ -355,7 +355,7 @@ abstract class _MenuItem implements MenuItem {
   @override
   int? get price => throw _privateConstructorUsedError;
   @override
-  List<dynamic>? get sections => throw _privateConstructorUsedError;
+  List<Section>? get sections => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$MenuItemCopyWith<_MenuItem> get copyWith =>

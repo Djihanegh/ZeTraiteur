@@ -9,31 +9,36 @@ class MenuItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MenuScreen(menuItem: menuItem,)),
-          );
-        },
-        child: Container(
-            child: Container(
-                width: 220,
-                height: 50,
-                margin: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                ),
-                child: Container(
-                  width: 230,
-                  height: 60,
-                  margin: EdgeInsets.all(5.0),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                      child: Stack(
-                        children: <Widget>[
-                          /*  Image(
+    return Column(children: [
+      GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MenuScreen(
+                        menuItem: menuItem,
+                      )),
+            );
+          },
+          child: Container(
+              child: Container(
+                  width: 220,
+                  height: 180,
+
+                  margin: EdgeInsets.all(10.0),
+                   decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                  child: Container(
+                    width: 230,
+                    height: 60,
+                    margin: EdgeInsets.all(5.0),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        child: Stack(
+                          children: <Widget>[
+                            /*  Image(
                                   image: CachedNetworkImageProvider(
                                       item['image']
                                       /*imageUrl: item['image'],
@@ -62,14 +67,23 @@ class MenuItemImage extends StatelessWidget {
                               );
                             },*/
                                       )),*/
-                          /*  Image.network(
+                            /*  Image.network(
                                 item['image'] ?? '',
                                 fit: BoxFit.cover,
                                 width: 1000.0,
                                 height: 1000.0,
                               ),*/
-                        ],
-                      )),
-                ))));
+                          ],
+                        )),
+                  )))),
+      SizedBox(
+        height: 0,
+      ),
+      Flexible (child: Text(
+        menuItem.name ?? '',
+        style: TextStyle(fontSize: 30),
+         overflow: TextOverflow.ellipsis
+      )),
+    ]);
   }
 }

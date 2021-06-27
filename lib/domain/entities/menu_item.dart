@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:ze_traiteur/domain/entities/section.dart';
 
 part 'menu_item.freezed.dart';
 part 'menu_item.g.dart';
@@ -15,7 +16,7 @@ class MenuItem with _$MenuItem {
       bool? available,
       @JsonKey(name: 'font_name') String? fontName,
       int? price,
-      List? sections) = _MenuItem;
+      List<Section>? sections) = _MenuItem;
   static const fromJsonFactory = _$MenuItemFromJson;
   factory MenuItem.fromJson(Map<String, dynamic> json) =>
       _$MenuItemFromJson(json);

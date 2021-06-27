@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
+import 'package:ze_traiteur/presentation/components/food_item.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class MenuScreen extends StatefulWidget {
-   final MenuItem menuItem;
+  final MenuItem menuItem;
 
   const MenuScreen({Key? key, required this.menuItem}) : super(key: key);
   @override
@@ -29,6 +30,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       vsync: this,
       initialIndex: selectedIndex,
     );
+
+    print(widget.menuItem.sections!.length);
   }
 
   @override
@@ -88,7 +91,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                         width: double.infinity,
                         color: Colors.white,
                         child: Text(
-                          "Menu classique",
+                          widget.menuItem.name!,
                           style: (TextStyle(
                               fontFamily: 'Poppins-Regular',
                               fontSize: 24,
@@ -137,7 +140,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                                   Radius.circular(15))),
                                           child: Center(
                                             child: Text(
-                                              'Entrees',
+                                              widget
+                                                  .menuItem.sections![0].name!,
                                               style: TextStyle(
                                                   color: Colors.black),
                                             ),
@@ -217,32 +221,15 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                     physics: ScrollPhysics(),
                                     scrollDirection: Axis.vertical,
                                     shrinkWrap: true,
-                                    itemCount: 6,
+                                    itemCount: widget
+                                        .menuItem.sections![0].foods!.length,
                                     itemBuilder: (BuildContext context, index) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(7),
-                                          color: Colors.white,
-                                        ),
-                                        child: ListTile(
-                                          title: const Text('Lafayette'),
-                                          leading: Image.asset(
-                                              "assets/images/menu.png"),
-                                          trailing: Radio(
-                                            value: 'lafayette',
-                                            groupValue: selectedValue,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                selectedValue =
-                                                    value.toString();
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      );
+                                      return FoodItem(
+                                          name: widget.menuItem.sections![0]
+                                              .foods![index].name!,
+                                          image: widget.menuItem.sections![0]
+                                              .foods![index].image!,
+                                          value: "");
                                     },
                                     separatorBuilder:
                                         (BuildContext context, int index) {
