@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
+import 'package:ze_traiteur/domain/entities/section.dart';
 import 'package:ze_traiteur/presentation/components/food_item.dart';
+import 'package:ze_traiteur/presentation/components/shopping_cart_button.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
@@ -20,13 +22,19 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   Color gratinColor = Colors.white;
   Color boissonColor = Colors.white;
   var selectedValue = 'animal';
-
+  int length = 0;
   @override
   void initState() {
     super.initState();
 
+    setState(() {
+      length = widget.menuItem.sections!.length;
+    });
+
+    print("LEEEEEEEEEEEEEEEEEEEEEGTH$length");
+
     _tabController = new TabController(
-      length: 4,
+      length: length,
       vsync: this,
       initialIndex: selectedIndex,
     );
@@ -36,9 +44,48 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+     List<Widget> tabs= List.filled(length , Container());
+    
+      for( int i=0 ; i<  widget.menuItem.sections!.length ; i++  ){
+            
+        tabs[i] =   new Container(
+              height: 50,
+              width: 50,
+              child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = 0;
+                      entreesColor = kColorPrimary;
+                      // _tabController?.animateTo(0);
+                    });
+                  },
+                  child: new Container(
+                    //color: Colors.blue,
+                    height: 60,
+                    width: 80,
+                    child: new Tab(
+                      child: Container(
+                        height: 35,
+                        width: 60,
+                        decoration: BoxDecoration(
+                            color: entreesColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        child: Center(
+                          child: Text(
+                            widget.menuItem.sections![i].name!.substring(0, 5),
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )));
+         }
+       
+        
     return SafeArea(
         child: DefaultTabController(
-            length: 4,
+            length: length,
             child: Scaffold(
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(100.0),
@@ -49,28 +96,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                     actions: [
-                      Padding(
-                          padding: EdgeInsets.only(right: 15, top: 10),
-                          child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Panier()),
-                                );
-                              },
-                              child: Container(
-                                  child: Icon(
-                                    Icons.shopping_cart_outlined,
-                                    color: Colors.white,
-                                  ),
-                                  height: 60,
-                                  width: 65,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 2, color: Colors.white),
-                                      borderRadius: BorderRadius.circular(30),
-                                      color: kColorPrimary))))
+                      ShoppingCartButton(),
                     ],
                     flexibleSpace: Container(
                       decoration: BoxDecoration(
@@ -82,9 +108,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                body: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                body: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
                       Container(
                         padding: EdgeInsets.only(left: 20, top: 10),
                         height: 50,
@@ -117,8 +144,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                   _tabController?.animateTo(index);
                                 });
                               },
-                              tabs: [
-                                new GestureDetector(
+                              tabs: tabs
+
+                              /*new GestureDetector(
                                     onTap: () {
                                       setState(() {
                                         selectedIndex = 0;
@@ -141,7 +169,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                           child: Center(
                                             child: Text(
                                               widget
-                                                  .menuItem.sections![0].name!,
+                                                  .menuItem.sections![0].name!.substring(0,5),
                                               style: TextStyle(
                                                   color: Colors.black),
                                             ),
@@ -209,8 +237,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                           style: TextStyle(color: Colors.black),
                                         ),
                                       ),
-                                    )),
-                              ])),
+                                    )),*/
+                              )),
                       IndexedStack(children: [
                         IndexedStack(
                           children: <Widget>[
@@ -226,7 +254,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                     itemBuilder: (BuildContext context, index) {
                                       return FoodItem(
                                           name: widget.menuItem.sections![0]
-                                              .foods![index].name!,
+                                              .foods![index].name!
+                                              .substring(0, 2),
                                           image: widget.menuItem.sections![0]
                                               .foods![index].image!,
                                           value: "");
@@ -244,6 +273,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                           ],
                         )
                       ])
-                    ]))));
+                    ])))));
   }
 }
