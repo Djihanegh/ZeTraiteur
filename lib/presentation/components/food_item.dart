@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class FoodItem extends StatefulWidget {
   final String name;
   final String image;
-  final Object value;
+  final int value;
   const FoodItem(
       {Key? key, required this.name, required this.image, required this.value})
       : super(key: key);
@@ -13,10 +13,11 @@ class FoodItem extends StatefulWidget {
 }
 
 class _FoodItemState extends State<FoodItem> {
-  var selectedValue = 'animal';
-
   @override
   Widget build(BuildContext context) {
+    int selectedValue = widget.value;
+    int _value = 0;
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white),
@@ -28,10 +29,12 @@ class _FoodItemState extends State<FoodItem> {
         //leading: Image.network(widget.image),
         trailing: Radio(
           value: widget.value,
-          groupValue: selectedValue,
+          groupValue: _value,
           onChanged: (value) {
+            print(widget.value);
+            print(value);
             setState(() {
-              selectedValue = value.toString();
+              _value = int.parse(value.toString());
             });
           },
         ),

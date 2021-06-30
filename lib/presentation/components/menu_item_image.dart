@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/pages/menu/menu_screen.dart';
 
 class MenuItemImage extends StatelessWidget {
   final MenuItem menuItem;
+  final List<Food> extras;
 
-  const MenuItemImage({Key? key, required this.menuItem}) : super(key: key);
+  const MenuItemImage({Key? key, required this.menuItem, required this.extras})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,7 @@ class MenuItemImage extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => MenuScreen(
                         menuItem: menuItem,
+                        extras: extras
                       )),
             );
           },
@@ -24,9 +28,8 @@ class MenuItemImage extends StatelessWidget {
               child: Container(
                   width: 220,
                   height: 180,
-
                   margin: EdgeInsets.all(10.0),
-                   decoration: BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   ),
@@ -79,11 +82,9 @@ class MenuItemImage extends StatelessWidget {
       SizedBox(
         height: 0,
       ),
-      Flexible (child: Text(
-        menuItem.name ?? '',
-        style: TextStyle(fontSize: 30),
-         overflow: TextOverflow.ellipsis
-      )),
+      Flexible(
+          child: Text(menuItem.name!.substring(0, 5),
+              style: TextStyle(fontSize: 30), overflow: TextOverflow.ellipsis)),
     ]);
   }
 }

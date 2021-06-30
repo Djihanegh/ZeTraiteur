@@ -5,7 +5,7 @@ import 'package:ze_traiteur/domain/entities/addresses.dart';
 import 'package:ze_traiteur/domain/entities/city_obj.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/domain/entities/user.dart';
-import 'package:http/io_client.dart' as http ;
+import 'package:http/io_client.dart' as http;
 import 'package:ze_traiteur/infrastructure/core/converter.dart';
 import 'package:ze_traiteur/infrastructure/core/interceptor.dart';
 
@@ -25,10 +25,12 @@ abstract class ZeTraiteurApiService extends ChopperService {
 
   @Get(path: 'menus/')
   Future<Response<Map<String, dynamic>>> getAllMenus(
-    
     @Query('page') int page,
   );
-
+  @Get(path: 'extras/')
+  Future<Response<Map<String, dynamic>>> getAllExtras(
+    @Query('page') int page,
+  );
   /*@Put(path: 'users/password')
   Future<Response<String>> changePassword(
     @Field('old_pwd') String password,
@@ -36,7 +38,7 @@ abstract class ZeTraiteurApiService extends ChopperService {
     @Header('Authorization') String headerValue,
   );*/
 
-    static ZeTraiteurApiService create() {
+  static ZeTraiteurApiService create() {
     final client = ChopperClient(
       baseUrl: 'http://159.65.25.199:8000/apis/',
       client: http.IOClient(
@@ -49,14 +51,10 @@ abstract class ZeTraiteurApiService extends ChopperService {
       //converter: BuiltValueConverter(),
       //converter: FormUrlEncodedConverter(),
       converter: JsonSerializableConverter({
-        
         User: User.fromJsonFactory,
-        Addresses:Addresses.fromJsonFactory,
+        Addresses: Addresses.fromJsonFactory,
         CityObj: CityObj.fromJsonFactory,
-        MenuItem:MenuItem.fromJsonFactory,
-        
-      
-
+        MenuItem: MenuItem.fromJsonFactory,
       }),
       //errorConverter: BuiltValueConverter(),
       //converter: FormUrlEncodedConverter(),
@@ -74,5 +72,4 @@ abstract class ZeTraiteurApiService extends ChopperService {
     );
     return _$ZeTraiteurApiService(client);
   }
-
 }

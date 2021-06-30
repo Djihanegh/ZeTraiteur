@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/application/menu/menu_bloc.dart';
+import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/components/item_shimmer.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
@@ -18,14 +19,16 @@ class CarouselWithIndicatorDemo extends StatefulWidget {
 }
 
 class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
-  String color = kRedHexa;
   late List menus = [];
+  late List extras = [];
+
   late ScrollController _scrollController;
   late MenuBloc _menuBloc;
-  bool _loading = true;
 
+  bool _loading = true;
   int _offset = 1;
   double scrollOffset = 0.0;
+  String color = kRedHexa;
 
   _scrollListener() {
     if (_scrollController.offset >=
@@ -71,7 +74,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                   if (success['results'].isNotEmpty) {
                     setState(() {
                       menus.addAll(success['results']);
-                      print(menus);
+                      extras.addAll(success['extras']['results']);
+                      print(success['extras']['results']);
                     });
                   }
                   setState(() {
@@ -99,6 +103,11 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   }
 
   Widget _menusList(MenuState state) {
+    List<Food> list = [];
+    for( int i = 0 ; i< extras.length ; i++  ){
+        list.insert(i,  Food.fromJson(extras[i]));
+    }
+   
     return Stack(children: [
       Positioned.fill(
           top: 180,
@@ -122,7 +131,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
           physics: AlwaysScrollableScrollPhysics(),
           itemCount: menus.length,
           itemBuilder: (context, indexx) {
-            return MenuItemImage(menuItem: MenuItem.fromJson(menus[indexx]));
+            return MenuItemImage(
+              menuItem: MenuItem.fromJson(menus[indexx]),
+              extras: list,
+            );
           },
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(

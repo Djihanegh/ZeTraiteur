@@ -39,4 +39,12 @@ class _$ZeTraiteurApiService extends ZeTraiteurApiService {
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
   }
+
+  @override
+  Future<Response<Map<String, dynamic>>> getAllExtras(int page) {
+    final $url = 'http://159.65.25.199:8000/apis/extras/';
+    final $params = <String, dynamic>{'page': page};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
+  }
 }

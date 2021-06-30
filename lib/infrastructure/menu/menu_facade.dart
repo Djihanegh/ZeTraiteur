@@ -16,6 +16,33 @@ class MenuFacade implements IMenuFacade {
       print('TRYYY');
       final result =
           await getIt<ZeTraiteurApiService>().getAllMenus(page!);
+          final extras =
+          await getIt<ZeTraiteurApiService>().getAllExtras(page);
+      print(result.base.statusCode);
+      if (result.body != null && extras.body != null ) {
+       Map<String,dynamic> menus = result.body!;
+       menus["extras"] = extras.body ;
+        pages++;
+        return right(menus);
+      } else {
+        pages = 0;
+        return left(ServerFailure.apiFailure(msg: result.error.toString()));
+      }
+    } catch (e) {
+      print(e);
+      pages = 0;
+      return left(ServerFailure.serverError());
+    }
+  }
+
+
+   @override
+  Future<Either<ServerFailure, Map<String, dynamic>>> getAllExtras(
+      { int? page}) async {
+    try {
+      print('TRYYY EXTRAS');
+      final result =
+          await getIt<ZeTraiteurApiService>().getAllExtras(page!);
       print(result.base.statusCode);
       if (result.body != null) {
         pages++;
