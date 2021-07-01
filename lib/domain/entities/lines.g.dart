@@ -9,7 +9,7 @@ part of 'lines.dart';
 _$_Lines _$_$_LinesFromJson(Map<String, dynamic> json) {
   return _$_Lines(
     json['quantity'] as int,
-    json['composition'],
+    Composition.fromJson(json['composition'] as Map<String, dynamic>),
   );
 }
 

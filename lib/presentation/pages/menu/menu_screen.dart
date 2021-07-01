@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ze_traiteur/application/order/order_bloc.dart';
+import 'package:ze_traiteur/domain/entities/composition.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
+import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/domain/entities/section.dart';
 import 'package:ze_traiteur/presentation/components/food_item.dart';
 import 'package:ze_traiteur/presentation/components/shopping_cart_button.dart';
+import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
+
+import '../../../injection.dart';
 
 class MenuScreen extends StatefulWidget {
   final MenuItem menuItem;
@@ -44,11 +51,14 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     );
   }
 
+  OrderBloc? _orderBloc;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> tabs = List.filled(length + 1, Container());
     int j = widget.menuItem.sections!.length;
-    List<int> foodSelected = List.generate(j, (index) => -1);
+    List<Lines> lines =
+        List.generate(j, (index) => Lines(0, Composition(0, [], [])));
 
     for (int i = 0; i < j; i++) {
       tabs[i] = new Container(
@@ -64,7 +74,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       _sectionIndex++;
                     });
                   } else if (_sectionSelected[_sectionIndex - 1] == true) {
-                    print(_sectionSelected[_sectionIndex - 1]);
                     _sectionIndex--;
                     selectedIndex = i;
                     _tabController?.animateTo(i);
@@ -155,54 +164,80 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       );
                     },
                     itemCount: 0)
-                : ListView.separated(
-                    physics: ScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: widget.menuItem.sections![i].foods!.length,
-                    itemBuilder: (BuildContext context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.white,
-                        ),
-                        child: ListTile(
-                          title: Text(widget.menuItem.sections![i].foods![index]
-                              .name! // TO DO
-                              .substring(0, 6)), // TO DO
-                          // TODOOOOOOOOO
-                          //leading: Image.network(widget.image),
-                          trailing: Radio(
-                            activeColor: kColorPrimary,
-                            value: index,
-                            groupValue: _value,
-                            onChanged: (value) {
-                              setState(() {
-                                _value = int.parse(value.toString());
-                                if (foodSelected[i] == -1) {
-                                  foodSelected[i] =
-                                      widget.menuItem.sections![i].id;
-                                } else {
-                                  foodSelected[i] = -1;
-                                }
-                                print("FoodSelected");
-
-                                print(foodSelected[i]);
-
-                                _sectionSelected.insert(_sectionIndex, true);
-                              });
+                : BlocProvider(
+                    create: (context) => _orderBloc = getIt<OrderBloc>(),
+                    child: BlocListener<OrderBloc, OrderState>(
+                        listener: (context, state) {
+                      state.createOrderFailureOrSuccess.fold(
+                        () => null,
+                        (either) {
+                          Navigator.pop(context);
+                          either.fold(
+                            (failure) {
+                              failure.map(
+                                serverError: (_) => null,
+                                apiFailure: (e) => showToast("e.msg"),
+                              );
                             },
-                          ),
-                        ),
+                            (success) {
+                              showToast('post_shared');
+                            },
+                          );
+                        },
                       );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 10,
+                    }, child: BlocBuilder<OrderBloc, OrderState>(
+                            builder: (context, state) {
+                      return ListView.separated(
+                        physics: ScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: widget.menuItem.sections![i].foods!.length,
+                        itemBuilder: (BuildContext context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(7),
+                              color: Colors.white,
+                            ),
+                            child: ListTile(
+                              title: Text(widget.menuItem.sections![i]
+                                  .foods![index].name! // TO DO
+                                  .substring(0, 6)), // TO DO
+                              // TODOOOOOOOOO
+                              //leading: Image.network(widget.image),
+                              trailing: Radio(
+                                activeColor: kColorPrimary,
+                                value: index,
+                                groupValue: _value,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _value = int.parse(value.toString());
+
+                                    foodChanged(i, index);
+
+                                    print("STATE FOODS ");
+
+                                    print(state.foodId);
+                                    print(state.foodId);
+
+                                    print(state.foods);
+                                    print(state.foodId);
+
+                                    _sectionSelected.insert(
+                                        _sectionIndex, true);
+                                  });
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            height: 10,
+                          );
+                        },
                       );
-                    },
-                  )),
+                    })))),
         maintainState: true,
         visible: selectedIndex == i,
       ));
@@ -237,7 +272,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       onChanged: (value) {
                         setState(() {
                           _value = int.parse(value.toString());
-
+                         
                           _sectionSelected.insert(_sectionIndex, true);
                         });
                       },
@@ -325,5 +360,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                               tabs: tabs)),
                       IndexedStack(index: selectedIndex, children: widgets)
                     ])))));
+  }
+
+  void foodChanged(int i, int index) {
+    _orderBloc!.add(
+        OrderEvent.foodChanged(widget.menuItem.sections![i].foods![index].id));
   }
 }

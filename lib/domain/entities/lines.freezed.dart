@@ -50,6 +50,8 @@ abstract class $LinesCopyWith<$Res> {
   factory $LinesCopyWith(Lines value, $Res Function(Lines) then) =
       _$LinesCopyWithImpl<$Res>;
   $Res call({int quantity, Composition composition});
+
+  $CompositionCopyWith<$Res> get composition;
 }
 
 /// @nodoc
@@ -76,6 +78,13 @@ class _$LinesCopyWithImpl<$Res> implements $LinesCopyWith<$Res> {
               as Composition,
     ));
   }
+
+  @override
+  $CompositionCopyWith<$Res> get composition {
+    return $CompositionCopyWith<$Res>(_value.composition, (value) {
+      return _then(_value.copyWith(composition: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -84,6 +93,9 @@ abstract class _$LinesCopyWith<$Res> implements $LinesCopyWith<$Res> {
       __$LinesCopyWithImpl<$Res>;
   @override
   $Res call({int quantity, Composition composition});
+
+  @override
+  $CompositionCopyWith<$Res> get composition;
 }
 
 /// @nodoc
