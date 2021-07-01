@@ -48,6 +48,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     List<Widget> tabs = List.filled(length + 1, Container());
     int j = widget.menuItem.sections!.length;
+    List<int> foodSelected = List.generate(j, (index) => -1);
 
     for (int i = 0; i < j; i++) {
       tabs[i] = new Container(
@@ -101,6 +102,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                 if (_sectionSelected[_sectionIndex] == true) {
                   setState(() {
                     selectedIndex = j;
+
                     _tabController?.animateTo(j);
                     _sectionIndex++;
                   });
@@ -178,6 +180,15 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                             onChanged: (value) {
                               setState(() {
                                 _value = int.parse(value.toString());
+                                if (foodSelected[i] == -1) {
+                                  foodSelected[i] =
+                                      widget.menuItem.sections![i].id;
+                                } else {
+                                  foodSelected[i] = -1;
+                                }
+                                print("FoodSelected");
+
+                                print(foodSelected[i]);
 
                                 _sectionSelected.insert(_sectionIndex, true);
                               });
