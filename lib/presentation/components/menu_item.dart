@@ -104,10 +104,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
 
   Widget _menusList(MenuState state) {
     List<Food> list = [];
-    for( int i = 0 ; i< extras.length ; i++  ){
-        list.insert(i,  Food.fromJson(extras[i]));
+    for (int i = 0; i < extras.length; i++) {
+      list.insert(i, Food.fromJson(extras[i]));
     }
-   
+
     return Stack(children: [
       Positioned.fill(
           top: 180,
@@ -143,32 +143,6 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
           },
         ),
       ),
-
-      /* child:  CarouselSlider(
-            ScrollController: _scrollController,
-            items: menu,
-            options: CarouselOptions(
-                height: 200,
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 2.0,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index;
-                    setState(() {
-                      print(menus[_current]['id']);
-                      print('*************************************');
-                      //color = menu[index] ?? '';
-                    });
-                  });
-                }),
-          )*/
-
-      /*  Positioned.fill(
-        top: 430,
-        left: 80,
-        child:
-      )*/
     ]);
   }
 

@@ -33,22 +33,20 @@ class _SplashScreenState extends State<SplashScreen> {
                         end: Alignment.topCenter)),
               ))),
       Positioned.fill(
-        bottom: 20,
-
-        child:  Align (
-          alignment: Alignment.bottomCenter,
-          child :Text(
-          '© 2021, Ze Traiteur.',
-          style: TextStyle(
-            fontFamily: 'HelveticaNeue',
-            // color: kColorGrey,
-            color: Colors.white,
-            fontSize: 10,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-          ),
-        ),
-      ))
+          bottom: 20,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              '© 2021, Ze Traiteur.',
+              style: TextStyle(
+                fontFamily: 'HelveticaNeue',
+                color: Colors.white,
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.normal,
+              ),
+            ),
+          ))
     ]));
   }
 }

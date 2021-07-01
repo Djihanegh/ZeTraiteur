@@ -41,6 +41,7 @@ class MenuItemImage extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         child: Stack(
                           children: <Widget>[
+                            // TO DO
                             /*  Image(
                                   image: CachedNetworkImageProvider(
                                       item['image']
@@ -83,7 +84,7 @@ class MenuItemImage extends StatelessWidget {
         height: 0,
       ),
       Flexible(
-          child: Text(menuItem.name!.substring(0, 5),
+          child: Text(menuItem.name!.substring(0, 5), // TO DO
               style: TextStyle(fontSize: 30), overflow: TextOverflow.ellipsis)),
     ]);
   }

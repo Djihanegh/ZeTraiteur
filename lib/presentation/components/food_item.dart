@@ -15,7 +15,6 @@ class FoodItem extends StatefulWidget {
 class _FoodItemState extends State<FoodItem> {
   @override
   Widget build(BuildContext context) {
-    int selectedValue = widget.value;
     int _value = 0;
 
     return Container(

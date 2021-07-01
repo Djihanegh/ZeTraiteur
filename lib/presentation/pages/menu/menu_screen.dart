@@ -49,7 +49,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     List<Widget> tabs = List.filled(length + 1, Container());
     int j = widget.menuItem.sections!.length;
 
-    for (int i = 0; i < widget.menuItem.sections!.length; i++) {
+    for (int i = 0; i < j; i++) {
       tabs[i] = new Container(
           height: 50,
           width: 50,
