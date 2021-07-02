@@ -3,9 +3,11 @@ import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class CustomRadioButton extends StatefulWidget {
   final bool? isActive;
+  final int? id;
+
   final Function? onPressed;
 
-  const CustomRadioButton({Key? key, this.isActive, this.onPressed})
+  const CustomRadioButton({Key? key, this.isActive, this.onPressed, this.id})
       : super(key: key);
 
   @override
@@ -14,6 +16,7 @@ class CustomRadioButton extends StatefulWidget {
 
 class _CustomRadioButtonState extends State<CustomRadioButton> {
   bool isActive = false;
+  int? id;
 
   @override
   void initState() {
@@ -21,6 +24,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
 
     setState(() {
       isActive = widget.isActive!;
+      id = widget.id;
     });
   }
 
@@ -31,6 +35,8 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
           setState(() {
             isActive = !isActive;
           });
+
+          widget.onPressed!(isActive, id);
         },
         child: Container(
             height: 18,

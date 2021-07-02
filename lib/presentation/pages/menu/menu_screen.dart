@@ -23,20 +23,19 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
-  TabController? _tabController;
   int selectedIndex = 0;
-  //Color entreesColor = Colors.white;
-  //Color platColor = Colors.white;
-  //Color gratinColor = Colors.white;
-  //Color boissonColor = Colors.white;
-  static int length = 0;
   int _sectionIndex = 0;
   int foodId = 0;
   int extraId = 0;
-  List<bool> _sectionSelected = List.generate(length + 1, (index) => false);
-  Map<int, int>? _list;
-  List<int> radioButtonValues = List.filled(2, -1);
+  static int length = 0;
+
   bool _isActive = false;
+
+  TabController? _tabController;
+
+  List<bool> _sectionSelected = List.generate(length + 1, (index) => false);
+  List<int> radioButtonValues = List.filled(2, -1);
+  Map<int, int>? _list;
 
   @override
   void initState() {
@@ -72,11 +71,11 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                   (failure) {
                     failure.map(
                       serverError: (_) => null,
-                      apiFailure: (e) => showToast("e.msg"),
+                      apiFailure: (e) => showToast(""),
                     );
                   },
                   (success) {
-                    showToast('post_shared');
+                    showToast('');
                   },
                 );
               },
@@ -211,11 +210,11 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                             (failure) {
                               failure.map(
                                 serverError: (_) => null,
-                                apiFailure: (e) => showToast("e.msg"),
+                                apiFailure: (e) => showToast(""),
                               );
                             },
                             (success) {
-                              showToast('post_shared');
+                              showToast('');
                             },
                           );
                         },
@@ -292,11 +291,11 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                         (failure) {
                           failure.map(
                             serverError: (_) => null,
-                            apiFailure: (e) => showToast("e.msg"),
+                            apiFailure: (e) => showToast(""),
                           );
                         },
                         (success) {
-                          showToast('post_shared');
+                          showToast('');
                         },
                       );
                     },
@@ -323,27 +322,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                               trailing: CustomRadioButton(
                                 isActive: false,
                                 onPressed: _onPressed,
-                              ) /*Radio(
-                              activeColor: kColorPrimary,
-                              value: index,
-                              groupValue: _value,
-                              onChanged: (value) {
-                                setState(() {
-                                  extraChanged(index);
-                                  print(state.extraId);
-
-                                  extraId = widget.extras[index].id;
-
-                                  if (extraId != 0) {
-                                    addExtra(extraId);
-                                  }
-                                  _value = int.parse(value.toString());
-
-                                  _sectionSelected.insert(_sectionIndex, true);
-                                });
-                              },
-                            ),*/
-                              ),
+                                id: widget.extras[index].id,
+                              )),
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
@@ -433,24 +413,15 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
     setState(() {
       foodId = widget.menuItem.sections![i].foods![index].id;
-      print("FooodId $foodId");
     });
   }
 
   void addFood(int i, int index) {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addFood(i, index));
-
-    setState(() {
-      print("AddFood $foodId");
-    });
   }
 
   void addExtra(int i) {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addExtra(i));
-
-    setState(() {
-      print("AddExtra $extraId");
-    });
   }
 
   void extraChanged(int index) {
@@ -458,9 +429,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       ..add(OrderEvent.extraChanged(widget.extras[index].id));
   }
 
-  void _onPressed(bool isActive) {
-    setState(() {
-      _isActive = !_isActive;
-    });
+  void _onPressed(bool isActive, int i) {
+    addExtra(i);
   }
 }

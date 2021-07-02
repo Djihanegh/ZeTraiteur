@@ -10,7 +10,6 @@ import 'application/order/order_bloc.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   configureInjection(Environment.dev);
-  //final OrderBloc orderBloc = getIt<OrderBloc>() ;
   runApp(MultiBlocProvider(providers: [
     BlocProvider<MenuBloc>(create: (context) => getIt<MenuBloc>()),
     BlocProvider<OrderBloc>(create: (context) => getIt<OrderBloc>()),
