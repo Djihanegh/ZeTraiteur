@@ -5,6 +5,7 @@ import 'package:ze_traiteur/domain/entities/composition.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
+import 'package:ze_traiteur/presentation/components/custom_radio_button.dart';
 import 'package:ze_traiteur/presentation/components/shopping_cart_button.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
@@ -328,11 +329,12 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                             color: Colors.white,
                           ),
                           child: ListTile(
-                            title: Text(widget.extras[index].name! // TO DO
-                                ), // TO DO
-                            // TODOOOOOOOOO
-                            //leading: Image.network(widget.image),
-                            trailing: Radio(
+                              title: Text(widget.extras[index].name! // TO DO
+                                  ), // TO DO
+                              // TODOOOOOOOOO
+                              //leading: Image.network(widget.image),
+                              trailing:
+                                  CustomRadioButton() /*Radio(
                               activeColor: kColorPrimary,
                               value: index,
                               groupValue: _value,
@@ -351,8 +353,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                   _sectionSelected.insert(_sectionIndex, true);
                                 });
                               },
-                            ),
-                          ),
+                            ),*/
+                              ),
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
