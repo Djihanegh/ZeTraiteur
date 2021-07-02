@@ -7,6 +7,7 @@ import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/components/custom_radio_button.dart';
 import 'package:ze_traiteur/presentation/components/shopping_cart_button.dart';
+import 'package:ze_traiteur/presentation/components/show_dialog.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
@@ -28,8 +29,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   int foodId = 0;
   int extraId = 0;
   static int length = 0;
-
-  bool _isActive = false;
 
   TabController? _tabController;
 
@@ -55,6 +54,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     List<Widget> tabs = List.filled(length + 1, Container());
     int j = widget.menuItem.sections!.length;
 
@@ -245,13 +245,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                 groupValue: radioButtonValues[i],
                                 onChanged: (value) {
                                   setState(() {
-                                    print(i);
-                                    print(index);
-                                    print(radioButtonValues[i]);
-
                                     radioButtonValues[i] =
                                         int.parse(value.toString());
-                                    print(radioButtonValues[i]);
                                     foodChanged(i, index);
                                     _sectionSelected.insert(
                                         _sectionIndex, true);
@@ -300,37 +295,89 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       );
                     },
                   );
+
+                  if (state.hasSentOrderToCart) {
+                    showToast("Votre commande est ajoutée au panier");
+                    showDialogWidget(
+                        "Vous pouvez faire une autre commande en allant vers la page des ",
+                        "ou bien valider ta commande dans le panier",
+                        " Menus,",
+                        context);
+                  }
                 }, child: BlocBuilder<OrderBloc, OrderState>(
                         builder: (context, state) {
-                  return ListView.separated(
-                      physics: ScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: widget.extras.length,
-                      itemBuilder: (BuildContext context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.circular(7),
-                            color: Colors.white,
+                  return ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 10.0,
+                            left: 0.0,
+                            right: 0.0,
+                            bottom: 0.0,
+                            child: SizedBox(
+                                height: height * 0.3,
+                                width: MediaQuery.of(context).size.width,
+                                child: ListView.separated(
+                                    physics: ScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    itemCount: widget.extras.length,
+                                    itemBuilder: (BuildContext context, index) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(7),
+                                          color: Colors.white,
+                                        ),
+                                        child: ListTile(
+                                            title: Text(widget.extras[index]
+                                                    .name! // TO DO
+                                                ), // TO DO
+                                            // TODOOOOOOOOO
+                                            //leading: Image.network(widget.image),
+                                            trailing: CustomRadioButton(
+                                              isActive: false,
+                                              onPressed: _onPressed,
+                                              id: widget.extras[index].id,
+                                            )),
+                                      );
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return SizedBox(
+                                        height: 10,
+                                      );
+                                    })),
                           ),
-                          child: ListTile(
-                              title: Text(widget.extras[index].name! // TO DO
-                                  ), // TO DO
-                              // TODOOOOOOOOO
-                              //leading: Image.network(widget.image),
-                              trailing: CustomRadioButton(
-                                isActive: false,
-                                onPressed: _onPressed,
-                                id: widget.extras[index].id,
-                              )),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          height: 10,
-                        );
-                      });
+                          Positioned(
+                              top: height * 0.5,
+                              left: 80.0,
+                              right: 80.0,
+                              bottom: 295.0,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: kColorPrimary),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      createOrder(widget.menuItem.id);
+                                    },
+                                    child: Text(
+                                      "Ajouter au panier",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                  ))),
+                          /* bottom: 10,
+                            left: 0,
+                            right: 0,
+                            top: height, */
+                        ],
+                      ));
                 })))),
         maintainState: true,
         visible: selectedIndex == j,
@@ -431,5 +478,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   void _onPressed(bool isActive, int i) {
     addExtra(i);
+  }
+
+  void createOrder(int id) {
+    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.sendOrderToCart(id));
   }
 }

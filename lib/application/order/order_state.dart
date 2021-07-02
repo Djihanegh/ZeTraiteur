@@ -8,8 +8,9 @@ class OrderState with _$OrderState {
     required int menu,
     required int quantity,
     required int index,
-    required Map<int,int> foods,
+    required Map<int, int> foods,
     required List<int> extras,
+    required bool hasSentOrderToCart,
     required Option<Either<ServerFailure, Map<String, dynamic>>>
         createOrderFailureOrSuccess,
     final String? error,
@@ -19,6 +20,7 @@ class OrderState with _$OrderState {
   factory OrderState.initial() => OrderState(
       createOrderFailureOrSuccess: none(),
       lines: [],
+      hasSentOrderToCart: false,
       extraId: 0,
       foodId: 0,
       menu: 0,

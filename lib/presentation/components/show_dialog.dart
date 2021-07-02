@@ -1,43 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
+import 'package:ze_traiteur/presentation/utils/constants.dart';
 import '../../infrastructure/core/pref_manager.dart';
 import 'package:flutter/gestures.dart';
 
-
-
-showDialogWidget(String msg, BuildContext context,
-   ) async {
+showDialogWidget(
+  String msg,
+  String msg2,
+  String msg3,
+  BuildContext context,
+) async {
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor:  Colors.white,
+            backgroundColor: Colors.white,
             content: Stack(overflow: Overflow.visible, children: <Widget>[
-          Positioned(
-            right: -40.0,
-            top: -40.0,
-            child: InkResponse(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: CircleAvatar(
-                child: Icon(Icons.close),
-                backgroundColor: Colors.red,
+              Positioned(
+                right: -40.0,
+                top: -40.0,
+                child: InkResponse(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: CircleAvatar(
+                    child: Icon(Icons.close),
+                    backgroundColor: kColorPrimary,
+                  ),
+                ),
               ),
-            ),
-          ),
-          RichText(
-            text: new TextSpan(
-              text: ' ',
-              children: <TextSpan>[
-                new TextSpan(
-                    text: msg,
-                    style: TextStyle(
-                        color:
-                            Color(0xFF444242))),
-               
-              ],
-            ),
-          ),
-        ]));
+              RichText(
+                text: new TextSpan(
+                  text: ' ',
+                  children: <TextSpan>[
+                    new TextSpan(
+                        text: msg, style: TextStyle(color: Color(0xFF444242))),
+                    TextSpan(
+                        text: msg3,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF444242)),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    HomeScreen()));
+                          }),
+                    new TextSpan(
+                        text: msg2, style: TextStyle(color: Color(0xFF444242))),
+                  ],
+                ),
+              ),
+            ]));
       });
 }
