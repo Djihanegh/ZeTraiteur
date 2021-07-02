@@ -20,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: kColorPrimary,
           elevation: 0,
-          
           leading: IconButton(
             icon: Icon(
               Icons.view_headline,
@@ -45,12 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Positioned.fill(
               top: 0,
-              child:
-                 
-                  CarouselWithIndicatorDemo(),
+              child: CarouselWithIndicatorDemo(),
             ),
-
-          
           ],
         ));
   }

@@ -22,8 +22,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   late List menus = [];
   late List extras = [];
 
-  late ScrollController _scrollController;
-  late MenuBloc _menuBloc;
+   ScrollController? _scrollController;
+   MenuBloc? _menuBloc;
 
   bool _loading = true;
   int _offset = 1;
@@ -31,28 +31,28 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   String color = kRedHexa;
 
   _scrollListener() {
-    if (_scrollController.offset >=
-            _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange) {
+    if (_scrollController!.offset >=
+            _scrollController!.position.maxScrollExtent &&
+        !_scrollController!.position.outOfRange) {
       setState(() {
         _offset++;
-        _menuBloc.add(MenuEvent.getAllMenus(_offset));
+        _menuBloc!.add(MenuEvent.getAllMenus(_offset));
         _loading = true;
       });
     }
-    if (_scrollController.offset <=
-            _scrollController.position.minScrollExtent &&
-        !_scrollController.position.outOfRange) {}
+    if (_scrollController!.offset <=
+            _scrollController!.position.minScrollExtent &&
+        !_scrollController!.position.outOfRange) {}
 
-    if (_scrollController.offset != 0.0) {
-      scrollOffset = _scrollController.offset;
+    if (_scrollController!.offset != 0.0) {
+      scrollOffset = _scrollController!.offset;
     }
   }
 
   @override
   void initState() {
     _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
+    _scrollController!.addListener(_scrollListener);
 
     super.initState();
   }
@@ -148,7 +148,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController!.dispose();
 
     super.dispose();
   }

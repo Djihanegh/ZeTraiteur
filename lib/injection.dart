@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ze_traiteur/application/menu/menu_bloc.dart';
 
 import 'infrastructure/api/api_service.dart';
 
@@ -17,4 +18,6 @@ void configureInjection(String env) {
 
   getIt.registerFactory<ZeTraiteurApiService>(
       () => ZeTraiteurApiService.create());
+
+      
 }

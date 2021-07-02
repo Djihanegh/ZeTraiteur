@@ -8,14 +8,17 @@ import 'package:ze_traiteur/presentation/pages/splash/splash_screen.dart';
 import 'package:ze_traiteur/presentation/pages/welcome/welcome_screen.dart';
 
 import 'application/menu/menu_bloc.dart';
+import 'application/order/order_bloc.dart';
 import 'presentation/pages/menu/menu_screen.dart';
 import 'presentation/pages/shoppingcart/your_shopping_cart_screen.dart';
 
 void main() {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   configureInjection(Environment.dev);
+  //final OrderBloc orderBloc = getIt<OrderBloc>() ;
   runApp(MultiBlocProvider(providers: [
     BlocProvider<MenuBloc>(create: (context) => getIt<MenuBloc>()),
+    BlocProvider<OrderBloc>(create: (context) => getIt<OrderBloc>()),
   ], child: MaterialApp(home: MyApp())));
 }
 

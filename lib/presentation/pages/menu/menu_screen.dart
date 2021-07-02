@@ -5,11 +5,8 @@ import 'package:ze_traiteur/domain/entities/composition.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
-import 'package:ze_traiteur/domain/entities/section.dart';
-import 'package:ze_traiteur/presentation/components/food_item.dart';
 import 'package:ze_traiteur/presentation/components/shopping_cart_button.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
-import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 import '../../../injection.dart';
@@ -35,9 +32,17 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   int _value = -1;
   int _sectionIndex = 0;
   List<bool> _sectionSelected = List.generate(0, (index) => false);
+
+  OrderBloc? _orderBloc;
+
+  void _initBloc() {
+    _orderBloc = getIt<OrderBloc>();
+  }
+
   @override
   void initState() {
     super.initState();
+    _initBloc();
 
     setState(() {
       length = widget.menuItem.sections!.length;
@@ -50,8 +55,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       initialIndex: selectedIndex,
     );
   }
-
-  OrderBloc? _orderBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +167,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       );
                     },
                     itemCount: 0)
-                : BlocProvider(
-                    create: (context) => _orderBloc = getIt<OrderBloc>(),
+                : BlocProvider.value(
+                  value:  BlocProvider.of<OrderBloc>(context),
+                    //create: (context) => _orderBloc = getIt<OrderBloc>(),
                     child: BlocListener<OrderBloc, OrderState>(
                         listener: (context, state) {
                       state.createOrderFailureOrSuccess.fold(
@@ -218,10 +222,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                     print("STATE FOODS ");
 
                                     print(state.foodId);
-                                    print(state.foodId);
 
                                     print(state.foods);
-                                    print(state.foodId);
 
                                     _sectionSelected.insert(
                                         _sectionIndex, true);
@@ -248,44 +250,69 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       Visibility(
         child: Padding(
             padding: EdgeInsets.all(15),
-            child: ListView.separated(
-              physics: ScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: widget.extras.length,
-              itemBuilder: (BuildContext context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(7),
-                    color: Colors.white,
-                  ),
-                  child: ListTile(
-                    title: Text(widget.extras[index].name! // TO DO
-                        ), // TO DO
-                    // TODOOOOOOOOO
-                    //leading: Image.network(widget.image),
-                    trailing: Radio(
-                      activeColor: kColorPrimary,
-                      value: index,
-                      groupValue: _value,
-                      onChanged: (value) {
-                        setState(() {
-                          _value = int.parse(value.toString());
-                         
-                          _sectionSelected.insert(_sectionIndex, true);
-                        });
+            child: BlocProvider.value(
+                  value:  BlocProvider.of<OrderBloc>(context), //BlocProvider.of<OrderBloc>(context),
+                child: BlocListener<OrderBloc, OrderState>(
+                    listener: (context, state) {
+                  state.createOrderFailureOrSuccess.fold(
+                    () => null,
+                    (either) {
+                      Navigator.pop(context);
+                      either.fold(
+                        (failure) {
+                          failure.map(
+                            serverError: (_) => null,
+                            apiFailure: (e) => showToast("e.msg"),
+                          );
+                        },
+                        (success) {
+                          showToast('post_shared');
+                        },
+                      );
+                    },
+                  );
+                }, child: BlocBuilder<OrderBloc, OrderState>(
+                        builder: (context, state) {
+                  return ListView.separated(
+                      physics: ScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: widget.extras.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(7),
+                            color: Colors.white,
+                          ),
+                          child: ListTile(
+                            title: Text(widget.extras[index].name! // TO DO
+                                ), // TO DO
+                            // TODOOOOOOOOO
+                            //leading: Image.network(widget.image),
+                            trailing: Radio(
+                              activeColor: kColorPrimary,
+                              value: index,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  extraChanged(index);
+                                  print(state.extraId);
+                                  _value = int.parse(value.toString());
+
+                                  _sectionSelected.insert(_sectionIndex, true);
+                                });
+                              },
+                            ),
+                          ),
+                        );
                       },
-                    ),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: 10,
-                );
-              },
-            )),
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: 10,
+                        );
+                      });
+                })))),
         maintainState: true,
         visible: selectedIndex == j,
       ),
@@ -363,7 +390,15 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 
   void foodChanged(int i, int index) {
-    _orderBloc!.add(
-        OrderEvent.foodChanged(widget.menuItem.sections![i].foods![index].id));
+    BlocProvider.of<OrderBloc>(context)
+     // _orderBloc!
+      ..add(OrderEvent.foodChanged(
+          widget.menuItem.sections![i].foods![index].id));
+  }
+
+  void extraChanged(int index) {
+    BlocProvider.of<OrderBloc>(context)
+      // _orderBloc!
+       ..add(OrderEvent.extraChanged(widget.extras[index].id));
   }
 }
