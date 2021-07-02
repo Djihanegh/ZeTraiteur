@@ -30,25 +30,17 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   //Color gratinColor = Colors.white;
   //Color boissonColor = Colors.white;
   static int length = 0;
-  int _value = -1;
   int _sectionIndex = 0;
+  int foodId = 0;
+  int extraId = 0;
   List<bool> _sectionSelected = List.generate(length + 1, (index) => false);
   Map<int, int>? _list;
   List<int> radioButtonValues = List.filled(2, -1);
-
-  int foodId = 0;
-  int extraId = 0;
-
-  //OrderBloc? _orderBloc;
-
-  //void _initBloc() {
-  //_orderBloc = getIt<OrderBloc>();
-  //}
+  bool _isActive = false;
 
   @override
   void initState() {
     super.initState();
-    //_initBloc();
 
     setState(() {
       length = widget.menuItem.sections!.length;
@@ -67,13 +59,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     List<Widget> tabs = List.filled(length + 1, Container());
     int j = widget.menuItem.sections!.length;
 
-    //List<Lines> lines =
-    //   List.generate(j, (index) => Lines(0, Composition(0, [], [])));
-
     for (int i = 0; i < j; i++) {
       tabs[i] = BlocProvider.value(
           value: BlocProvider.of<OrderBloc>(context),
-          //create: (context) => _orderBloc = getIt<OrderBloc>(),
           child: BlocListener<OrderBloc, OrderState>(
               listener: (context, state) {
             state.createOrderFailureOrSuccess.fold(
@@ -213,7 +201,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     itemCount: 0)
                 : BlocProvider.value(
                     value: BlocProvider.of<OrderBloc>(context),
-                    //create: (context) => _orderBloc = getIt<OrderBloc>(),
                     child: BlocListener<OrderBloc, OrderState>(
                         listener: (context, state) {
                       state.createOrderFailureOrSuccess.fold(
@@ -256,7 +243,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                               trailing: Radio(
                                 activeColor: kColorPrimary,
                                 value: index,
-                                groupValue: radioButtonValues[i], // _value,
+                                groupValue: radioButtonValues[i],
                                 onChanged: (value) {
                                   setState(() {
                                     print(i);
@@ -333,8 +320,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                   ), // TO DO
                               // TODOOOOOOOOO
                               //leading: Image.network(widget.image),
-                              trailing:
-                                  CustomRadioButton() /*Radio(
+                              trailing: CustomRadioButton(
+                                isActive: false,
+                                onPressed: _onPressed,
+                              ) /*Radio(
                               activeColor: kColorPrimary,
                               value: index,
                               groupValue: _value,
@@ -467,5 +456,11 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   void extraChanged(int index) {
     BlocProvider.of<OrderBloc>(context)
       ..add(OrderEvent.extraChanged(widget.extras[index].id));
+  }
+
+  void _onPressed(bool isActive) {
+    setState(() {
+      _isActive = !_isActive;
+    });
   }
 }
