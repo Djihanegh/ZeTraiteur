@@ -8,7 +8,7 @@ class OrderState with _$OrderState {
     required int menu,
     required int quantity,
     required int index,
-    required List<int> foods,
+    required Map<int,int> foods,
     required List<int> extras,
     required Option<Either<ServerFailure, Map<String, dynamic>>>
         createOrderFailureOrSuccess,
@@ -25,5 +25,5 @@ class OrderState with _$OrderState {
       quantity: 0,
       index: 0,
       extras: [],
-      foods: []);
+      foods: {});
 }

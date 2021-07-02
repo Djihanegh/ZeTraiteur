@@ -16,9 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$OrderEventTearOff {
   const _$OrderEventTearOff();
 
-  AddFood addFood(int foodId) {
+  AddFood addFood(int foodId, int index) {
     return AddFood(
       foodId,
+      index,
     );
   }
 
@@ -48,7 +49,7 @@ const $OrderEvent = _$OrderEventTearOff();
 mixin _$OrderEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int foodId) addFood,
+    required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
@@ -56,7 +57,7 @@ mixin _$OrderEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int foodId)? addFood,
+    TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
@@ -102,7 +103,7 @@ class _$OrderEventCopyWithImpl<$Res> implements $OrderEventCopyWith<$Res> {
 abstract class $AddFoodCopyWith<$Res> {
   factory $AddFoodCopyWith(AddFood value, $Res Function(AddFood) then) =
       _$AddFoodCopyWithImpl<$Res>;
-  $Res call({int foodId});
+  $Res call({int foodId, int index});
 }
 
 /// @nodoc
@@ -117,11 +118,16 @@ class _$AddFoodCopyWithImpl<$Res> extends _$OrderEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? foodId = freezed,
+    Object? index = freezed,
   }) {
     return _then(AddFood(
       foodId == freezed
           ? _value.foodId
           : foodId // ignore: cast_nullable_to_non_nullable
+              as int,
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -130,14 +136,16 @@ class _$AddFoodCopyWithImpl<$Res> extends _$OrderEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AddFood with DiagnosticableTreeMixin implements AddFood {
-  const _$AddFood(this.foodId);
+  const _$AddFood(this.foodId, this.index);
 
   @override
   final int foodId;
+  @override
+  final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OrderEvent.addFood(foodId: $foodId)';
+    return 'OrderEvent.addFood(foodId: $foodId, index: $index)';
   }
 
   @override
@@ -145,7 +153,8 @@ class _$AddFood with DiagnosticableTreeMixin implements AddFood {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'OrderEvent.addFood'))
-      ..add(DiagnosticsProperty('foodId', foodId));
+      ..add(DiagnosticsProperty('foodId', foodId))
+      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
@@ -153,12 +162,16 @@ class _$AddFood with DiagnosticableTreeMixin implements AddFood {
     return identical(this, other) ||
         (other is AddFood &&
             (identical(other.foodId, foodId) ||
-                const DeepCollectionEquality().equals(other.foodId, foodId)));
+                const DeepCollectionEquality().equals(other.foodId, foodId)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(foodId);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(foodId) ^
+      const DeepCollectionEquality().hash(index);
 
   @JsonKey(ignore: true)
   @override
@@ -168,25 +181,25 @@ class _$AddFood with DiagnosticableTreeMixin implements AddFood {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int foodId) addFood,
+    required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
   }) {
-    return addFood(foodId);
+    return addFood(foodId, index);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int foodId)? addFood,
+    TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     required TResult orElse(),
   }) {
     if (addFood != null) {
-      return addFood(foodId);
+      return addFood(foodId, index);
     }
     return orElse();
   }
@@ -219,9 +232,10 @@ class _$AddFood with DiagnosticableTreeMixin implements AddFood {
 }
 
 abstract class AddFood implements OrderEvent {
-  const factory AddFood(int foodId) = _$AddFood;
+  const factory AddFood(int foodId, int index) = _$AddFood;
 
   int get foodId => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $AddFoodCopyWith<AddFood> get copyWith => throw _privateConstructorUsedError;
 }
@@ -296,7 +310,7 @@ class _$AddExtra with DiagnosticableTreeMixin implements AddExtra {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int foodId) addFood,
+    required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
@@ -307,7 +321,7 @@ class _$AddExtra with DiagnosticableTreeMixin implements AddExtra {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int foodId)? addFood,
+    TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
@@ -427,7 +441,7 @@ class _$FoodChanged with DiagnosticableTreeMixin implements FoodChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int foodId) addFood,
+    required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
@@ -438,7 +452,7 @@ class _$FoodChanged with DiagnosticableTreeMixin implements FoodChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int foodId)? addFood,
+    TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
@@ -558,7 +572,7 @@ class _$ExtraChanged with DiagnosticableTreeMixin implements ExtraChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int foodId) addFood,
+    required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
@@ -569,7 +583,7 @@ class _$ExtraChanged with DiagnosticableTreeMixin implements ExtraChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int foodId)? addFood,
+    TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
@@ -627,7 +641,7 @@ class _$OrderStateTearOff {
       required int menu,
       required int quantity,
       required int index,
-      required List<int> foods,
+      required Map<int, int> foods,
       required List<int> extras,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
           createOrderFailureOrSuccess,
@@ -658,7 +672,7 @@ mixin _$OrderState {
   int get menu => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
-  List<int> get foods => throw _privateConstructorUsedError;
+  Map<int, int> get foods => throw _privateConstructorUsedError;
   List<int> get extras => throw _privateConstructorUsedError;
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get createOrderFailureOrSuccess => throw _privateConstructorUsedError;
@@ -681,7 +695,7 @@ abstract class $OrderStateCopyWith<$Res> {
       int menu,
       int quantity,
       int index,
-      List<int> foods,
+      Map<int, int> foods,
       List<int> extras,
       Option<Either<ServerFailure, Map<String, dynamic>>>
           createOrderFailureOrSuccess,
@@ -734,7 +748,7 @@ class _$OrderStateCopyWithImpl<$Res> implements $OrderStateCopyWith<$Res> {
       foods: foods == freezed
           ? _value.foods
           : foods // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as Map<int, int>,
       extras: extras == freezed
           ? _value.extras
           : extras // ignore: cast_nullable_to_non_nullable
@@ -767,7 +781,7 @@ abstract class _$OrderStateCopyWith<$Res> implements $OrderStateCopyWith<$Res> {
       int menu,
       int quantity,
       int index,
-      List<int> foods,
+      Map<int, int> foods,
       List<int> extras,
       Option<Either<ServerFailure, Map<String, dynamic>>>
           createOrderFailureOrSuccess,
@@ -822,7 +836,7 @@ class __$OrderStateCopyWithImpl<$Res> extends _$OrderStateCopyWithImpl<$Res>
       foods: foods == freezed
           ? _value.foods
           : foods // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as Map<int, int>,
       extras: extras == freezed
           ? _value.extras
           : extras // ignore: cast_nullable_to_non_nullable
@@ -869,7 +883,7 @@ class _$_OrderState with DiagnosticableTreeMixin implements _OrderState {
   @override
   final int index;
   @override
-  final List<int> foods;
+  final Map<int, int> foods;
   @override
   final List<int> extras;
   @override
@@ -961,7 +975,7 @@ abstract class _OrderState implements OrderState {
       required int menu,
       required int quantity,
       required int index,
-      required List<int> foods,
+      required Map<int, int> foods,
       required List<int> extras,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
           createOrderFailureOrSuccess,
@@ -979,7 +993,7 @@ abstract class _OrderState implements OrderState {
   @override
   int get index => throw _privateConstructorUsedError;
   @override
-  List<int> get foods => throw _privateConstructorUsedError;
+  Map<int, int> get foods => throw _privateConstructorUsedError;
   @override
   List<int> get extras => throw _privateConstructorUsedError;
   @override

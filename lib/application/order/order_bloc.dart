@@ -23,11 +23,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     OrderEvent event,
   ) async* {
     yield* event.map(addFood: (e) async* {
-      yield* _performAddFood(e.foodId);
+      yield* _performAddFood(e.foodId, e.index);
     }, addExtra: (e) async* {
       yield* _performAddExtra(e.extraId);
     }, foodChanged: (e) async* {
-      yield state.copyWith(foodId: e.foodId);
+      yield* _performFoodChanged(e.foodId);
+      //yield state.copyWith(foodId: e.foodId);
     }, extraChanged: (e) async* {
       yield state.copyWith(extraId: e.extraId);
     });
@@ -35,41 +36,38 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
   Stream<OrderState> _performAddFood(
     int foodId,
+    int index,
   ) async* {
-    // Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;
+    Map<int, int> foodsList = state.foods;
 
-    List<int> foodsList = state.foods;
-
-    if (!foodsList.contains(foodId)) {
-      foodsList.add(foodId);
+    if (foodsList[index] != foodId) {
+      foodsList[index] = foodId;
     }
 
-    //Lines line = Lines(1 , Composition( state.menu , state.selected_foods , state.extra ));
-
+    print("STATE LIST");
+    print(state.foods);
     yield state.copyWith(createOrderFailureOrSuccess: none(), foods: foodsList);
-
-    /*  failureOrSuccess = await forwardedCall(page: page);
-
-    yield state.copyWith(
-      createOrderFailureOrSuccess: optionOf(failureOrSuccess),
-    );*/
   }
 
   Stream<OrderState> _performAddExtra(
     int extraId,
   ) async* {
-    // Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;
+    List<int> extraList = state.extras;
 
-    state.extras.add(extraId);
-    //Lines line = Lines(1 , Composition( state.menu , state.selected_foods , state.extra ));
-
+    if (!extraList.contains(extraId)) {
+      extraList.add(extraId);
+    } else {
+      extraList.remove(extraId);
+    }
+    print("EXTRAS LIST");
+    print(state.extras);
     yield state.copyWith(
-        createOrderFailureOrSuccess: none(), extras: state.extras);
+        createOrderFailureOrSuccess: none(), extras: extraList);
+  }
 
-    /*  failureOrSuccess = await forwardedCall(page: page);
-
-    yield state.copyWith(
-      createOrderFailureOrSuccess: optionOf(failureOrSuccess),
-    );*/
+  Stream<OrderState> _performFoodChanged(
+    int foodId,
+  ) async* {
+    yield state.copyWith(createOrderFailureOrSuccess: none(), foodId: foodId);
   }
 }
