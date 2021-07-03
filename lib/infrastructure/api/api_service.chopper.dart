@@ -17,17 +17,17 @@ class _$ZeTraiteurApiService extends ZeTraiteurApiService {
   final definitionType = ZeTraiteurApiService;
 
   @override
-  Future<Response<User>> login(Map<dynamic, dynamic> user) {
-    final $url = 'http://159.65.25.199:8000/apis/login/';
-    final $body = user;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<User, User>($request);
-  }
-
-  @override
   Future<Response<Map<String, dynamic>>> register(User user) {
     final $url = 'http://159.65.25.199:8000/apis/clients/';
     final $body = user;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
+  }
+
+  @override
+  Future<Response<Map<String, dynamic>>> login(int phone) {
+    final $url = 'http://159.65.25.199:8000/apis/login/';
+    final $body = phone;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
   }

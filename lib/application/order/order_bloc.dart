@@ -37,6 +37,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       extraChanged: (e) async* {
         yield state.copyWith(extraId: e.extraId);
       },
+      numberPhoneChanged: (e) async* {
+        yield state.copyWith(phone: e.phone);
+      },addressChanged: (e) async* {
+        yield state.copyWith(address: e.address);
+      },
       sendOrderToCart: (e) async* {
         yield* _performSendOrderToCart(e.menuId);
       },

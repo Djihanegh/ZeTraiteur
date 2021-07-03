@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import 'application/menu/menu_bloc.dart' as _i5;
 import 'application/order/order_bloc.dart' as _i6;
+import 'application/register/register_bloc.dart' as _i7;
 import 'domain/menu/i_menu_facade.dart' as _i3;
 import 'infrastructure/menu/menu_facade.dart'
     as _i4; // ignore_for_file: unnecessary_lambdas
@@ -21,5 +22,6 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i3.IMenuFacade>(() => _i4.MenuFacade());
   gh.factory<_i5.MenuBloc>(() => _i5.MenuBloc(get<_i3.IMenuFacade>()));
   gh.factory<_i6.OrderBloc>(() => _i6.OrderBloc());
+  gh.factory<_i7.RegisterBloc>(() => _i7.RegisterBloc(get<dynamic>()));
   return get;
 }

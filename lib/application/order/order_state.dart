@@ -11,6 +11,8 @@ class OrderState with _$OrderState {
     required Map<int, int> foods,
     required List<int> extras,
     required bool hasSentOrderToCart,
+    required int phone,
+    required String address,
     required Option<Either<ServerFailure, Map<String, dynamic>>>
         createOrderFailureOrSuccess,
     final String? error,
@@ -27,5 +29,7 @@ class OrderState with _$OrderState {
       quantity: 0,
       index: 0,
       extras: [],
-      foods: {});
+      foods: {},
+      address: '',
+      phone: 0);
 }
