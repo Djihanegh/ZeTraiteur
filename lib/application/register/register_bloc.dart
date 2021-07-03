@@ -24,34 +24,48 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> mapEventToState(
     RegisterEvent event,
   ) async* {
-    /*yield* event.map(  getAllMenus: (e) async* {
-    yield* _performGetAllMenus(
-        e.page,
-        _menuFacade.getAllMenus,
-      );
-    }, indexChanged: (e) async* { 
-      yield state.copyWith(index: e.index);
-     });*/
+    yield* event.map(createUser: (e) async* {
+      yield* _performCreateUser(e.phone, _registerFacade.createUser);
+    }, isUserCreated: (e) async* {
+      yield* _performIsUserCreated(e.phone, _registerFacade.isUserCreated);
+    });
   }
 
- /* Stream<RegisterState> _performGetAllMenus(
-    int page,
+  Stream<RegisterState> _performCreateUser(
+    int phone,
     Future<Either<ServerFailure, Map<String, dynamic>>> Function(
-            {@required int page})
+            {@required int phone})
         forwardedCall,
   ) async* {
     Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;
 
     yield state.copyWith(
-      menusFailureOrSuccess: none(),
+      createUserFailureOrSuccess: none(),
     );
 
-    failureOrSuccess = await forwardedCall(page: page);
+    failureOrSuccess = await forwardedCall(phone: phone);
 
     yield state.copyWith(
-      menusFailureOrSuccess: optionOf(failureOrSuccess),
+      createUserFailureOrSuccess: optionOf(failureOrSuccess),
     );
-  }*/
+  }
 
-  
+  Stream<RegisterState> _performIsUserCreated(
+    int phone,
+    Future<Either<ServerFailure, Map<String, dynamic>>> Function(
+            {@required int phone})
+        forwardedCall,
+  ) async* {
+    Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;
+
+    yield state.copyWith(
+      createUserFailureOrSuccess: none(),
+    );
+
+    failureOrSuccess = await forwardedCall(phone: phone);
+
+    yield state.copyWith(
+      createUserFailureOrSuccess: optionOf(failureOrSuccess),
+    );
+  }
 }

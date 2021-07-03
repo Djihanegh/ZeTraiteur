@@ -38,6 +38,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         yield state.copyWith(extraId: e.extraId);
       },
       numberPhoneChanged: (e) async* {
+        print(e.phone);
         yield state.copyWith(phone: e.phone);
       },addressChanged: (e) async* {
         yield state.copyWith(address: e.address);

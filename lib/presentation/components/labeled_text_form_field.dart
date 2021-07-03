@@ -6,7 +6,7 @@ import '../utils/constants.dart';
 class LabeledTextFormField extends StatelessWidget {
   final String? title;
   final double? padding;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final String? hintText;
   final String? initialValue;
   final bool? obscureText;
@@ -21,7 +21,7 @@ class LabeledTextFormField extends StatelessWidget {
   LabeledTextFormField({
     this.title,
     this.padding,
-    this.controller,
+    required this.controller,
     this.hintText,
     this.initialValue,
     this.obscureText,
@@ -41,13 +41,10 @@ class LabeledTextFormField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Text(
-            '$title:',
-            style: //isDark
-                //? TextStyle(color: Colors.grey[100])
-                 GoogleFonts.lato(
-                              fontWeight: FontWeight.w400, fontSize: 16)
-          ),
+          Text('$title:',
+              style: //isDark
+                  //? TextStyle(color: Colors.grey[100])
+                  GoogleFonts.lato(fontWeight: FontWeight.w400, fontSize: 16)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -89,7 +86,7 @@ class LabeledTextFormField extends StatelessWidget {
                     cursorColor: kColorPrimary,
                     cursorWidth: 1,
 
-                    //onChanged: onChanged,
+                    onChanged: onChanged!(controller.text),
                     //validator: validator,
                   )),
               Expanded(
