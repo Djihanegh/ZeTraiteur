@@ -42,8 +42,7 @@ class _PanierState extends State<Panier> {
             child: BlocProvider(
                 create: (context) => _registerBloc = getIt<RegisterBloc>(),
                 child: BlocProvider.value(
-                    value: BlocProvider.of<OrderBloc>(
-                        context), //BlocProvider.of<OrderBloc>(context),
+                    value: BlocProvider.of<OrderBloc>(context),
                     child: BlocListener<OrderBloc, OrderState>(
                         listener: (context, state) {
                       state.createOrderFailureOrSuccess.fold(
@@ -76,7 +75,7 @@ class _PanierState extends State<Panier> {
                               BlocProvider.of<OrderBloc>(context)
                                 ..add(OrderEvent.addressChanged(value));
                             }),
-                       /* LabeledTextFormField(
+                        LabeledTextFormField(
                             controller: phoneEditingController,
                             title: "Numero de telephone",
                             enabled: true,
@@ -87,7 +86,7 @@ class _PanierState extends State<Panier> {
                               BlocProvider.of<OrderBloc>(context)
                                 ..add(OrderEvent.numberPhoneChanged(
                                     int.tryParse(value.toString()) ?? 0));
-                            }),*/
+                            }),
                         Padding(
                           padding:
                               EdgeInsets.only(top: 20, left: 18, bottom: 10),
@@ -138,6 +137,9 @@ class _PanierState extends State<Panier> {
                                   );
                                 })),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
                               padding:

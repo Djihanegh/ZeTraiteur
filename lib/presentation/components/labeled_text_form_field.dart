@@ -79,7 +79,7 @@ class LabeledTextFormField extends StatelessWidget {
                     initialValue: initialValue,
                     cursorColor: kColorPrimary,
                     cursorWidth: 1,
-                    onFieldSubmitted: onChanged!(controller!.text),
+                    onFieldSubmitted: (value) => onChanged!(value),
                   )),
               Expanded(
                 child: Icon(
