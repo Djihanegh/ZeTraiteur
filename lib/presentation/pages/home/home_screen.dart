@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Positioned.fill(
               top: 0,
-              child: CarouselWithIndicatorDemo(),
+              child: MenuItemWidget(),
             ),
           ],
         ));

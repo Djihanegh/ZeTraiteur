@@ -18,7 +18,9 @@ class Panier extends StatefulWidget {
 
 class _PanierState extends State<Panier> {
   RegisterBloc? _registerBloc;
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController phoneEditingController = TextEditingController();
+  TextEditingController addressEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     List<Lines>? lines;
@@ -65,21 +67,27 @@ class _PanierState extends State<Panier> {
                             builder: (context, state) {
                       lines = state.lines;
                       return ListView(children: [
-                        /* LabeledTextFormField(
-                          title: "Lieu de livraison",
-                          enabled: true,
-                        ),*/
                         LabeledTextFormField(
-                          controller: textEditingController,
-                          title: "Numero de telephone",
-                          enabled: true,
-                          hintText: "",
-                          keyboardType: TextInputType.phone,
-                          onChanged: (value) =>
-                              BlocProvider.of<OrderBloc>(context).add(
-                                  OrderEvent.numberPhoneChanged(
-                                      int.parse(value))),
-                        ),
+                            controller: addressEditingController,
+                            title: "Lieu de livraison",
+                            enabled: true,
+                            hintText: "",
+                            onChanged: (value) {
+                              BlocProvider.of<OrderBloc>(context)
+                                ..add(OrderEvent.addressChanged(value));
+                            }),
+                       /* LabeledTextFormField(
+                            controller: phoneEditingController,
+                            title: "Numero de telephone",
+                            enabled: true,
+                            hintText: "",
+                            keyboardType: TextInputType.phone,
+                            onChanged: (value) {
+                              print(value);
+                              BlocProvider.of<OrderBloc>(context)
+                                ..add(OrderEvent.numberPhoneChanged(
+                                    int.tryParse(value.toString()) ?? 0));
+                            }),*/
                         Padding(
                           padding:
                               EdgeInsets.only(top: 20, left: 18, bottom: 10),

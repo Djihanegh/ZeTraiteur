@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:injectable/injectable.dart';
 import 'package:ze_traiteur/application/register/register_bloc.dart';
 import 'package:ze_traiteur/injection.dart';
@@ -15,7 +16,9 @@ void main() {
     BlocProvider<MenuBloc>(create: (context) => getIt<MenuBloc>()),
     BlocProvider<OrderBloc>(create: (context) => getIt<OrderBloc>()),
     BlocProvider<RegisterBloc>(create: (context) => getIt<RegisterBloc>()),
-  ], child: MaterialApp(home: MyApp())));
+  ], child: ScreenUtilInit(
+      designSize: Size(360, 690),
+      builder: () =>  MaterialApp(home: MyApp()))));
 }
 
 class MyApp extends StatelessWidget {

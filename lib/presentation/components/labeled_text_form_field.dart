@@ -6,7 +6,7 @@ import '../utils/constants.dart';
 class LabeledTextFormField extends StatelessWidget {
   final String? title;
   final double? padding;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? hintText;
   final String? initialValue;
   final bool? obscureText;
@@ -21,7 +21,7 @@ class LabeledTextFormField extends StatelessWidget {
   LabeledTextFormField({
     this.title,
     this.padding,
-    required this.controller,
+    this.controller,
     this.hintText,
     this.initialValue,
     this.obscureText,
@@ -31,8 +31,7 @@ class LabeledTextFormField extends StatelessWidget {
     this.onChanged,
     this.onEdit,
     this.validator,
-  }); //: super(key: key);
-
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,8 +41,7 @@ class LabeledTextFormField extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Text('$title:',
-              style: //isDark
-                  //? TextStyle(color: Colors.grey[100])
+              style:
                   GoogleFonts.lato(fontWeight: FontWeight.w400, fontSize: 16)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,24 +68,18 @@ class LabeledTextFormField extends StatelessWidget {
                       hintText: hintText,
                       hintStyle: TextStyle(
                         fontSize: 16,
-                        color: //isDark
-                            //? Colors.white.withOpacity(0.5)
-                            Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withOpacity(0.5),
                       ),
                       errorText: error ?? null,
                     ),
                     style: TextStyle(
                       fontSize: 16,
-                      color:
-                          //isDark ? Colors.white.withOpacity(0.87) :
-                          Color(0xff575757),
+                      color: Color(0xff575757),
                     ),
                     initialValue: initialValue,
                     cursorColor: kColorPrimary,
                     cursorWidth: 1,
-
-                    onChanged: onChanged!(controller.text),
-                    //validator: validator,
+                    onFieldSubmitted: onChanged!(controller!.text),
                   )),
               Expanded(
                 child: Icon(

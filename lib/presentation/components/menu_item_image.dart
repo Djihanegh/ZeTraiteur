@@ -12,6 +12,8 @@ class MenuItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final size = MediaQuery.of(context).size;
+
     return Column(children: [
       GestureDetector(
           onTap: () {
@@ -26,8 +28,8 @@ class MenuItemImage extends StatelessWidget {
           },
           child: Container(
               child: Container(
-                  width: 220,
-                  height: 180,
+                  width: size.width * 0.6,
+                  height: size.height * 0.28,
                   margin: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     color: Colors.white,

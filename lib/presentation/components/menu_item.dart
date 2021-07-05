@@ -11,19 +11,19 @@ import '../../injection.dart';
 import 'menu_item_image.dart';
 import 'no_internet.dart';
 
-class CarouselWithIndicatorDemo extends StatefulWidget {
+class MenuItemWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _CarouselWithIndicatorState();
+    return _MenuItemWidgetState();
   }
 }
 
-class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
+class _MenuItemWidgetState extends State<MenuItemWidget> {
   late List menus = [];
   late List extras = [];
 
-   ScrollController? _scrollController;
-   MenuBloc? _menuBloc;
+  ScrollController? _scrollController;
+  MenuBloc? _menuBloc;
 
   bool _loading = true;
   int _offset = 1;
@@ -103,6 +103,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   }
 
   Widget _menusList(MenuState state) {
+    final size = MediaQuery.of(context).size;
+
     List<Food> list = [];
     for (int i = 0; i < extras.length; i++) {
       list.insert(i, Food.fromJson(extras[i]));
@@ -112,19 +114,18 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
       Positioned.fill(
           top: 180,
           bottom: 130,
-          right: 55,
-          left: 55,
+          right: 40,
+          left: 40,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(15.0)),
               color: Color(int.parse(color)),
             ),
-            height: 250,
           )),
       Positioned.fill(
         top: 200,
         bottom: 160,
-        left: 85,
+        left: size.width * 0.17,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           controller: _scrollController,
@@ -138,7 +139,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
           },
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
-              width: 50,
+              width: 40,
             );
           },
         ),

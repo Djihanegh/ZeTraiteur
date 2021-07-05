@@ -10,6 +10,7 @@ import 'package:ze_traiteur/presentation/components/shopping_cart_button.dart';
 import 'package:ze_traiteur/presentation/components/show_dialog.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../injection.dart';
 
@@ -55,6 +56,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     List<Widget> tabs = List.filled(length + 1, Container());
     int j = widget.menuItem.sections!.length;
 
@@ -85,7 +88,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
             _list = state.foods;
             return Container(
                 height: 50,
-                width: 50,
+                width: width / 3,
                 child: GestureDetector(
                     onTap: () {
                       setState(() {
@@ -151,22 +154,17 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     _sectionIndex++;
                   });
                 }
-                /*else if (_sectionSelected[_sectionIndex - 1] == true) {
-                  _sectionIndex--;
-                  selectedIndex = j;
-                  _tabController?.animateTo(j);
-                }*/
               });
             },
             child: new Container(
               height: 60,
-              width: 100,
+              width: 80,
               child: new Tab(
                 child: Container(
                   height: 35,
                   width: 80,
                   decoration: BoxDecoration(
-                      color: Colors.white, // _sectionSelected ? kColorPrimary :
+                      color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: Center(
                     child: Text(
@@ -355,9 +353,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                           ),
                           Positioned(
                               top: height * 0.5,
-                              left: 80.0,
-                              right: 80.0,
-                              bottom: 295.0,
+                              left: width * 0.18,
+                              right: width * 0.18, // 80
+                              bottom: height * 0.41, // 295
                               child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25),
@@ -369,7 +367,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                     child: Text(
                                       "Ajouter au panier",
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
+                                          color: Colors.white, fontSize: 18.sp),
                                     ),
                                   ))),
                           /* bottom: 10,
@@ -422,17 +420,18 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                           widget.menuItem.name!,
                           style: (TextStyle(
                               fontFamily: 'Poppins-Regular',
-                              fontSize: 24,
+                              fontSize: 24.sp,
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.normal)),
                         ),
                       ),
                       Container(
                         color: kLightGrey,
-                        height: 20,
+                        height: 20.h,
                       ),
                       Container(
                           height: 50,
+                          width: width,
                           color: Colors.white,
                           child: TabBar(
                               //physics: NeverScrollableScrollPhysics(),
