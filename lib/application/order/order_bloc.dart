@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/composition.dart';
+import 'package:ze_traiteur/domain/entities/food.dart';
 
 import '../../domain/core/failures.dart';
 
@@ -48,6 +49,15 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       },
       sendOrderToCart: (e) async* {
         yield* _performSendOrderToCart(e.menuId);
+      },
+      selectFood: (e) async* {
+        print("FOOOD");
+        print(e.food);
+        yield* _performSelectedFood(e.food);
+      },
+      selectExtra: (e) async* {
+        print("Extra");
+        yield* _performSelectedExtra(e.extra);
       },
     );
   }
@@ -120,7 +130,37 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), extras: extraList);
   }
+ Stream<OrderState> _performSelectedExtra(
+    Food extra,
+  ) async* {
+    List<Food> extraList = state.selectedExtras;
 
+    if (!extraList.contains(extra)) {
+      extraList.add(extra);
+    } else {
+      extraList.remove(extra);
+    }
+    print("EXTRAS SELECTED ");
+    print(state.selectedExtras);
+    yield state.copyWith(
+        createOrderFailureOrSuccess: none(), selectedExtras: extraList);
+  }
+
+Stream<OrderState> _performSelectedFood(
+    Food food,
+  ) async* {
+    List<Food> foodList = state.selectedFood;
+
+    if (!foodList.contains(food)) {
+      foodList.add(food);
+    } else {
+      foodList.remove(food);
+    }
+    print("food SELECTED ");
+    print(state.selectedFood);
+    yield state.copyWith(
+        createOrderFailureOrSuccess: none(), selectedFood: foodList);
+  }
   Stream<OrderState> _performFoodChanged(
     int foodId,
   ) async* {

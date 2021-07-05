@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
-class ShoppingCartButton extends StatelessWidget {
-  const ShoppingCartButton({Key? key}) : super(key: key);
+class ShoppingCartButton extends StatefulWidget {
+  final List<Food>? foods;
+  final List<Food>? extras;
+  const ShoppingCartButton({Key? key, this.foods, this.extras})
+      : super(key: key);
 
+  @override
+  _ShoppingCartButtonState createState() => _ShoppingCartButtonState();
+}
+
+class _ShoppingCartButtonState extends State<ShoppingCartButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,7 +22,7 @@ class ShoppingCartButton extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Panier()),
+                MaterialPageRoute(builder: (context) => Panier()), //widget.extras , widget.foods
               );
             },
             child: Container(

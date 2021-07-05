@@ -35,6 +35,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   List<bool> _sectionSelected = List.generate(length + 1, (index) => false);
   List<int> radioButtonValues = List.filled(2, -1);
+  List<Food> selectedFood = [];
+  List<Food> selectedExtra = [];
+
   Map<int, int>? _list;
 
   @override
@@ -231,27 +234,35 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                               borderRadius: BorderRadius.circular(7),
                               color: Colors.white,
                             ),
-                            child: ListTile(
-                              title: Text(widget.menuItem.sections![i]
-                                  .foods![index].name! // TO DO
-                                  .substring(0, 6)), // TO DO
-                              // TODOOOOOOOOO
-                              //leading: Image.network(widget.image),
-                              trailing: Radio(
-                                activeColor: kColorPrimary,
-                                value: index,
-                                groupValue: radioButtonValues[i],
-                                onChanged: (value) {
-                                  setState(() {
-                                    radioButtonValues[i] =
-                                        int.parse(value.toString());
-                                    foodChanged(i, index);
-                                    _sectionSelected.insert(
-                                        _sectionIndex, true);
-                                  });
-                                },
-                              ),
-                            ),
+                            child: GestureDetector(
+                                onTap: () {},
+                                child: ListTile(
+                                  title: Text(widget.menuItem.sections![i]
+                                      .foods![index].name! // TO DO
+                                      .substring(0, 6)), // TO DO
+                                  // TODOOOOOOOOO
+                                  //leading: Image.network(widget.image),
+                                  trailing: Radio(
+                                    activeColor: kColorPrimary,
+                                    value: index,
+                                    groupValue: radioButtonValues[i],
+                                    onChanged: (value) {
+                                      setState(() {
+
+                                         selectFood(widget.menuItem
+                                            .sections![i].foods![index]);
+                                       // selectedFood.add(widget.menuItem
+                                          //  .sections![i].foods![index]);
+                                        print(selectedFood);
+                                        radioButtonValues[i] =
+                                            int.parse(value.toString());
+                                        foodChanged(i, index);
+                                        _sectionSelected.insert(
+                                            _sectionIndex, true);
+                                      });
+                                    },
+                                  ),
+                                )),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
@@ -338,10 +349,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                             // TODOOOOOOOOO
                                             //leading: Image.network(widget.image),
                                             trailing: CustomRadioButton(
-                                              isActive: false,
-                                              onPressed: _onPressed,
-                                              id: widget.extras[index].id,
-                                            )),
+                                                isActive: false,
+                                                onPressed: _onPressed,
+                                                id: widget.extras[index].id,
+                                                extra: widget.extras[index])),
                                       );
                                     },
                                     separatorBuilder:
@@ -462,6 +473,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     });
   }
 
+
+
   void addFood(int i, int index) {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addFood(i, index));
   }
@@ -470,12 +483,23 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addExtra(i));
   }
 
+  void selectExtra(Food extra) {
+    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.selectExtra(extra));
+  }
+
+  void selectFood(Food food) {
+    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.selectFood(food));
+  }
+
   void extraChanged(int index) {
     BlocProvider.of<OrderBloc>(context)
       ..add(OrderEvent.extraChanged(widget.extras[index].id));
   }
 
-  void _onPressed(bool isActive, int i) {
+  void _onPressed(bool isActive, int i, Food extra) {
+    selectedExtra.add(extra);
+    selectExtra(extra);
+    print(selectedExtra);
     addExtra(i);
   }
 

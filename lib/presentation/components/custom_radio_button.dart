@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class CustomRadioButton extends StatefulWidget {
   final bool? isActive;
   final int? id;
+  final Food? extra;
 
   final Function? onPressed;
 
-  const CustomRadioButton({Key? key, this.isActive, this.onPressed, this.id})
+  const CustomRadioButton({Key? key, this.isActive, this.onPressed, this.id , this.extra})
       : super(key: key);
 
   @override
@@ -17,6 +19,7 @@ class CustomRadioButton extends StatefulWidget {
 class _CustomRadioButtonState extends State<CustomRadioButton> {
   bool isActive = false;
   int? id;
+  Food? extra;
 
   @override
   void initState() {
@@ -25,6 +28,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
     setState(() {
       isActive = widget.isActive!;
       id = widget.id;
+      extra = widget.extra;
     });
   }
 
@@ -36,7 +40,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
             isActive = !isActive;
           });
 
-          widget.onPressed!(isActive, id);
+          widget.onPressed!(isActive, id , extra);
         },
         child: Container(
             height: 18,

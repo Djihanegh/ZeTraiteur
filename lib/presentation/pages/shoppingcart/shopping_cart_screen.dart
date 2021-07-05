@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/application/order/order_bloc.dart';
 import 'package:ze_traiteur/application/register/register_bloc.dart';
+import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
@@ -12,6 +13,8 @@ import 'package:ze_traiteur/presentation/utils/constants.dart';
 import '../../../injection.dart';
 
 class Panier extends StatefulWidget {
+  //final List<Food>? foods;
+  //final List<Food>? extras;
   @override
   _PanierState createState() => _PanierState();
 }
