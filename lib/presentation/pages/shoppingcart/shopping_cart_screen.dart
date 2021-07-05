@@ -23,10 +23,12 @@ class _PanierState extends State<Panier> {
   RegisterBloc? _registerBloc;
   TextEditingController phoneEditingController = TextEditingController();
   TextEditingController addressEditingController = TextEditingController();
+  double totalPrice = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    List<Lines>? lines;
+    List<Food> foods = [];
+    List<Food> extras = [];
 
     return Scaffold(
         appBar: AppBar(
@@ -65,9 +67,42 @@ class _PanierState extends State<Panier> {
                           );
                         },
                       );
+
+                      /*  for (Food food in foods) {
+                        setState(() {
+                          totalPrice = totalPrice + food.price!;
+                        });*/
+
+                      /* if (state.selectedExtras.isNotEmpty) {
+                    
+                        setState(() {
+                          extras.addAll(state.selectedExtras);
+                        });
+                      }
+                      if (state.selectedFood.isNotEmpty) {
+                        print(state.selectedFood);
+
+                        setState(() {
+                          foods.addAll(state.selectedFood);
+                          foods.addAll(extras);
+                        });
+
+                       
+                        }*/
                     }, child: BlocBuilder<OrderBloc, OrderState>(
                             builder: (context, state) {
-                      lines = state.lines;
+                      //foods = state.selectedFood;
+                      // extras = state.selectedExtras;
+                      //
+
+                      extras.addAll(state.selectedExtras);
+                      foods.addAll(state.selectedFood);
+                      foods.addAll(extras);
+
+                      foods.forEach((element) {
+                        totalPrice = totalPrice + element.price!;
+                      });
+
                       return ListView(children: [
                         LabeledTextFormField(
                             controller: addressEditingController,
@@ -101,24 +136,18 @@ class _PanierState extends State<Panier> {
                             height: 200,
                             child: ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: lines!.length,
+                                itemCount: foods.length,
                                 itemBuilder: (context, index) {
+                                  totalPrice = totalPrice + foods[index].price!;
                                   return Column(
                                     children: [
                                       ListTile(
-                                        title: Text(
-                                            lines![index]
-                                                .composition
-                                                .menu
-                                                .toString(),
+                                        title: Text(foods[index].name!,
                                             style: GoogleFonts.lato(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16)),
                                         subtitle: Text(
-                                            lines![index]
-                                                .composition
-                                                .menu
-                                                .toString(),
+                                            foods[index].description ?? "",
                                             style: GoogleFonts.lato()),
                                         trailing: Icon(
                                           Icons.mode_edit,
@@ -132,7 +161,11 @@ class _PanierState extends State<Panier> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SizedBox(),
-                                              Text("800 DA ",
+                                              Text(
+                                                  foods[index]
+                                                          .price
+                                                          .toString() +
+                                                      " DA",
                                                   style: GoogleFonts.lato())
                                             ],
                                           ))
@@ -155,7 +188,7 @@ class _PanierState extends State<Panier> {
                                       style: GoogleFonts.lato(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16)),
-                                  Text("160" + "DA",
+                                  Text(totalPrice.toString() + " DA",
                                       style: GoogleFonts.lato(fontSize: 16))
                                 ],
                               ),
@@ -214,7 +247,7 @@ class _PanierState extends State<Panier> {
                                               fontSize: 20),
                                         ),
                                         Text(
-                                          "1600" + "DA",
+                                          totalPrice.toString()+ " DA",
                                           style: GoogleFonts.lato(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20),

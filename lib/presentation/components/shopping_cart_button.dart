@@ -4,9 +4,8 @@ import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class ShoppingCartButton extends StatefulWidget {
-  final List<Food>? foods;
-  final List<Food>? extras;
-  const ShoppingCartButton({Key? key, this.foods, this.extras})
+  
+  const ShoppingCartButton({Key? key})
       : super(key: key);
 
   @override
