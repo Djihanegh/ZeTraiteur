@@ -29,14 +29,16 @@ class _$OrderEventTearOff {
     );
   }
 
-  SelectFood selectFood(Food food) {
+  SelectFood selectFood(String name, Food food) {
     return SelectFood(
+      name,
       food,
     );
   }
 
-  SelectExtra selectExtra(Food extra) {
+  SelectExtra selectExtra(String name, Food extra) {
     return SelectExtra(
+      name,
       extra,
     );
   }
@@ -81,8 +83,8 @@ mixin _$OrderEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
@@ -94,8 +96,8 @@ mixin _$OrderEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -233,8 +235,8 @@ class _$AddFood with DiagnosticableTreeMixin implements AddFood {
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
@@ -249,8 +251,8 @@ class _$AddFood with DiagnosticableTreeMixin implements AddFood {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -382,8 +384,8 @@ class _$AddExtra with DiagnosticableTreeMixin implements AddExtra {
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
@@ -398,8 +400,8 @@ class _$AddExtra with DiagnosticableTreeMixin implements AddExtra {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -464,7 +466,9 @@ abstract class $SelectFoodCopyWith<$Res> {
   factory $SelectFoodCopyWith(
           SelectFood value, $Res Function(SelectFood) then) =
       _$SelectFoodCopyWithImpl<$Res>;
-  $Res call({Food food});
+  $Res call({String name, Food food});
+
+  $FoodCopyWith<$Res> get food;
 }
 
 /// @nodoc
@@ -478,28 +482,42 @@ class _$SelectFoodCopyWithImpl<$Res> extends _$OrderEventCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? name = freezed,
     Object? food = freezed,
   }) {
     return _then(SelectFood(
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       food == freezed
           ? _value.food
           : food // ignore: cast_nullable_to_non_nullable
               as Food,
     ));
   }
+
+  @override
+  $FoodCopyWith<$Res> get food {
+    return $FoodCopyWith<$Res>(_value.food, (value) {
+      return _then(_value.copyWith(food: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$SelectFood with DiagnosticableTreeMixin implements SelectFood {
-  const _$SelectFood(this.food);
+  const _$SelectFood(this.name, this.food);
 
+  @override
+  final String name;
   @override
   final Food food;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OrderEvent.selectFood(food: $food)';
+    return 'OrderEvent.selectFood(name: $name, food: $food)';
   }
 
   @override
@@ -507,6 +525,7 @@ class _$SelectFood with DiagnosticableTreeMixin implements SelectFood {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'OrderEvent.selectFood'))
+      ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('food', food));
   }
 
@@ -514,13 +533,17 @@ class _$SelectFood with DiagnosticableTreeMixin implements SelectFood {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is SelectFood &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.food, food) ||
                 const DeepCollectionEquality().equals(other.food, food)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(food);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(food);
 
   @JsonKey(ignore: true)
   @override
@@ -532,15 +555,15 @@ class _$SelectFood with DiagnosticableTreeMixin implements SelectFood {
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
     required TResult Function(int phone) numberPhoneChanged,
     required TResult Function(String address) addressChanged,
   }) {
-    return selectFood(food);
+    return selectFood(name, food);
   }
 
   @override
@@ -548,8 +571,8 @@ class _$SelectFood with DiagnosticableTreeMixin implements SelectFood {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -558,7 +581,7 @@ class _$SelectFood with DiagnosticableTreeMixin implements SelectFood {
     required TResult orElse(),
   }) {
     if (selectFood != null) {
-      return selectFood(food);
+      return selectFood(name, food);
     }
     return orElse();
   }
@@ -601,8 +624,9 @@ class _$SelectFood with DiagnosticableTreeMixin implements SelectFood {
 }
 
 abstract class SelectFood implements OrderEvent {
-  const factory SelectFood(Food food) = _$SelectFood;
+  const factory SelectFood(String name, Food food) = _$SelectFood;
 
+  String get name => throw _privateConstructorUsedError;
   Food get food => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SelectFoodCopyWith<SelectFood> get copyWith =>
@@ -614,7 +638,9 @@ abstract class $SelectExtraCopyWith<$Res> {
   factory $SelectExtraCopyWith(
           SelectExtra value, $Res Function(SelectExtra) then) =
       _$SelectExtraCopyWithImpl<$Res>;
-  $Res call({Food extra});
+  $Res call({String name, Food extra});
+
+  $FoodCopyWith<$Res> get extra;
 }
 
 /// @nodoc
@@ -629,28 +655,42 @@ class _$SelectExtraCopyWithImpl<$Res> extends _$OrderEventCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? name = freezed,
     Object? extra = freezed,
   }) {
     return _then(SelectExtra(
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       extra == freezed
           ? _value.extra
           : extra // ignore: cast_nullable_to_non_nullable
               as Food,
     ));
   }
+
+  @override
+  $FoodCopyWith<$Res> get extra {
+    return $FoodCopyWith<$Res>(_value.extra, (value) {
+      return _then(_value.copyWith(extra: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$SelectExtra with DiagnosticableTreeMixin implements SelectExtra {
-  const _$SelectExtra(this.extra);
+  const _$SelectExtra(this.name, this.extra);
 
+  @override
+  final String name;
   @override
   final Food extra;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OrderEvent.selectExtra(extra: $extra)';
+    return 'OrderEvent.selectExtra(name: $name, extra: $extra)';
   }
 
   @override
@@ -658,6 +698,7 @@ class _$SelectExtra with DiagnosticableTreeMixin implements SelectExtra {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'OrderEvent.selectExtra'))
+      ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('extra', extra));
   }
 
@@ -665,13 +706,17 @@ class _$SelectExtra with DiagnosticableTreeMixin implements SelectExtra {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is SelectExtra &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.extra, extra) ||
                 const DeepCollectionEquality().equals(other.extra, extra)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(extra);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(extra);
 
   @JsonKey(ignore: true)
   @override
@@ -683,15 +728,15 @@ class _$SelectExtra with DiagnosticableTreeMixin implements SelectExtra {
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
     required TResult Function(int phone) numberPhoneChanged,
     required TResult Function(String address) addressChanged,
   }) {
-    return selectExtra(extra);
+    return selectExtra(name, extra);
   }
 
   @override
@@ -699,8 +744,8 @@ class _$SelectExtra with DiagnosticableTreeMixin implements SelectExtra {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -709,7 +754,7 @@ class _$SelectExtra with DiagnosticableTreeMixin implements SelectExtra {
     required TResult orElse(),
   }) {
     if (selectExtra != null) {
-      return selectExtra(extra);
+      return selectExtra(name, extra);
     }
     return orElse();
   }
@@ -752,8 +797,9 @@ class _$SelectExtra with DiagnosticableTreeMixin implements SelectExtra {
 }
 
 abstract class SelectExtra implements OrderEvent {
-  const factory SelectExtra(Food extra) = _$SelectExtra;
+  const factory SelectExtra(String name, Food extra) = _$SelectExtra;
 
+  String get name => throw _privateConstructorUsedError;
   Food get extra => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SelectExtraCopyWith<SelectExtra> get copyWith =>
@@ -834,8 +880,8 @@ class _$FoodChanged with DiagnosticableTreeMixin implements FoodChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
@@ -850,8 +896,8 @@ class _$FoodChanged with DiagnosticableTreeMixin implements FoodChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -985,8 +1031,8 @@ class _$ExtraChanged with DiagnosticableTreeMixin implements ExtraChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
@@ -1001,8 +1047,8 @@ class _$ExtraChanged with DiagnosticableTreeMixin implements ExtraChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -1138,8 +1184,8 @@ class _$SendOrderToCart
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
@@ -1154,8 +1200,8 @@ class _$SendOrderToCart
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -1292,8 +1338,8 @@ class _$NumberPhoneChanged
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
@@ -1308,8 +1354,8 @@ class _$NumberPhoneChanged
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -1443,8 +1489,8 @@ class _$AddressChanged with DiagnosticableTreeMixin implements AddressChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(int foodId, int index) addFood,
     required TResult Function(int extraId) addExtra,
-    required TResult Function(Food food) selectFood,
-    required TResult Function(Food extra) selectExtra,
+    required TResult Function(String name, Food food) selectFood,
+    required TResult Function(String name, Food extra) selectExtra,
     required TResult Function(int foodId) foodChanged,
     required TResult Function(int extraId) extraChanged,
     required TResult Function(int menuId) sendOrderToCart,
@@ -1459,8 +1505,8 @@ class _$AddressChanged with DiagnosticableTreeMixin implements AddressChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int foodId, int index)? addFood,
     TResult Function(int extraId)? addExtra,
-    TResult Function(Food food)? selectFood,
-    TResult Function(Food extra)? selectExtra,
+    TResult Function(String name, Food food)? selectFood,
+    TResult Function(String name, Food extra)? selectExtra,
     TResult Function(int foodId)? foodChanged,
     TResult Function(int extraId)? extraChanged,
     TResult Function(int menuId)? sendOrderToCart,
@@ -1532,8 +1578,8 @@ class _$OrderStateTearOff {
       required int index,
       required Map<int, int> foods,
       required List<int> extras,
-      required List<Food> selectedExtras,
-      required List<Food> selectedFood,
+      required Map<String, List<Food>> selectedExtras,
+      required Map<String, List<Food>> selectedFood,
       required bool hasSentOrderToCart,
       required int phone,
       required String address,
@@ -1573,8 +1619,10 @@ mixin _$OrderState {
   int get index => throw _privateConstructorUsedError;
   Map<int, int> get foods => throw _privateConstructorUsedError;
   List<int> get extras => throw _privateConstructorUsedError;
-  List<Food> get selectedExtras => throw _privateConstructorUsedError;
-  List<Food> get selectedFood => throw _privateConstructorUsedError;
+  Map<String, List<Food>> get selectedExtras =>
+      throw _privateConstructorUsedError;
+  Map<String, List<Food>> get selectedFood =>
+      throw _privateConstructorUsedError;
   bool get hasSentOrderToCart => throw _privateConstructorUsedError;
   int get phone => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
@@ -1601,8 +1649,8 @@ abstract class $OrderStateCopyWith<$Res> {
       int index,
       Map<int, int> foods,
       List<int> extras,
-      List<Food> selectedExtras,
-      List<Food> selectedFood,
+      Map<String, List<Food>> selectedExtras,
+      Map<String, List<Food>> selectedFood,
       bool hasSentOrderToCart,
       int phone,
       String address,
@@ -1670,11 +1718,11 @@ class _$OrderStateCopyWithImpl<$Res> implements $OrderStateCopyWith<$Res> {
       selectedExtras: selectedExtras == freezed
           ? _value.selectedExtras
           : selectedExtras // ignore: cast_nullable_to_non_nullable
-              as List<Food>,
+              as Map<String, List<Food>>,
       selectedFood: selectedFood == freezed
           ? _value.selectedFood
           : selectedFood // ignore: cast_nullable_to_non_nullable
-              as List<Food>,
+              as Map<String, List<Food>>,
       hasSentOrderToCart: hasSentOrderToCart == freezed
           ? _value.hasSentOrderToCart
           : hasSentOrderToCart // ignore: cast_nullable_to_non_nullable
@@ -1717,8 +1765,8 @@ abstract class _$OrderStateCopyWith<$Res> implements $OrderStateCopyWith<$Res> {
       int index,
       Map<int, int> foods,
       List<int> extras,
-      List<Food> selectedExtras,
-      List<Food> selectedFood,
+      Map<String, List<Food>> selectedExtras,
+      Map<String, List<Food>> selectedFood,
       bool hasSentOrderToCart,
       int phone,
       String address,
@@ -1788,11 +1836,11 @@ class __$OrderStateCopyWithImpl<$Res> extends _$OrderStateCopyWithImpl<$Res>
       selectedExtras: selectedExtras == freezed
           ? _value.selectedExtras
           : selectedExtras // ignore: cast_nullable_to_non_nullable
-              as List<Food>,
+              as Map<String, List<Food>>,
       selectedFood: selectedFood == freezed
           ? _value.selectedFood
           : selectedFood // ignore: cast_nullable_to_non_nullable
-              as List<Food>,
+              as Map<String, List<Food>>,
       hasSentOrderToCart: hasSentOrderToCart == freezed
           ? _value.hasSentOrderToCart
           : hasSentOrderToCart // ignore: cast_nullable_to_non_nullable
@@ -1856,9 +1904,9 @@ class _$_OrderState with DiagnosticableTreeMixin implements _OrderState {
   @override
   final List<int> extras;
   @override
-  final List<Food> selectedExtras;
+  final Map<String, List<Food>> selectedExtras;
   @override
-  final List<Food> selectedFood;
+  final Map<String, List<Food>> selectedFood;
   @override
   final bool hasSentOrderToCart;
   @override
@@ -1980,8 +2028,8 @@ abstract class _OrderState implements OrderState {
       required int index,
       required Map<int, int> foods,
       required List<int> extras,
-      required List<Food> selectedExtras,
-      required List<Food> selectedFood,
+      required Map<String, List<Food>> selectedExtras,
+      required Map<String, List<Food>> selectedFood,
       required bool hasSentOrderToCart,
       required int phone,
       required String address,
@@ -2005,9 +2053,11 @@ abstract class _OrderState implements OrderState {
   @override
   List<int> get extras => throw _privateConstructorUsedError;
   @override
-  List<Food> get selectedExtras => throw _privateConstructorUsedError;
+  Map<String, List<Food>> get selectedExtras =>
+      throw _privateConstructorUsedError;
   @override
-  List<Food> get selectedFood => throw _privateConstructorUsedError;
+  Map<String, List<Food>> get selectedFood =>
+      throw _privateConstructorUsedError;
   @override
   bool get hasSentOrderToCart => throw _privateConstructorUsedError;
   @override

@@ -25,7 +25,7 @@ class _$ZeTraiteurApiService extends ZeTraiteurApiService {
   }
 
   @override
-  Future<Response<Map<String, dynamic>>> login(int phone) {
+  Future<Response<Map<String, dynamic>>> login(Map<String, dynamic> phone) {
     final $url = 'http://159.65.25.199:8000/apis/login/';
     final $body = phone;
     final $request = Request('POST', $url, client.baseUrl, body: $body);

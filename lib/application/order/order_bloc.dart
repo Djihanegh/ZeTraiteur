@@ -53,11 +53,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       selectFood: (e) async* {
         print("FOOOD");
         print(e.food);
-        yield* _performSelectedFood(e.food);
+        yield* _performSelectedFood(e.food,e.name);
       },
       selectExtra: (e) async* {
         print("Extra");
-        yield* _performSelectedExtra(e.extra);
+        yield* _performSelectedExtra(e.extra,e.name);
       },
     );
   }
@@ -132,14 +132,19 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   }
  Stream<OrderState> _performSelectedExtra(
     Food extra,
+    String name,
   ) async* {
-    List<Food> extraList = state.selectedExtras;
+   Map<String, List<Food>>  extraList = state.selectedExtras;
 
-    if (!extraList.contains(extra)) {
-      extraList.add(extra);
-    } else {
-      extraList.remove(extra);
-    }
+       if (!extraList.containsKey(name)) {
+      extraList[name] = [];
+       }
+   
+      List<Food>? food =  extraList[name];
+      food!.add(extra);
+
+      extraList[name] = food;     
+  
     print("EXTRAS SELECTED ");
     print(state.selectedExtras);
     yield state.copyWith(
@@ -148,14 +153,20 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
 Stream<OrderState> _performSelectedFood(
     Food food,
+    String name,
   ) async* {
-    List<Food> foodList = state.selectedFood;
+   Map<String, List<Food>> foodList = state.selectedFood;
 
-    if (!foodList.contains(food)) {
-      foodList.add(food);
-    } else {
-      foodList.remove(food);
-    }
+    
+     
+
+    if (!foodList.containsKey(name)) {
+      foodList[name] = [];
+    } 
+       List<Food>? _food =  foodList[name];
+      _food!.add(food);
+
+      foodList[name] = _food; 
     print("food SELECTED ");
     print(state.selectedFood);
     yield state.copyWith(

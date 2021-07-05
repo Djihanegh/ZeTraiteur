@@ -10,8 +10,8 @@ class OrderState with _$OrderState {
     required int index,
     required Map<int, int> foods,
     required List<int> extras,
-    required List<Food> selectedExtras,
-    required List<Food> selectedFood,
+    required Map<String, List<Food>> selectedExtras,
+    required Map<String, List<Food>> selectedFood,
     required bool hasSentOrderToCart,
     required int phone,
     required String address,
@@ -33,5 +33,7 @@ class OrderState with _$OrderState {
       extras: [],
       foods: {},
       address: '',
-      phone: 0, selectedExtras: [], selectedFood: []);
+      phone: 0,
+      selectedExtras: {},
+      selectedFood: {});
 }

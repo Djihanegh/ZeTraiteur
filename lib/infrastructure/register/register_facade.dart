@@ -16,15 +16,17 @@ class RegisterFacade implements IRegisterFacade {
 
   @override
   Future<Either<ServerFailure, Map<String, dynamic>>> isUserCreated(
-      {int? phone}) async {
+      {Map<String, dynamic>? phone}) async {
     try {
-      print('TRYYY');
+      print('HHHHHHHHHHHHH');
       final result = await getIt<ZeTraiteurApiService>().login(phone!);
-      print(result.body!["error"]);
-      if (result.body!["error"] == null) {
+      print(result.body);
+      if (result.body!["error"] != "no such user") {
+        print("RIGHHHT");
         return right(result.body!);
       } else {
-        return left(ServerFailure.apiFailure(msg: result.error.toString()));
+        print("LEFFT");
+        return left(ServerFailure.apiFailure(msg: result.body!["error"]));
       }
     } catch (e) {
       print(e);

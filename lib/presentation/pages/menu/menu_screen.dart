@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ze_traiteur/application/order/order_bloc.dart';
-import 'package:ze_traiteur/domain/entities/composition.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
-import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/components/custom_radio_button.dart';
 import 'package:ze_traiteur/presentation/components/shopping_cart_button.dart';
@@ -12,7 +10,6 @@ import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../injection.dart';
 
 class MenuScreen extends StatefulWidget {
   final MenuItem menuItem;
@@ -248,11 +245,12 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                     groupValue: radioButtonValues[i],
                                     onChanged: (value) {
                                       setState(() {
-
-                                         selectFood(widget.menuItem
-                                            .sections![i].foods![index]);
-                                       // selectedFood.add(widget.menuItem
-                                          //  .sections![i].foods![index]);
+                                        selectFood(
+                                            widget.menuItem.sections![i]
+                                                .foods![index],
+                                            widget.menuItem.name!);
+                                        // selectedFood.add(widget.menuItem
+                                        //  .sections![i].foods![index]);
                                         print(selectedFood);
                                         radioButtonValues[i] =
                                             int.parse(value.toString());
@@ -473,8 +471,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     });
   }
 
-
-
   void addFood(int i, int index) {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addFood(i, index));
   }
@@ -483,12 +479,13 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addExtra(i));
   }
 
-  void selectExtra(Food extra) {
-    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.selectExtra(extra));
+  void selectExtra(Food extra, String name) {
+    BlocProvider.of<OrderBloc>(context)
+      ..add(OrderEvent.selectExtra(name, extra));
   }
 
-  void selectFood(Food food) {
-    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.selectFood(food));
+  void selectFood(Food food, String name) {
+    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.selectFood(name, food));
   }
 
   void extraChanged(int index) {
@@ -496,9 +493,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       ..add(OrderEvent.extraChanged(widget.extras[index].id));
   }
 
-  void _onPressed(bool isActive, int i, Food extra) {
+  void _onPressed(bool isActive, int i, Food extra, String name) {
     selectedExtra.add(extra);
-    selectExtra(extra);
+    selectExtra(extra, name);
     print(selectedExtra);
     addExtra(i);
   }

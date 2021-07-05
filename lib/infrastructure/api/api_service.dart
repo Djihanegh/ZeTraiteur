@@ -22,7 +22,7 @@ abstract class ZeTraiteurApiService extends ChopperService {
 
  @Post(path: 'login/')
   Future<Response<Map<String, dynamic>>> login(
-    @body int phone,
+    @body Map<String, dynamic> phone,
   );
   @Get(path: 'menus/')
   Future<Response<Map<String, dynamic>>> getAllMenus(
