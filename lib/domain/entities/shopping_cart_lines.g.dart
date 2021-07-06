@@ -9,7 +9,7 @@ part of 'shopping_cart_lines.dart';
 _$_ShoppingCartLines _$_$_ShoppingCartLinesFromJson(Map<String, dynamic> json) {
   return _$_ShoppingCartLines(
     json['quantity'] as int,
-    Composition.fromJson(json['composition'] as Map<String, dynamic>),
+    json['composition'],
   );
 }
 

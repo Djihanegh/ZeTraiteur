@@ -9,6 +9,9 @@ import 'package:meta/meta.dart';
 import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/composition.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
+import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
+import 'package:ze_traiteur/domain/entities/shopping_cart_composition.dart';
+
 import 'package:ze_traiteur/domain/register/i_register_facade.dart';
 
 import '../../domain/core/failures.dart';
@@ -48,6 +51,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       },
       sendOrderToCart: (e) async* {
         yield* _performSendOrderToCart(e.menuId);
+      },
+      sendCompleteOrderToCart: (e) async* {
+        yield* _performSendCompleteOrderToCart(e.menu);
       },
       selectFood: (e) async* {
         yield* _performSelectedFood(e.food,e.name);
@@ -105,6 +111,42 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         hasSentOrderToCart: false,
         foods: {},
         extras: []);
+  }
+
+  Stream<OrderState> _performSendCompleteOrderToCart(
+    String menu,
+  ) async* {
+    Map<String, List<Food>> foodsList = state.selectedFood;
+
+    Map<String, List<Food>> extraList = state.selectedExtras;
+
+    List<Food>? foods = foodsList[menu];
+
+        List<Food>? extras = extraList[menu];
+
+
+    ShoppingCartComposition composition = ShoppingCartComposition(menu, foods!, extras!);
+
+    ShoppingCartLines line = ShoppingCartLines(1, composition);
+
+    List<ShoppingCartLines> _lines = state.shoppingCartLines!;
+
+    _lines.add(line);
+
+
+    yield state.copyWith(
+        createOrderFailureOrSuccess: none(),
+        shoppingCartLines: _lines,
+        hasSentOrderToCart: true,
+        selectedFood: {},
+        selectedExtras:  {});
+
+    yield state.copyWith(
+        createOrderFailureOrSuccess: none(),
+        shoppingCartLines: _lines,
+        hasSentOrderToCart: false,
+        selectedFood: {},
+        selectedExtras:  {});
   }
 
   Stream<OrderState> _performAddExtra(

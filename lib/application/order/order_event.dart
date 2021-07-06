@@ -9,6 +9,8 @@ class OrderEvent with _$OrderEvent {
   const factory OrderEvent.foodChanged(int foodId) = FoodChanged;
   const factory OrderEvent.extraChanged(int extraId) = ExtraChanged;
   const factory OrderEvent.sendOrderToCart(int menuId) = SendOrderToCart;
+  const factory OrderEvent.sendCompleteOrderToCart(String menu) = SendCompleteOrderToCart;
+
   const factory OrderEvent.numberPhoneChanged(int phone) = NumberPhoneChanged;
   const factory OrderEvent.addressChanged(String address) = AddressChanged;
 }

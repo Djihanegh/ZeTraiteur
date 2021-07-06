@@ -20,6 +20,7 @@ class OrderState with _$OrderState {
     
     final String? error,
     final List<Lines>? lines,
+    final List<ShoppingCartLines>? shoppingCartLines,
   }) = _OrderState;
 
   factory OrderState.initial() => OrderState(
