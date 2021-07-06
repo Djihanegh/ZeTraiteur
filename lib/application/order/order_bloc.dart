@@ -73,7 +73,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     if (foodsList[index] != foodId) {
       foodsList[index] = foodId;
     }
-
     yield state.copyWith(createOrderFailureOrSuccess: none(), foods: foodsList);
   }
 
@@ -96,7 +95,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     List<Lines> _lines = state.lines!;
 
     _lines.add(line);
-
 
     yield state.copyWith(
         createOrderFailureOrSuccess: none(),
@@ -122,7 +120,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     List<Food>? foods = foodsList[menu];
 
-        List<Food>? extras = extraList[menu];
+    List<Food>? extras = extraList[menu];
 
 
     ShoppingCartComposition composition = ShoppingCartComposition(menu, foods!, extras!);
@@ -132,7 +130,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     List<ShoppingCartLines> _lines = state.shoppingCartLines!;
 
     _lines.add(line);
-
 
     yield state.copyWith(
         createOrderFailureOrSuccess: none(),
@@ -162,6 +159,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), extras: extraList);
   }
+
+
  Stream<OrderState> _performSelectedExtra(
     Food extra,
     String name,
@@ -185,10 +184,8 @@ Stream<OrderState> _performSelectedFood(
     Food food,
     String name,
   ) async* {
-   Map<String, List<Food>> foodList = state.selectedFood;
 
-    
-     
+   Map<String, List<Food>> foodList = state.selectedFood;
 
     if (!foodList.containsKey(name)) {
       foodList[name] = [];
@@ -200,6 +197,8 @@ Stream<OrderState> _performSelectedFood(
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), selectedFood: foodList);
   }
+
+
   Stream<OrderState> _performFoodChanged(
     int foodId,
   ) async* {

@@ -10,7 +10,6 @@ import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class MenuScreen extends StatefulWidget {
   final MenuItem menuItem;
   final List<Food> extras;
@@ -372,6 +371,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                   child: TextButton(
                                     onPressed: () {
                                       createOrder(widget.menuItem.id);
+                                      createCompleteOrder(
+                                          widget.menuItem.name!);
                                     },
                                     child: Text(
                                       "Ajouter au panier",
@@ -502,5 +503,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   void createOrder(int id) {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.sendOrderToCart(id));
+  }
+
+  void createCompleteOrder(String menu) {
+    BlocProvider.of<OrderBloc>(context)
+      ..add(OrderEvent.sendCompleteOrderToCart(menu));
   }
 }
