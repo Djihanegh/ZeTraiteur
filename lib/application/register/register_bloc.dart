@@ -61,13 +61,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;
 
     yield state.copyWith(
-      createUserFailureOrSuccess: none(),
+      isUserCreatedFailureOrSuccess: none(),
     );
 
     failureOrSuccess = await forwardedCall(phone: phone);
 
     yield state.copyWith(
-      createUserFailureOrSuccess: optionOf(failureOrSuccess),
+      isUserCreatedFailureOrSuccess: optionOf(failureOrSuccess),
     );
   }
 }

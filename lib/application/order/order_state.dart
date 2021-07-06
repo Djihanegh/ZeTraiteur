@@ -17,6 +17,7 @@ class OrderState with _$OrderState {
     required String address,
     required Option<Either<ServerFailure, Map<String, dynamic>>>
         createOrderFailureOrSuccess,
+    
     final String? error,
     final List<Lines>? lines,
   }) = _OrderState;
@@ -35,5 +36,6 @@ class OrderState with _$OrderState {
       address: '',
       phone: 0,
       selectedExtras: {},
-      selectedFood: {});
+      selectedFood: {},
+    );
 }

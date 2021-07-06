@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/composition.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
+import 'package:ze_traiteur/domain/register/i_register_facade.dart';
 
 import '../../domain/core/failures.dart';
 
@@ -18,13 +19,16 @@ part 'order_state.dart';
 
 @injectable
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
-  OrderBloc() : super(OrderState.initial());
+    final IRegisterFacade _registerFacade;
+
+  OrderBloc(this._registerFacade) : super(OrderState.initial());
 
   @override
   Stream<OrderState> mapEventToState(
     OrderEvent event,
   ) async* {
     yield* event.map(
+      
       addFood: (e) async* {
         yield* _performAddFood(e.foodId, e.index);
       },
@@ -33,30 +37,22 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       },
       foodChanged: (e) async* {
         yield* _performFoodChanged(e.foodId);
-        //yield state.copyWith(foodId: e.foodId);
       },
       extraChanged: (e) async* {
         yield state.copyWith(extraId: e.extraId);
       },
       numberPhoneChanged: (e) async* {
-        print("Helooo");
-        print(e.phone);
         yield state.copyWith(phone: e.phone);
       },addressChanged: (e) async* {
-           print("ADDRESS");
-        print(e.address);
         yield state.copyWith(address: e.address);
       },
       sendOrderToCart: (e) async* {
         yield* _performSendOrderToCart(e.menuId);
       },
       selectFood: (e) async* {
-        print("FOOOD");
-        print(e.food);
         yield* _performSelectedFood(e.food,e.name);
       },
       selectExtra: (e) async* {
-        print("Extra");
         yield* _performSelectedExtra(e.extra,e.name);
       },
     );
@@ -72,8 +68,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       foodsList[index] = foodId;
     }
 
-    print("STATE LIST");
-    print(state.foods);
     yield state.copyWith(createOrderFailureOrSuccess: none(), foods: foodsList);
   }
 
@@ -97,8 +91,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     _lines.add(line);
 
-    print("LINES LISTT");
-    print(state.lines);
 
     yield state.copyWith(
         createOrderFailureOrSuccess: none(),
@@ -125,8 +117,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     } else {
       extraList.remove(extraId);
     }
-    print("EXTRAS LIST");
-    print(state.extras);
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), extras: extraList);
   }
@@ -145,8 +135,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
       extraList[name] = food;     
   
-    print("EXTRAS SELECTED ");
-    print(state.selectedExtras);
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), selectedExtras: extraList);
   }
@@ -167,8 +155,6 @@ Stream<OrderState> _performSelectedFood(
       _food!.add(food);
 
       foodList[name] = _food; 
-    print("food SELECTED ");
-    print(state.selectedFood);
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), selectedFood: foodList);
   }
@@ -177,4 +163,6 @@ Stream<OrderState> _performSelectedFood(
   ) async* {
     yield state.copyWith(createOrderFailureOrSuccess: none(), foodId: foodId);
   }
+
+  
 }

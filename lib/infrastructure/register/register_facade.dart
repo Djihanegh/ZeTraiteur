@@ -20,7 +20,7 @@ class RegisterFacade implements IRegisterFacade {
     try {
       print('HHHHHHHHHHHHH');
       final result = await getIt<ZeTraiteurApiService>().login(phone!);
-      print(result.body);
+      print("BODDDDY  ${result.body!["error"]} ");
       if (result.body!["error"] != "no such user") {
         print("RIGHHHT");
         return right(result.body!);
@@ -29,7 +29,7 @@ class RegisterFacade implements IRegisterFacade {
         return left(ServerFailure.apiFailure(msg: result.body!["error"]));
       }
     } catch (e) {
-      print(e);
+      //print(e);
       return left(ServerFailure.serverError());
     }
   }

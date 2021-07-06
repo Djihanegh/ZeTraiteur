@@ -6,6 +6,7 @@ import 'package:ze_traiteur/application/register/register_bloc.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
+import 'package:ze_traiteur/presentation/components/show_dialog.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/your_shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
@@ -45,23 +46,26 @@ class _PanierState extends State<Panier> {
           ),
         ),
         body: SafeArea(
-            child: BlocProvider(
-                create: (context) => _registerBloc = getIt<RegisterBloc>(),
+            child: BlocProvider.value(
+                value: BlocProvider.of<RegisterBloc>(context),
                 child: BlocListener<RegisterBloc, RegisterState>(
+                    //listenWhen: (p, c) => p.phone != c.phone,
                     listener: (context, state) {
                   state.isUserCreatedFailureOrSuccess.fold(
                     () => null,
                     (either) {
-                      Navigator.pop(context);
                       either.fold(
                         (failure) {
                           failure.map(
-                            serverError: (_) => null,
-                            apiFailure: (e) => showToast("ERRROOOR"),
+                            serverError: (_) => showToast("Server failure"),
+                            apiFailure: (e) {
+                              //showToast(e.msg.toString());
+                              showDialogWidget("Vous n'avez pas de compte ",
+                                  "Creez en un.", "", context);
+                            },
                           );
                         },
                         (success) {
-                          showToast('SUCCESSS');
                         },
                       );
                     },
@@ -75,7 +79,6 @@ class _PanierState extends State<Panier> {
                         state.createOrderFailureOrSuccess.fold(
                           () => null,
                           (either) {
-                            Navigator.pop(context);
                             either.fold(
                               (failure) {
                                 failure.map(
@@ -89,23 +92,44 @@ class _PanierState extends State<Panier> {
                             );
                           },
                         );
+
+                        /* state.isUserCreatedFailureOrSuccess.fold(
+                          () => null,
+                          (either) {
+                            either.fold(
+                              (failure) {
+                                failure.map(
+                                  serverError: (_) =>
+                                      showToast("Server failure"),
+                                  apiFailure: (e) {
+                                    showToast(e.msg.toString());
+                                    showDialogWidget(
+                                        "Vous n'avez pas de compte ",
+                                        "Creez en un.",
+                                        "",
+                                        context);
+                                  },
+                                );
+                              },
+                              (success) {
+                                //showToast('SUCCESSS');
+                              },
+                            );
+                          },
+                        );*/
                       }, child: BlocBuilder<OrderBloc, OrderState>(
                               builder: (context, state) {
-
-                                
                         extras.addAll(state.selectedExtras);
                         foods.addAll(state.selectedFood);
                         foods.addAll(extras);
 
-                        /*foods.forEach((element) {
-                          totalPrice = totalPrice + element.price!;
-                        });*/
-
                         foods.forEach((key, value) {
                           keys.add(key);
-                          print(key);
                         });
-                        print(foods);
+
+                        /*BlocProvider(
+                      create: (context) =>
+                          _registerBloc = getIt<RegisterBloc>(),*/
 
                         return ListView(children: [
                           LabeledTextFormField(
@@ -124,7 +148,6 @@ class _PanierState extends State<Panier> {
                               hintText: "",
                               keyboardType: TextInputType.phone,
                               onChanged: (value) {
-                                print(value);
                                 BlocProvider.of<OrderBloc>(context)
                                   ..add(OrderEvent.numberPhoneChanged(
                                       int.tryParse(value.toString()) ?? 0));
@@ -143,51 +166,56 @@ class _PanierState extends State<Panier> {
                                   itemCount: foods.length,
                                   itemBuilder: (context, index) {
                                     return SizedBox(
-                                      height: 200,
-                                      child:ListView.builder(
-                                        itemCount: foods[keys[index]]!.length,
-                                        itemBuilder: (context, indexx) {
-                                          totalPrice = totalPrice +
-                                            foods[keys[index]]![indexx].price! ;
-                                          return Column(
-                                            children: [
-                                              ListTile(
-                                                title: Text(keys[index],
-                                                    style: GoogleFonts.lato(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 16)),
-                                                subtitle: Text(
-                                                    foods[keys[index]]![indexx]
-                                                            .name ??
-                                                        "",
-                                                    style: GoogleFonts.lato()),
-                                                trailing: Icon(
-                                                  Icons.mode_edit,
-                                                  color: kColorPrimary,
-                                                ),
-                                              ),
-                                              Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: 20),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      SizedBox(),
-                                                      Text(
-                                                        foods[keys[index]]![indexx]
-                                                                  .price
-                                                                  .toString() +
-                                                              " DA",
-                                                          style: GoogleFonts
-                                                              .lato())
-                                                    ],
-                                                  ))
-                                            ],
-                                          );
-                                        }));
+                                        height: 200,
+                                        child: ListView.builder(
+                                            itemCount:
+                                                foods[keys[index]]!.length,
+                                            itemBuilder: (context, indexx) {
+                                              totalPrice = totalPrice +
+                                                  foods[keys[index]]![indexx]
+                                                      .price!;
+                                              return Column(
+                                                children: [
+                                                  ListTile(
+                                                    title: Text(keys[index],
+                                                        style: GoogleFonts.lato(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 16)),
+                                                    subtitle: Text(
+                                                        foods[keys[index]]![
+                                                                    indexx]
+                                                                .name ??
+                                                            "",
+                                                        style:
+                                                            GoogleFonts.lato()),
+                                                    trailing: Icon(
+                                                      Icons.mode_edit,
+                                                      color: kColorPrimary,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 20),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          SizedBox(),
+                                                          Text(
+                                                              foods[keys[index]]![
+                                                                          indexx]
+                                                                      .price
+                                                                      .toString() +
+                                                                  " DA",
+                                                              style: GoogleFonts
+                                                                  .lato())
+                                                        ],
+                                                      ))
+                                                ],
+                                              );
+                                            }));
                                   })),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -282,11 +310,18 @@ class _PanierState extends State<Panier> {
                                     width: double.infinity,
                                     child: TextButton(
                                         onPressed: () {
-                                          print(state.phone);
+                                          //print(state.phone);
 
-                                          _registerBloc!
+                                          //_registerBloc!
+                                          BlocProvider.of<RegisterBloc>(context)
                                             ..add(RegisterEvent.isUserCreated(
                                                 state.phone));
+
+                                          /*    BlocProvider.of<OrderBloc>(
+                                                  context)
+                                                ..add(OrderEvent
+                                                    .numberPhoneChanged(
+                                                        state.phone));*/
                                         },
                                         child: Text("Passer ma commande",
                                             style: GoogleFonts.lato(

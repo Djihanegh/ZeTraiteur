@@ -24,7 +24,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i3.IMenuFacade>(() => _i4.MenuFacade());
   gh.lazySingleton<_i5.IRegisterFacade>(() => _i6.RegisterFacade());
   gh.factory<_i7.MenuBloc>(() => _i7.MenuBloc(get<_i3.IMenuFacade>()));
-  gh.factory<_i8.OrderBloc>(() => _i8.OrderBloc());
+  gh.factory<_i8.OrderBloc>(() => _i8.OrderBloc(get<_i5.IRegisterFacade>()));
   gh.factory<_i9.RegisterBloc>(
       () => _i9.RegisterBloc(get<_i5.IRegisterFacade>()));
   return get;
