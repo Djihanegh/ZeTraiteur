@@ -6,10 +6,12 @@ class CustomRadioButton extends StatefulWidget {
   final bool? isActive;
   final int? id;
   final Food? extra;
+  final String? name;
 
   final Function? onPressed;
 
-  const CustomRadioButton({Key? key, this.isActive, this.onPressed, this.id , this.extra})
+  const CustomRadioButton(
+      {Key? key, this.isActive, this.onPressed, this.id, this.extra, this.name})
       : super(key: key);
 
   @override
@@ -20,17 +22,17 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
   bool isActive = false;
   int? id;
   Food? extra;
+  String? name;
 
   @override
   void initState() {
     super.initState();
 
-    
-
     setState(() {
       isActive = widget.isActive!;
       id = widget.id;
       extra = widget.extra;
+      name = widget.name;
     });
   }
 
@@ -42,7 +44,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
             isActive = !isActive;
           });
 
-          widget.onPressed!(isActive, id , extra);
+          widget.onPressed!(isActive, id, extra, name);
         },
         child: Container(
             height: 18,

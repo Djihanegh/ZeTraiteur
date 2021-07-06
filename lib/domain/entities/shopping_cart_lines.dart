@@ -10,7 +10,7 @@ class ShoppingCartLines with _$ShoppingCartLines {
  
   factory ShoppingCartLines(
       int quantity,
-      ShoppingCartComposition composition,
+      ShoppingCartComposition? composition,
   ) = _ShoppingCartLines;
   static const fromJsonFactory = _$ShoppingCartLinesFromJson;
   factory ShoppingCartLines.fromJson(Map<String, dynamic> json) =>

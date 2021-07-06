@@ -22,7 +22,7 @@ class _$ShoppingCartCompositionTearOff {
   const _$ShoppingCartCompositionTearOff();
 
   _ShoppingCartComposition call(
-      String menu, List<Food> selectedFoods, List<Food> extras) {
+      String? menu, List<Food>? selectedFoods, List<Food> extras) {
     return _ShoppingCartComposition(
       menu,
       selectedFoods,
@@ -40,8 +40,8 @@ const $ShoppingCartComposition = _$ShoppingCartCompositionTearOff();
 
 /// @nodoc
 mixin _$ShoppingCartComposition {
-  String get menu => throw _privateConstructorUsedError;
-  List<Food> get selectedFoods => throw _privateConstructorUsedError;
+  String? get menu => throw _privateConstructorUsedError;
+  List<Food>? get selectedFoods => throw _privateConstructorUsedError;
   List<Food> get extras => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +55,7 @@ abstract class $ShoppingCartCompositionCopyWith<$Res> {
   factory $ShoppingCartCompositionCopyWith(ShoppingCartComposition value,
           $Res Function(ShoppingCartComposition) then) =
       _$ShoppingCartCompositionCopyWithImpl<$Res>;
-  $Res call({String menu, List<Food> selectedFoods, List<Food> extras});
+  $Res call({String? menu, List<Food>? selectedFoods, List<Food> extras});
 }
 
 /// @nodoc
@@ -77,11 +77,11 @@ class _$ShoppingCartCompositionCopyWithImpl<$Res>
       menu: menu == freezed
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       selectedFoods: selectedFoods == freezed
           ? _value.selectedFoods
           : selectedFoods // ignore: cast_nullable_to_non_nullable
-              as List<Food>,
+              as List<Food>?,
       extras: extras == freezed
           ? _value.extras
           : extras // ignore: cast_nullable_to_non_nullable
@@ -97,7 +97,7 @@ abstract class _$ShoppingCartCompositionCopyWith<$Res>
           $Res Function(_ShoppingCartComposition) then) =
       __$ShoppingCartCompositionCopyWithImpl<$Res>;
   @override
-  $Res call({String menu, List<Food> selectedFoods, List<Food> extras});
+  $Res call({String? menu, List<Food>? selectedFoods, List<Food> extras});
 }
 
 /// @nodoc
@@ -122,11 +122,11 @@ class __$ShoppingCartCompositionCopyWithImpl<$Res>
       menu == freezed
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       selectedFoods == freezed
           ? _value.selectedFoods
           : selectedFoods // ignore: cast_nullable_to_non_nullable
-              as List<Food>,
+              as List<Food>?,
       extras == freezed
           ? _value.extras
           : extras // ignore: cast_nullable_to_non_nullable
@@ -144,9 +144,9 @@ class _$_ShoppingCartComposition implements _ShoppingCartComposition {
       _$_$_ShoppingCartCompositionFromJson(json);
 
   @override
-  final String menu;
+  final String? menu;
   @override
-  final List<Food> selectedFoods;
+  final List<Food>? selectedFoods;
   @override
   final List<Food> extras;
 
@@ -189,16 +189,16 @@ class _$_ShoppingCartComposition implements _ShoppingCartComposition {
 
 abstract class _ShoppingCartComposition implements ShoppingCartComposition {
   factory _ShoppingCartComposition(
-          String menu, List<Food> selectedFoods, List<Food> extras) =
+          String? menu, List<Food>? selectedFoods, List<Food> extras) =
       _$_ShoppingCartComposition;
 
   factory _ShoppingCartComposition.fromJson(Map<String, dynamic> json) =
       _$_ShoppingCartComposition.fromJson;
 
   @override
-  String get menu => throw _privateConstructorUsedError;
+  String? get menu => throw _privateConstructorUsedError;
   @override
-  List<Food> get selectedFoods => throw _privateConstructorUsedError;
+  List<Food>? get selectedFoods => throw _privateConstructorUsedError;
   @override
   List<Food> get extras => throw _privateConstructorUsedError;
   @override

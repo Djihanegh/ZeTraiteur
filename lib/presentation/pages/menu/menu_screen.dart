@@ -349,7 +349,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                                 isActive: false,
                                                 onPressed: _onPressed,
                                                 id: widget.extras[index].id,
-                                                extra: widget.extras[index])),
+                                                extra: widget.extras[index] , name: widget.menuItem.name! )),
                                       );
                                     },
                                     separatorBuilder:
@@ -380,10 +380,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                           color: Colors.white, fontSize: 18.sp),
                                     ),
                                   ))),
-                          /* bottom: 10,
-                            left: 0,
-                            right: 0,
-                            top: height, */
+                          
                         ],
                       ));
                 })))),

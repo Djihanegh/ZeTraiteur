@@ -20,7 +20,7 @@ ShoppingCartLines _$ShoppingCartLinesFromJson(Map<String, dynamic> json) {
 class _$ShoppingCartLinesTearOff {
   const _$ShoppingCartLinesTearOff();
 
-  _ShoppingCartLines call(int quantity, ShoppingCartComposition composition) {
+  _ShoppingCartLines call(int quantity, ShoppingCartComposition? composition) {
     return _ShoppingCartLines(
       quantity,
       composition,
@@ -38,7 +38,8 @@ const $ShoppingCartLines = _$ShoppingCartLinesTearOff();
 /// @nodoc
 mixin _$ShoppingCartLines {
   int get quantity => throw _privateConstructorUsedError;
-  ShoppingCartComposition get composition => throw _privateConstructorUsedError;
+  ShoppingCartComposition? get composition =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +52,9 @@ abstract class $ShoppingCartLinesCopyWith<$Res> {
   factory $ShoppingCartLinesCopyWith(
           ShoppingCartLines value, $Res Function(ShoppingCartLines) then) =
       _$ShoppingCartLinesCopyWithImpl<$Res>;
-  $Res call({int quantity, ShoppingCartComposition composition});
+  $Res call({int quantity, ShoppingCartComposition? composition});
+
+  $ShoppingCartCompositionCopyWith<$Res>? get composition;
 }
 
 /// @nodoc
@@ -76,8 +79,19 @@ class _$ShoppingCartLinesCopyWithImpl<$Res>
       composition: composition == freezed
           ? _value.composition
           : composition // ignore: cast_nullable_to_non_nullable
-              as ShoppingCartComposition,
+              as ShoppingCartComposition?,
     ));
+  }
+
+  @override
+  $ShoppingCartCompositionCopyWith<$Res>? get composition {
+    if (_value.composition == null) {
+      return null;
+    }
+
+    return $ShoppingCartCompositionCopyWith<$Res>(_value.composition!, (value) {
+      return _then(_value.copyWith(composition: value));
+    });
   }
 }
 
@@ -88,7 +102,10 @@ abstract class _$ShoppingCartLinesCopyWith<$Res>
           _ShoppingCartLines value, $Res Function(_ShoppingCartLines) then) =
       __$ShoppingCartLinesCopyWithImpl<$Res>;
   @override
-  $Res call({int quantity, ShoppingCartComposition composition});
+  $Res call({int quantity, ShoppingCartComposition? composition});
+
+  @override
+  $ShoppingCartCompositionCopyWith<$Res>? get composition;
 }
 
 /// @nodoc
@@ -115,7 +132,7 @@ class __$ShoppingCartLinesCopyWithImpl<$Res>
       composition == freezed
           ? _value.composition
           : composition // ignore: cast_nullable_to_non_nullable
-              as ShoppingCartComposition,
+              as ShoppingCartComposition?,
     ));
   }
 }
@@ -131,7 +148,7 @@ class _$_ShoppingCartLines implements _ShoppingCartLines {
   @override
   final int quantity;
   @override
-  final ShoppingCartComposition composition;
+  final ShoppingCartComposition? composition;
 
   @override
   String toString() {
@@ -169,7 +186,8 @@ class _$_ShoppingCartLines implements _ShoppingCartLines {
 
 abstract class _ShoppingCartLines implements ShoppingCartLines {
   factory _ShoppingCartLines(
-      int quantity, ShoppingCartComposition composition) = _$_ShoppingCartLines;
+          int quantity, ShoppingCartComposition? composition) =
+      _$_ShoppingCartLines;
 
   factory _ShoppingCartLines.fromJson(Map<String, dynamic> json) =
       _$_ShoppingCartLines.fromJson;
@@ -177,7 +195,8 @@ abstract class _ShoppingCartLines implements ShoppingCartLines {
   @override
   int get quantity => throw _privateConstructorUsedError;
   @override
-  ShoppingCartComposition get composition => throw _privateConstructorUsedError;
+  ShoppingCartComposition? get composition =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ShoppingCartLinesCopyWith<_ShoppingCartLines> get copyWith =>

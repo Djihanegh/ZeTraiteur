@@ -68,7 +68,7 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
               () => null,
               (either) => either.fold(
                 (failure) {
-                  showToast(failure.msg!);
+                  showToast(failure.msg ?? "Failure");
                 },
                 (success) {
                   if (success['results'].isNotEmpty) {

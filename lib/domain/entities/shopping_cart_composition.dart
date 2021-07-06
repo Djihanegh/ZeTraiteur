@@ -7,8 +7,8 @@ part 'shopping_cart_composition.g.dart';
 @freezed
 class ShoppingCartComposition with _$ShoppingCartComposition {
   factory ShoppingCartComposition(
-    String menu,
-    List<Food> selectedFoods,
+    String? menu,
+    List<Food>? selectedFoods,
     List<Food> extras,
   ) = _ShoppingCartComposition;
   static const fromJsonFactory = _$ShoppingCartCompositionFromJson;

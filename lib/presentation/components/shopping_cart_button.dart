@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 

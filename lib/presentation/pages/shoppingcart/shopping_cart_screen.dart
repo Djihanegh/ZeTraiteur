@@ -4,14 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/application/order/order_bloc.dart';
 import 'package:ze_traiteur/application/register/register_bloc.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
+import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/show_dialog.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
-
 class Panier extends StatefulWidget {
-  
   @override
   _PanierState createState() => _PanierState();
 }
@@ -21,12 +20,15 @@ class _PanierState extends State<Panier> {
   TextEditingController phoneEditingController = TextEditingController();
   TextEditingController addressEditingController = TextEditingController();
   double totalPrice = 0.0;
+  int foodIndex = 0;
+  double totalCompoPrice = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    Map<String, List<Food>> foods = {};
-    Map<String, List<Food>> extras = {};
+    List<Food> foods = [];
+    List<Food> extras = [];
     List<String> keys = [];
+    List<ShoppingCartLines> lines = [];
 
     return Scaffold(
         appBar: AppBar(
@@ -59,8 +61,7 @@ class _PanierState extends State<Panier> {
                             },
                           );
                         },
-                        (success) {
-                        },
+                        (success) {},
                       );
                     },
                   );
@@ -86,20 +87,13 @@ class _PanierState extends State<Panier> {
                             );
                           },
                         );
-
                       }, child: BlocBuilder<OrderBloc, OrderState>(
                               builder: (context, state) {
-                        extras.addAll(state.selectedExtras);
-                        foods.addAll(state.selectedFood);
-                        foods.addAll(extras);
+                        lines = [];
+                        lines.addAll(state.shoppingCartLines!);
 
-                        foods.forEach((key, value) {
-                          keys.add(key);
-                        });
-
-                        /*BlocProvider(
-                      create: (context) =>
-                          _registerBloc = getIt<RegisterBloc>(),*/
+                        print("LEEEENGTH");
+                        print(lines.length);
 
                         return ListView(children: [
                           LabeledTextFormField(
@@ -133,59 +127,81 @@ class _PanierState extends State<Panier> {
                               height: 200,
                               child: ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: foods.length,
+                                  itemCount: lines.length,
                                   itemBuilder: (context, index) {
-                                    return SizedBox(
-                                        height: 200,
-                                        child: ListView.builder(
-                                            itemCount:
-                                                foods[keys[index]]!.length,
-                                            itemBuilder: (context, indexx) {
-                                              totalPrice = totalPrice +
-                                                  foods[keys[index]]![indexx]
-                                                      .price!;
-                                              return Column(
-                                                children: [
-                                                  ListTile(
-                                                    title: Text(keys[index],
-                                                        style: GoogleFonts.lato(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16)),
-                                                    subtitle: Text(
-                                                        foods[keys[index]]![
-                                                                    indexx]
-                                                                .name ??
-                                                            "",
-                                                        style:
-                                                            GoogleFonts.lato()),
-                                                    trailing: Icon(
-                                                      Icons.mode_edit,
-                                                      color: kColorPrimary,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 20),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          SizedBox(),
-                                                          Text(
-                                                              foods[keys[index]]![
-                                                                          indexx]
-                                                                      .price
-                                                                      .toString() +
-                                                                  " DA",
-                                                              style: GoogleFonts
-                                                                  .lato())
-                                                        ],
-                                                      ))
-                                                ],
-                                              );
-                                            }));
+                                    extras = [];
+                                    foods = [];
+                                    extras.addAll(
+                                        lines[index].composition!.extras);
+                                    foods.addAll(lines[index]
+                                        .composition!
+                                        .selectedFoods!);
+                                    foods.addAll(extras);
+
+                                    totalPrice = totalPrice + totalCompoPrice;
+
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                          title: Text(
+                                              lines[index].composition!.menu!,
+                                              style: GoogleFonts.lato(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16)),
+                                          subtitle: SizedBox(
+                                            height: 50,
+                                              child: ListView.separated(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemCount: foods.length,
+                                                itemBuilder: (context, indexx) {
+                                                  print("AAAA");
+                                                  print(foods.length);
+
+                                                  totalCompoPrice =
+                                                      totalCompoPrice +
+                                                          foods[indexx].price!;
+
+                                                  return Text(
+                                                      foods[indexx]
+                                                          .name!
+                                                          .substring(0, 3),
+                                                      style:
+                                                          GoogleFonts.lato());
+                                                },
+                                                separatorBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return SizedBox(
+                                                    width: 10,
+                                                  );
+                                                },
+                                              )),
+                                          trailing: Icon(
+                                            Icons.mode_edit,
+                                            color: kColorPrimary,
+                                          ),
+                                        ),
+                                        Padding(
+                                            padding: EdgeInsets.only(right: 20),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(),
+                                                Text(
+                                                    //foods[keys[index]]![
+                                                    //          indexx]
+                                                    //    .price
+                                                    //  .toString() +
+
+                                                    "$totalCompoPrice" + " DA",
+                                                    style: GoogleFonts.lato())
+                                              ],
+                                            ))
+                                      ],
+                                    );
                                   })),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -280,18 +296,9 @@ class _PanierState extends State<Panier> {
                                     width: double.infinity,
                                     child: TextButton(
                                         onPressed: () {
-                                          //print(state.phone);
-
-                                          //_registerBloc!
                                           BlocProvider.of<RegisterBloc>(context)
                                             ..add(RegisterEvent.isUserCreated(
                                                 state.phone));
-
-                                          /*    BlocProvider.of<OrderBloc>(
-                                                  context)
-                                                ..add(OrderEvent
-                                                    .numberPhoneChanged(
-                                                        state.phone));*/
                                         },
                                         child: Text("Passer ma commande",
                                             style: GoogleFonts.lato(

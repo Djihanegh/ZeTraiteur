@@ -9,9 +9,9 @@ part of 'shopping_cart_composition.dart';
 _$_ShoppingCartComposition _$_$_ShoppingCartCompositionFromJson(
     Map<String, dynamic> json) {
   return _$_ShoppingCartComposition(
-    json['menu'] as String,
-    (json['selectedFoods'] as List<dynamic>)
-        .map((e) => Food.fromJson(e as Map<String, dynamic>))
+    json['menu'] as String?,
+    (json['selectedFoods'] as List<dynamic>?)
+        ?.map((e) => Food.fromJson(e as Map<String, dynamic>))
         .toList(),
     (json['extras'] as List<dynamic>)
         .map((e) => Food.fromJson(e as Map<String, dynamic>))

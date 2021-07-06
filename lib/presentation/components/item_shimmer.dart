@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../infrastructure/core/pref_manager.dart';
-import '../utils/constants.dart';
 
 class PostListItemShimmer extends StatelessWidget {
   @override

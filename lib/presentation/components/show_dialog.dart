@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
-import '../../infrastructure/core/pref_manager.dart';
 import 'package:flutter/gestures.dart';
 
 showDialogWidget(

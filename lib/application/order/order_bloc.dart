@@ -116,28 +116,35 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   ) async* {
     Map<String, List<Food>> foodsList = state.selectedFood;
 
+    print("STATTTTTE");
+    print(state.selectedExtras);
+
+
+    print("FOOOOOOOOOOOOOOOD");
+    print(state.selectedFood);
+
+
     Map<String, List<Food>> extraList = state.selectedExtras;
 
-    List<Food>? foods = foodsList[menu];
+    List<Food> foods = foodsList[menu]!;
 
-    List<Food>? extras = extraList[menu];
+    List<Food> extras = extraList[menu]!;
+
+    print("EXTRRRAAA $extras");
 
 
-    ShoppingCartComposition composition = ShoppingCartComposition(menu, foods!, extras!);
+    ShoppingCartComposition composition = ShoppingCartComposition(menu, foods, extras);
 
     ShoppingCartLines line = ShoppingCartLines(1, composition);
 
-    List<ShoppingCartLines> _lines = state.shoppingCartLines!;
+    List<ShoppingCartLines> _lines = state.shoppingCartLines ?? [];
 
     _lines.add(line);
 
-    yield state.copyWith(
-        createOrderFailureOrSuccess: none(),
-        shoppingCartLines: _lines,
-        hasSentOrderToCart: true,
-        selectedFood: {},
-        selectedExtras:  {});
+    print("LINNNES");
+    print(_lines);
 
+   
     yield state.copyWith(
         createOrderFailureOrSuccess: none(),
         shoppingCartLines: _lines,
