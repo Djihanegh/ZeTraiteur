@@ -5,7 +5,6 @@ import '../utils/constants.dart';
 
 class LabeledTextFormField extends StatelessWidget {
   final String? title;
-
   final double? padding;
   final TextEditingController? controller;
   final String? hintText;
@@ -36,16 +35,14 @@ class LabeledTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: padding ?? 20, left: 18, right: 8),
+      padding: EdgeInsets.only(top: padding ?? 20, left: 8, right: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          title != ""
-              ? Text('$title:',
-                  style: GoogleFonts.lato(
-                      fontWeight: FontWeight.w400, fontSize: 16))
-              : Text(""),
+          /* Text('$title:',
+              style:
+                  GoogleFonts.lato(fontWeight: FontWeight.w400, fontSize: 16)),*/
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -59,7 +56,7 @@ class LabeledTextFormField extends StatelessWidget {
                     decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: Colors.grey.withOpacity(0.9),
                         ),
                       ),
                       focusedBorder: UnderlineInputBorder(
@@ -71,7 +68,7 @@ class LabeledTextFormField extends StatelessWidget {
                       hintText: hintText,
                       hintStyle: TextStyle(
                         fontSize: 16,
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withOpacity(0.8),
                       ),
                       errorText: error ?? null,
                     ),
@@ -84,7 +81,7 @@ class LabeledTextFormField extends StatelessWidget {
                     cursorWidth: 1,
                     onFieldSubmitted: (value) => onChanged!(value),
                   )),
-             /* Expanded(
+              /* Expanded(
                 child: Icon(
                   Icons.mode_edit,
                   color: kColorPrimary,

@@ -35,7 +35,7 @@ class OrderState with _$OrderState {
       extras: [],
       foods: {},
       address: '',
-      phone: 0,
+      phone: 775916789,
       selectedExtras: {},
       selectedFood: {},
     );

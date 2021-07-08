@@ -27,9 +27,15 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     yield* event.map(createUser: (e) async* {
       yield* _performCreateUser(e.phone, _registerFacade.createUser);
     }, isUserCreated: (e) async* {
-      Map<String, dynamic> body= {};
-      body["phone"] = e.phone;
+      Map<String, dynamic> body = {};
+      body["phone"] = "0" + "${e.phone}";
       yield* _performIsUserCreated(body, _registerFacade.isUserCreated);
+    }, numberPhoneChanged: (e) async* {
+      yield state.copyWith(phone: e.phone);
+    }, nameChanged: (e) async* {
+      yield state.copyWith(name: e.name);
+    }, emailAddressChanged: (e) async* {
+      yield state.copyWith(emailAddress: e.emailAddress);
     });
   }
 
@@ -55,7 +61,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> _performIsUserCreated(
     Map<String, dynamic> phone,
     Future<Either<ServerFailure, Map<String, dynamic>>> Function(
-            {@required Map<String, dynamic>  phone})
+            {@required Map<String, dynamic> phone})
         forwardedCall,
   ) async* {
     Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;

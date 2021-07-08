@@ -18,18 +18,14 @@ class RegisterFacade implements IRegisterFacade {
   Future<Either<ServerFailure, Map<String, dynamic>>> isUserCreated(
       {Map<String, dynamic>? phone}) async {
     try {
-      print('HHHHHHHHHHHHH');
+
       final result = await getIt<ZeTraiteurApiService>().login(phone!);
-      print("BODDDDY  ${result.body!["error"]} ");
       if (result.body!["error"] != "no such user") {
-        print("RIGHHHT");
         return right(result.body!);
       } else {
-        print("LEFFT");
         return left(ServerFailure.apiFailure(msg: result.body!["error"]));
       }
     } catch (e) {
-      //print(e);
       return left(ServerFailure.serverError());
     }
   }

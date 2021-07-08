@@ -8,6 +8,8 @@ import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/show_dialog.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
+import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
+import 'package:ze_traiteur/presentation/pages/signup/sign_up_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class Panier extends StatefulWidget {
@@ -17,8 +19,14 @@ class Panier extends StatefulWidget {
 
 class _PanierState extends State<Panier> {
   RegisterBloc? _registerBloc;
-  TextEditingController phoneEditingController = TextEditingController();
-  TextEditingController addressEditingController = TextEditingController();
+  static String address = "";
+  static int phone=  775896545;
+
+  TextEditingController phoneEditingController =
+      TextEditingController(text: "$phone");
+  TextEditingController addressEditingController = TextEditingController(
+    text: address,
+  );
   double totalPrice = 0.0;
   int foodIndex = 0;
   double totalCompoPrice = 0.0;
@@ -56,12 +64,18 @@ class _PanierState extends State<Panier> {
                           failure.map(
                             serverError: (_) => showToast("Server failure"),
                             apiFailure: (e) {
-                              showDialogWidget("Vous n'avez pas de compte ",
-                                  "Creez en un.", "", context);
+                              showDialogWidget("Vous n'avez pas de compte ", "",
+                                  " Creez en un.", SignUpScreen(), context);
                             },
                           );
                         },
-                        (success) {},
+                        (success) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ConfirmationScreen(),
+                              ));
+                        },
                       );
                     },
                   );
@@ -89,6 +103,8 @@ class _PanierState extends State<Panier> {
                         );
                       }, child: BlocBuilder<OrderBloc, OrderState>(
                               builder: (context, state) {
+                        address = state.address;
+                        phone = state.phone;
                         lines = [];
                         lines.addAll(state.shoppingCartLines!);
 
@@ -100,7 +116,6 @@ class _PanierState extends State<Panier> {
                               controller: addressEditingController,
                               title: "Lieu de livraison",
                               enabled: true,
-                              hintText: "",
                               onChanged: (value) {
                                 BlocProvider.of<OrderBloc>(context)
                                   ..add(OrderEvent.addressChanged(value));
@@ -131,6 +146,9 @@ class _PanierState extends State<Panier> {
                                   itemBuilder: (context, index) {
                                     extras = [];
                                     foods = [];
+                                    totalPrice = 0.0;
+                                    totalCompoPrice = 0.0;
+
                                     extras.addAll(
                                         lines[index].composition!.extras);
                                     foods.addAll(lines[index]
@@ -149,7 +167,7 @@ class _PanierState extends State<Panier> {
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 16)),
                                           subtitle: SizedBox(
-                                            height: 50,
+                                              height: 50,
                                               child: ListView.separated(
                                                 scrollDirection:
                                                     Axis.horizontal,
@@ -190,13 +208,7 @@ class _PanierState extends State<Panier> {
                                                       .spaceBetween,
                                               children: [
                                                 SizedBox(),
-                                                Text(
-                                                    //foods[keys[index]]![
-                                                    //          indexx]
-                                                    //    .price
-                                                    //  .toString() +
-
-                                                    "$totalCompoPrice" + " DA",
+                                                Text("$totalCompoPrice" + " DA",
                                                     style: GoogleFonts.lato())
                                               ],
                                             ))

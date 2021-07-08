@@ -27,6 +27,24 @@ class _$RegisterEventTearOff {
       phone,
     );
   }
+
+  NumberPhoneChanged numberPhoneChanged(int phone) {
+    return NumberPhoneChanged(
+      phone,
+    );
+  }
+
+  EmailAddressChanged emailAddressChanged(String emailAddress) {
+    return EmailAddressChanged(
+      emailAddress,
+    );
+  }
+
+  NameChanged nameChanged(String name) {
+    return NameChanged(
+      name,
+    );
+  }
 }
 
 /// @nodoc
@@ -34,18 +52,22 @@ const $RegisterEvent = _$RegisterEventTearOff();
 
 /// @nodoc
 mixin _$RegisterEvent {
-  int get phone => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
     required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
     TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -53,18 +75,20 @@ mixin _$RegisterEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
     required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
     TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $RegisterEventCopyWith<RegisterEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -73,7 +97,6 @@ abstract class $RegisterEventCopyWith<$Res> {
   factory $RegisterEventCopyWith(
           RegisterEvent value, $Res Function(RegisterEvent) then) =
       _$RegisterEventCopyWithImpl<$Res>;
-  $Res call({int phone});
 }
 
 /// @nodoc
@@ -84,27 +107,13 @@ class _$RegisterEventCopyWithImpl<$Res>
   final RegisterEvent _value;
   // ignore: unused_field
   final $Res Function(RegisterEvent) _then;
-
-  @override
-  $Res call({
-    Object? phone = freezed,
-  }) {
-    return _then(_value.copyWith(
-      phone: phone == freezed
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class $IsUserCreatedCopyWith<$Res>
-    implements $RegisterEventCopyWith<$Res> {
+abstract class $IsUserCreatedCopyWith<$Res> {
   factory $IsUserCreatedCopyWith(
           IsUserCreated value, $Res Function(IsUserCreated) then) =
       _$IsUserCreatedCopyWithImpl<$Res>;
-  @override
   $Res call({int phone});
 }
 
@@ -175,6 +184,9 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
     required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
   }) {
     return isUserCreated(phone);
   }
@@ -184,6 +196,9 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
     TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
     required TResult orElse(),
   }) {
     if (isUserCreated != null) {
@@ -197,6 +212,9 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
     required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
   }) {
     return isUserCreated(this);
   }
@@ -206,6 +224,9 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
     TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
     required TResult orElse(),
   }) {
     if (isUserCreated != null) {
@@ -218,21 +239,17 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
 abstract class IsUserCreated implements RegisterEvent {
   const factory IsUserCreated(int phone) = _$IsUserCreated;
 
-  @override
   int get phone => throw _privateConstructorUsedError;
-  @override
   @JsonKey(ignore: true)
   $IsUserCreatedCopyWith<IsUserCreated> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CreateUserCopyWith<$Res>
-    implements $RegisterEventCopyWith<$Res> {
+abstract class $CreateUserCopyWith<$Res> {
   factory $CreateUserCopyWith(
           CreateUser value, $Res Function(CreateUser) then) =
       _$CreateUserCopyWithImpl<$Res>;
-  @override
   $Res call({int phone});
 }
 
@@ -301,6 +318,9 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
     required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
   }) {
     return createUser(phone);
   }
@@ -310,6 +330,9 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
     TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
     required TResult orElse(),
   }) {
     if (createUser != null) {
@@ -323,6 +346,9 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
     required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
   }) {
     return createUser(this);
   }
@@ -332,6 +358,9 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
     TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
     required TResult orElse(),
   }) {
     if (createUser != null) {
@@ -344,11 +373,422 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
 abstract class CreateUser implements RegisterEvent {
   const factory CreateUser(int phone) = _$CreateUser;
 
-  @override
   int get phone => throw _privateConstructorUsedError;
-  @override
   @JsonKey(ignore: true)
   $CreateUserCopyWith<CreateUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NumberPhoneChangedCopyWith<$Res> {
+  factory $NumberPhoneChangedCopyWith(
+          NumberPhoneChanged value, $Res Function(NumberPhoneChanged) then) =
+      _$NumberPhoneChangedCopyWithImpl<$Res>;
+  $Res call({int phone});
+}
+
+/// @nodoc
+class _$NumberPhoneChangedCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res>
+    implements $NumberPhoneChangedCopyWith<$Res> {
+  _$NumberPhoneChangedCopyWithImpl(
+      NumberPhoneChanged _value, $Res Function(NumberPhoneChanged) _then)
+      : super(_value, (v) => _then(v as NumberPhoneChanged));
+
+  @override
+  NumberPhoneChanged get _value => super._value as NumberPhoneChanged;
+
+  @override
+  $Res call({
+    Object? phone = freezed,
+  }) {
+    return _then(NumberPhoneChanged(
+      phone == freezed
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$NumberPhoneChanged
+    with DiagnosticableTreeMixin
+    implements NumberPhoneChanged {
+  const _$NumberPhoneChanged(this.phone);
+
+  @override
+  final int phone;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.numberPhoneChanged(phone: $phone)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.numberPhoneChanged'))
+      ..add(DiagnosticsProperty('phone', phone));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is NumberPhoneChanged &&
+            (identical(other.phone, phone) ||
+                const DeepCollectionEquality().equals(other.phone, phone)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(phone);
+
+  @JsonKey(ignore: true)
+  @override
+  $NumberPhoneChangedCopyWith<NumberPhoneChanged> get copyWith =>
+      _$NumberPhoneChangedCopyWithImpl<NumberPhoneChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+  }) {
+    return numberPhoneChanged(phone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    required TResult orElse(),
+  }) {
+    if (numberPhoneChanged != null) {
+      return numberPhoneChanged(phone);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+  }) {
+    return numberPhoneChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    required TResult orElse(),
+  }) {
+    if (numberPhoneChanged != null) {
+      return numberPhoneChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NumberPhoneChanged implements RegisterEvent {
+  const factory NumberPhoneChanged(int phone) = _$NumberPhoneChanged;
+
+  int get phone => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $NumberPhoneChangedCopyWith<NumberPhoneChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EmailAddressChangedCopyWith<$Res> {
+  factory $EmailAddressChangedCopyWith(
+          EmailAddressChanged value, $Res Function(EmailAddressChanged) then) =
+      _$EmailAddressChangedCopyWithImpl<$Res>;
+  $Res call({String emailAddress});
+}
+
+/// @nodoc
+class _$EmailAddressChangedCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res>
+    implements $EmailAddressChangedCopyWith<$Res> {
+  _$EmailAddressChangedCopyWithImpl(
+      EmailAddressChanged _value, $Res Function(EmailAddressChanged) _then)
+      : super(_value, (v) => _then(v as EmailAddressChanged));
+
+  @override
+  EmailAddressChanged get _value => super._value as EmailAddressChanged;
+
+  @override
+  $Res call({
+    Object? emailAddress = freezed,
+  }) {
+    return _then(EmailAddressChanged(
+      emailAddress == freezed
+          ? _value.emailAddress
+          : emailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EmailAddressChanged
+    with DiagnosticableTreeMixin
+    implements EmailAddressChanged {
+  const _$EmailAddressChanged(this.emailAddress);
+
+  @override
+  final String emailAddress;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.emailAddressChanged(emailAddress: $emailAddress)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.emailAddressChanged'))
+      ..add(DiagnosticsProperty('emailAddress', emailAddress));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is EmailAddressChanged &&
+            (identical(other.emailAddress, emailAddress) ||
+                const DeepCollectionEquality()
+                    .equals(other.emailAddress, emailAddress)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(emailAddress);
+
+  @JsonKey(ignore: true)
+  @override
+  $EmailAddressChangedCopyWith<EmailAddressChanged> get copyWith =>
+      _$EmailAddressChangedCopyWithImpl<EmailAddressChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+  }) {
+    return emailAddressChanged(emailAddress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    required TResult orElse(),
+  }) {
+    if (emailAddressChanged != null) {
+      return emailAddressChanged(emailAddress);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+  }) {
+    return emailAddressChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    required TResult orElse(),
+  }) {
+    if (emailAddressChanged != null) {
+      return emailAddressChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EmailAddressChanged implements RegisterEvent {
+  const factory EmailAddressChanged(String emailAddress) =
+      _$EmailAddressChanged;
+
+  String get emailAddress => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EmailAddressChangedCopyWith<EmailAddressChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NameChangedCopyWith<$Res> {
+  factory $NameChangedCopyWith(
+          NameChanged value, $Res Function(NameChanged) then) =
+      _$NameChangedCopyWithImpl<$Res>;
+  $Res call({String name});
+}
+
+/// @nodoc
+class _$NameChangedCopyWithImpl<$Res> extends _$RegisterEventCopyWithImpl<$Res>
+    implements $NameChangedCopyWith<$Res> {
+  _$NameChangedCopyWithImpl(
+      NameChanged _value, $Res Function(NameChanged) _then)
+      : super(_value, (v) => _then(v as NameChanged));
+
+  @override
+  NameChanged get _value => super._value as NameChanged;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+  }) {
+    return _then(NameChanged(
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$NameChanged with DiagnosticableTreeMixin implements NameChanged {
+  const _$NameChanged(this.name);
+
+  @override
+  final String name;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.nameChanged(name: $name)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.nameChanged'))
+      ..add(DiagnosticsProperty('name', name));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is NameChanged &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
+
+  @JsonKey(ignore: true)
+  @override
+  $NameChangedCopyWith<NameChanged> get copyWith =>
+      _$NameChangedCopyWithImpl<NameChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+  }) {
+    return nameChanged(name);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    required TResult orElse(),
+  }) {
+    if (nameChanged != null) {
+      return nameChanged(name);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+  }) {
+    return nameChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    required TResult orElse(),
+  }) {
+    if (nameChanged != null) {
+      return nameChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NameChanged implements RegisterEvent {
+  const factory NameChanged(String name) = _$NameChanged;
+
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $NameChangedCopyWith<NameChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -358,6 +798,8 @@ class _$RegisterStateTearOff {
 
   _RegisterState call(
       {required int phone,
+      required String name,
+      required String emailAddress,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
           isUserCreatedFailureOrSuccess,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
@@ -365,6 +807,8 @@ class _$RegisterStateTearOff {
       String? error}) {
     return _RegisterState(
       phone: phone,
+      name: name,
+      emailAddress: emailAddress,
       isUserCreatedFailureOrSuccess: isUserCreatedFailureOrSuccess,
       createUserFailureOrSuccess: createUserFailureOrSuccess,
       error: error,
@@ -378,6 +822,8 @@ const $RegisterState = _$RegisterStateTearOff();
 /// @nodoc
 mixin _$RegisterState {
   int get phone => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get emailAddress => throw _privateConstructorUsedError;
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get isUserCreatedFailureOrSuccess => throw _privateConstructorUsedError;
   Option<Either<ServerFailure, Map<String, dynamic>>>
@@ -396,6 +842,8 @@ abstract class $RegisterStateCopyWith<$Res> {
       _$RegisterStateCopyWithImpl<$Res>;
   $Res call(
       {int phone,
+      String name,
+      String emailAddress,
       Option<Either<ServerFailure, Map<String, dynamic>>>
           isUserCreatedFailureOrSuccess,
       Option<Either<ServerFailure, Map<String, dynamic>>>
@@ -415,6 +863,8 @@ class _$RegisterStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? phone = freezed,
+    Object? name = freezed,
+    Object? emailAddress = freezed,
     Object? isUserCreatedFailureOrSuccess = freezed,
     Object? createUserFailureOrSuccess = freezed,
     Object? error = freezed,
@@ -424,6 +874,14 @@ class _$RegisterStateCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as int,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailAddress: emailAddress == freezed
+          ? _value.emailAddress
+          : emailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       isUserCreatedFailureOrSuccess: isUserCreatedFailureOrSuccess == freezed
           ? _value.isUserCreatedFailureOrSuccess
           : isUserCreatedFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -449,6 +907,8 @@ abstract class _$RegisterStateCopyWith<$Res>
   @override
   $Res call(
       {int phone,
+      String name,
+      String emailAddress,
       Option<Either<ServerFailure, Map<String, dynamic>>>
           isUserCreatedFailureOrSuccess,
       Option<Either<ServerFailure, Map<String, dynamic>>>
@@ -470,6 +930,8 @@ class __$RegisterStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? phone = freezed,
+    Object? name = freezed,
+    Object? emailAddress = freezed,
     Object? isUserCreatedFailureOrSuccess = freezed,
     Object? createUserFailureOrSuccess = freezed,
     Object? error = freezed,
@@ -479,6 +941,14 @@ class __$RegisterStateCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as int,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailAddress: emailAddress == freezed
+          ? _value.emailAddress
+          : emailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       isUserCreatedFailureOrSuccess: isUserCreatedFailureOrSuccess == freezed
           ? _value.isUserCreatedFailureOrSuccess
           : isUserCreatedFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -500,12 +970,18 @@ class __$RegisterStateCopyWithImpl<$Res>
 class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
   const _$_RegisterState(
       {required this.phone,
+      required this.name,
+      required this.emailAddress,
       required this.isUserCreatedFailureOrSuccess,
       required this.createUserFailureOrSuccess,
       this.error});
 
   @override
   final int phone;
+  @override
+  final String name;
+  @override
+  final String emailAddress;
   @override
   final Option<Either<ServerFailure, Map<String, dynamic>>>
       isUserCreatedFailureOrSuccess;
@@ -517,7 +993,7 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RegisterState(phone: $phone, isUserCreatedFailureOrSuccess: $isUserCreatedFailureOrSuccess, createUserFailureOrSuccess: $createUserFailureOrSuccess, error: $error)';
+    return 'RegisterState(phone: $phone, name: $name, emailAddress: $emailAddress, isUserCreatedFailureOrSuccess: $isUserCreatedFailureOrSuccess, createUserFailureOrSuccess: $createUserFailureOrSuccess, error: $error)';
   }
 
   @override
@@ -526,6 +1002,8 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
     properties
       ..add(DiagnosticsProperty('type', 'RegisterState'))
       ..add(DiagnosticsProperty('phone', phone))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('emailAddress', emailAddress))
       ..add(DiagnosticsProperty(
           'isUserCreatedFailureOrSuccess', isUserCreatedFailureOrSuccess))
       ..add(DiagnosticsProperty(
@@ -539,6 +1017,11 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
         (other is _RegisterState &&
             (identical(other.phone, phone) ||
                 const DeepCollectionEquality().equals(other.phone, phone)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.emailAddress, emailAddress) ||
+                const DeepCollectionEquality()
+                    .equals(other.emailAddress, emailAddress)) &&
             (identical(other.isUserCreatedFailureOrSuccess,
                     isUserCreatedFailureOrSuccess) ||
                 const DeepCollectionEquality().equals(
@@ -557,6 +1040,8 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(phone) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(emailAddress) ^
       const DeepCollectionEquality().hash(isUserCreatedFailureOrSuccess) ^
       const DeepCollectionEquality().hash(createUserFailureOrSuccess) ^
       const DeepCollectionEquality().hash(error);
@@ -570,6 +1055,8 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
 abstract class _RegisterState implements RegisterState {
   const factory _RegisterState(
       {required int phone,
+      required String name,
+      required String emailAddress,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
           isUserCreatedFailureOrSuccess,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
@@ -578,6 +1065,10 @@ abstract class _RegisterState implements RegisterState {
 
   @override
   int get phone => throw _privateConstructorUsedError;
+  @override
+  String get name => throw _privateConstructorUsedError;
+  @override
+  String get emailAddress => throw _privateConstructorUsedError;
   @override
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get isUserCreatedFailureOrSuccess => throw _privateConstructorUsedError;

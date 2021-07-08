@@ -7,6 +7,7 @@ showDialogWidget(
   String msg,
   String msg2,
   String msg3,
+  Widget function,
   BuildContext context,
 ) async {
   showDialog(
@@ -43,7 +44,7 @@ showDialogWidget(
                           ..onTap = () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    HomeScreen()));
+                                  function));
                           }),
                     new TextSpan(
                         text: msg2, style: TextStyle(color: Color(0xFF444242))),

@@ -7,6 +7,7 @@ import 'package:ze_traiteur/presentation/components/custom_radio_button.dart';
 import 'package:ze_traiteur/presentation/components/shopping_cart_button.dart';
 import 'package:ze_traiteur/presentation/components/show_dialog.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
+import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -308,6 +309,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                         "Vous pouvez faire une autre commande en allant vers la page des ",
                         "ou bien valider ta commande dans le panier",
                         " Menus,",
+                        HomeScreen(),
                         context);
                   }
                 }, child: BlocBuilder<OrderBloc, OrderState>(
@@ -349,7 +351,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                                 isActive: false,
                                                 onPressed: _onPressed,
                                                 id: widget.extras[index].id,
-                                                extra: widget.extras[index] , name: widget.menuItem.name! )),
+                                                extra: widget.extras[index],
+                                                name: widget.menuItem.name!)),
                                       );
                                     },
                                     separatorBuilder:
@@ -380,7 +383,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                           color: Colors.white, fontSize: 18.sp),
                                     ),
                                   ))),
-                          
                         ],
                       ));
                 })))),
