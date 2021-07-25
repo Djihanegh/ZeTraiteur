@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:flutter/gestures.dart';
 
@@ -41,10 +40,10 @@ showDialogWidget(
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF444242)),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                  function));
+                          ..onTap = ()  {
+                           Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) => function));
+
                           }),
                     new TextSpan(
                         text: msg2, style: TextStyle(color: Color(0xFF444242))),

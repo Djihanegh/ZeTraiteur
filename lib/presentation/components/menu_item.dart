@@ -35,6 +35,8 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
             _scrollController!.position.maxScrollExtent &&
         !_scrollController!.position.outOfRange) {
       setState(() {
+        print("reach the bottom");
+
         _offset++;
         _menuBloc!.add(MenuEvent.getAllMenus(_offset));
         _loading = true;
@@ -42,7 +44,9 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
     }
     if (_scrollController!.offset <=
             _scrollController!.position.minScrollExtent &&
-        !_scrollController!.position.outOfRange) {}
+        !_scrollController!.position.outOfRange) {
+      print("reach the TOOP");
+    }
 
     if (_scrollController!.offset != 0.0) {
       scrollOffset = _scrollController!.offset;
@@ -74,8 +78,7 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
                   if (success['results'].isNotEmpty) {
                     setState(() {
                       menus.addAll(success['results']);
-                      extras.addAll(success['extras']['results']);
-                      print(success['extras']['results']);
+                     // extras.addAll(success['extras']['results']);
                     });
                   }
                   setState(() {
@@ -105,10 +108,10 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
   Widget _menusList(MenuState state) {
     final size = MediaQuery.of(context).size;
 
-    List<Food> list = [];
+   /* List<Food> list = [];
     for (int i = 0; i < extras.length; i++) {
       list.insert(i, Food.fromJson(extras[i]));
-    }
+    }*/
 
     return Stack(children: [
       Positioned.fill(
@@ -132,9 +135,27 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
           physics: AlwaysScrollableScrollPhysics(),
           itemCount: menus.length,
           itemBuilder: (context, indexx) {
+            List<int> ids = [];
+            List<String> sections = [];
+
+            int length = 0;
+            if (menus[indexx]["sections"].isNotEmpty) {
+              length = menus[indexx]["sections"].length;
+
+              for (int i = 0; i < length; i++) {
+                ids.add(menus[indexx]["sections"][i]["id"]);
+                sections.add(menus[indexx]["sections"][i]["name"]);
+              }
+            }
+
             return MenuItemImage(
-              menuItem: MenuItem.fromJson(menus[indexx]),
-              extras: list,
+             // extras: list,
+             sectionNames: sections,
+              menuId:  menus[indexx]["id"],
+              name: menus[indexx]["name"],
+              sectionId: ids,
+              imageUrl: menus[indexx]["image"],
+              sectionLength: length,
             );
           },
           separatorBuilder: (BuildContext context, int index) {

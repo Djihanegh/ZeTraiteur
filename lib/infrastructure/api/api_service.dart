@@ -13,14 +13,12 @@ part 'api_service.chopper.dart';
 
 @ChopperApi(baseUrl: 'http://159.65.25.199:8000/apis/')
 abstract class ZeTraiteurApiService extends ChopperService {
- 
-
   @Post(path: 'clients/')
   Future<Response<Map<String, dynamic>>> register(
-    @body User user,
+    @body Map<String, dynamic> user,
   );
 
- @Post(path: 'login/')
+  @Post(path: 'login/')
   Future<Response<Map<String, dynamic>>> login(
     @body Map<String, dynamic> phone,
   );
@@ -30,6 +28,15 @@ abstract class ZeTraiteurApiService extends ChopperService {
   );
   @Get(path: 'extras/')
   Future<Response<Map<String, dynamic>>> getAllExtras(
+    @Query('page') int page,
+  );
+  @Get(path: 'foods/')
+  Future<Response<Map<String, dynamic>>> getAllFoods(
+    @Query('page') int page,
+    @Query('section') int section,
+  );
+  @Get(path: 'cities/')
+  Future<Response<Map<String, dynamic>>> getCities(
     @Query('page') int page,
   );
   /*@Put(path: 'users/password')

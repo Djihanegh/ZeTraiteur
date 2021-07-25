@@ -22,6 +22,12 @@ class _$RegisterEventTearOff {
     );
   }
 
+  ChangeUserStatus changeUserStatus(bool exist) {
+    return ChangeUserStatus(
+      exist,
+    );
+  }
+
   CreateUser createUser(int phone) {
     return CreateUser(
       phone,
@@ -45,6 +51,36 @@ class _$RegisterEventTearOff {
       name,
     );
   }
+
+  LastNameChanged lastNameChanged(String name) {
+    return LastNameChanged(
+      name,
+    );
+  }
+
+  AddressChanged addressChanged(String address) {
+    return AddressChanged(
+      address,
+    );
+  }
+
+  GetCities getCities(int page) {
+    return GetCities(
+      page,
+    );
+  }
+
+  CitiesChanged citiesReceived(List<CityObj> cities) {
+    return CitiesChanged(
+      cities,
+    );
+  }
+
+  IsFailure isFailure(String error) {
+    return IsFailure(
+      error,
+    );
+  }
 }
 
 /// @nodoc
@@ -55,38 +91,62 @@ mixin _$RegisterEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
     required TResult Function(int phone) createUser,
     required TResult Function(int phone) numberPhoneChanged,
     required TResult Function(String emailAddress) emailAddressChanged,
     required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
     TResult Function(int phone)? createUser,
     TResult Function(int phone)? numberPhoneChanged,
     TResult Function(String emailAddress)? emailAddressChanged,
     TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
     required TResult Function(CreateUser value) createUser,
     required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
     required TResult Function(EmailAddressChanged value) emailAddressChanged,
     required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
     TResult Function(CreateUser value)? createUser,
     TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
     TResult Function(EmailAddressChanged value)? emailAddressChanged,
     TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -183,10 +243,16 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
     required TResult Function(int phone) createUser,
     required TResult Function(int phone) numberPhoneChanged,
     required TResult Function(String emailAddress) emailAddressChanged,
     required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
   }) {
     return isUserCreated(phone);
   }
@@ -195,10 +261,16 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
     TResult Function(int phone)? createUser,
     TResult Function(int phone)? numberPhoneChanged,
     TResult Function(String emailAddress)? emailAddressChanged,
     TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
     required TResult orElse(),
   }) {
     if (isUserCreated != null) {
@@ -211,10 +283,16 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
     required TResult Function(CreateUser value) createUser,
     required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
     required TResult Function(EmailAddressChanged value) emailAddressChanged,
     required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
   }) {
     return isUserCreated(this);
   }
@@ -223,10 +301,16 @@ class _$IsUserCreated with DiagnosticableTreeMixin implements IsUserCreated {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
     TResult Function(CreateUser value)? createUser,
     TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
     TResult Function(EmailAddressChanged value)? emailAddressChanged,
     TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
     required TResult orElse(),
   }) {
     if (isUserCreated != null) {
@@ -242,6 +326,168 @@ abstract class IsUserCreated implements RegisterEvent {
   int get phone => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $IsUserCreatedCopyWith<IsUserCreated> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChangeUserStatusCopyWith<$Res> {
+  factory $ChangeUserStatusCopyWith(
+          ChangeUserStatus value, $Res Function(ChangeUserStatus) then) =
+      _$ChangeUserStatusCopyWithImpl<$Res>;
+  $Res call({bool exist});
+}
+
+/// @nodoc
+class _$ChangeUserStatusCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res>
+    implements $ChangeUserStatusCopyWith<$Res> {
+  _$ChangeUserStatusCopyWithImpl(
+      ChangeUserStatus _value, $Res Function(ChangeUserStatus) _then)
+      : super(_value, (v) => _then(v as ChangeUserStatus));
+
+  @override
+  ChangeUserStatus get _value => super._value as ChangeUserStatus;
+
+  @override
+  $Res call({
+    Object? exist = freezed,
+  }) {
+    return _then(ChangeUserStatus(
+      exist == freezed
+          ? _value.exist
+          : exist // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeUserStatus
+    with DiagnosticableTreeMixin
+    implements ChangeUserStatus {
+  const _$ChangeUserStatus(this.exist);
+
+  @override
+  final bool exist;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.changeUserStatus(exist: $exist)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.changeUserStatus'))
+      ..add(DiagnosticsProperty('exist', exist));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ChangeUserStatus &&
+            (identical(other.exist, exist) ||
+                const DeepCollectionEquality().equals(other.exist, exist)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(exist);
+
+  @JsonKey(ignore: true)
+  @override
+  $ChangeUserStatusCopyWith<ChangeUserStatus> get copyWith =>
+      _$ChangeUserStatusCopyWithImpl<ChangeUserStatus>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
+  }) {
+    return changeUserStatus(exist);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (changeUserStatus != null) {
+      return changeUserStatus(exist);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
+  }) {
+    return changeUserStatus(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (changeUserStatus != null) {
+      return changeUserStatus(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ChangeUserStatus implements RegisterEvent {
+  const factory ChangeUserStatus(bool exist) = _$ChangeUserStatus;
+
+  bool get exist => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ChangeUserStatusCopyWith<ChangeUserStatus> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -317,10 +563,16 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
     required TResult Function(int phone) createUser,
     required TResult Function(int phone) numberPhoneChanged,
     required TResult Function(String emailAddress) emailAddressChanged,
     required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
   }) {
     return createUser(phone);
   }
@@ -329,10 +581,16 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
     TResult Function(int phone)? createUser,
     TResult Function(int phone)? numberPhoneChanged,
     TResult Function(String emailAddress)? emailAddressChanged,
     TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
     required TResult orElse(),
   }) {
     if (createUser != null) {
@@ -345,10 +603,16 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
     required TResult Function(CreateUser value) createUser,
     required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
     required TResult Function(EmailAddressChanged value) emailAddressChanged,
     required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
   }) {
     return createUser(this);
   }
@@ -357,10 +621,16 @@ class _$CreateUser with DiagnosticableTreeMixin implements CreateUser {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
     TResult Function(CreateUser value)? createUser,
     TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
     TResult Function(EmailAddressChanged value)? emailAddressChanged,
     TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
     required TResult orElse(),
   }) {
     if (createUser != null) {
@@ -455,10 +725,16 @@ class _$NumberPhoneChanged
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
     required TResult Function(int phone) createUser,
     required TResult Function(int phone) numberPhoneChanged,
     required TResult Function(String emailAddress) emailAddressChanged,
     required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
   }) {
     return numberPhoneChanged(phone);
   }
@@ -467,10 +743,16 @@ class _$NumberPhoneChanged
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
     TResult Function(int phone)? createUser,
     TResult Function(int phone)? numberPhoneChanged,
     TResult Function(String emailAddress)? emailAddressChanged,
     TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
     required TResult orElse(),
   }) {
     if (numberPhoneChanged != null) {
@@ -483,10 +765,16 @@ class _$NumberPhoneChanged
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
     required TResult Function(CreateUser value) createUser,
     required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
     required TResult Function(EmailAddressChanged value) emailAddressChanged,
     required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
   }) {
     return numberPhoneChanged(this);
   }
@@ -495,10 +783,16 @@ class _$NumberPhoneChanged
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
     TResult Function(CreateUser value)? createUser,
     TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
     TResult Function(EmailAddressChanged value)? emailAddressChanged,
     TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
     required TResult orElse(),
   }) {
     if (numberPhoneChanged != null) {
@@ -594,10 +888,16 @@ class _$EmailAddressChanged
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
     required TResult Function(int phone) createUser,
     required TResult Function(int phone) numberPhoneChanged,
     required TResult Function(String emailAddress) emailAddressChanged,
     required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
   }) {
     return emailAddressChanged(emailAddress);
   }
@@ -606,10 +906,16 @@ class _$EmailAddressChanged
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
     TResult Function(int phone)? createUser,
     TResult Function(int phone)? numberPhoneChanged,
     TResult Function(String emailAddress)? emailAddressChanged,
     TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
     required TResult orElse(),
   }) {
     if (emailAddressChanged != null) {
@@ -622,10 +928,16 @@ class _$EmailAddressChanged
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
     required TResult Function(CreateUser value) createUser,
     required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
     required TResult Function(EmailAddressChanged value) emailAddressChanged,
     required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
   }) {
     return emailAddressChanged(this);
   }
@@ -634,10 +946,16 @@ class _$EmailAddressChanged
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
     TResult Function(CreateUser value)? createUser,
     TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
     TResult Function(EmailAddressChanged value)? emailAddressChanged,
     TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
     required TResult orElse(),
   }) {
     if (emailAddressChanged != null) {
@@ -730,10 +1048,16 @@ class _$NameChanged with DiagnosticableTreeMixin implements NameChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
     required TResult Function(int phone) createUser,
     required TResult Function(int phone) numberPhoneChanged,
     required TResult Function(String emailAddress) emailAddressChanged,
     required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
   }) {
     return nameChanged(name);
   }
@@ -742,10 +1066,16 @@ class _$NameChanged with DiagnosticableTreeMixin implements NameChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
     TResult Function(int phone)? createUser,
     TResult Function(int phone)? numberPhoneChanged,
     TResult Function(String emailAddress)? emailAddressChanged,
     TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
     required TResult orElse(),
   }) {
     if (nameChanged != null) {
@@ -758,10 +1088,16 @@ class _$NameChanged with DiagnosticableTreeMixin implements NameChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
     required TResult Function(CreateUser value) createUser,
     required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
     required TResult Function(EmailAddressChanged value) emailAddressChanged,
     required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
   }) {
     return nameChanged(this);
   }
@@ -770,10 +1106,16 @@ class _$NameChanged with DiagnosticableTreeMixin implements NameChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
     TResult Function(CreateUser value)? createUser,
     TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
     TResult Function(EmailAddressChanged value)? emailAddressChanged,
     TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
     required TResult orElse(),
   }) {
     if (nameChanged != null) {
@@ -793,24 +1135,831 @@ abstract class NameChanged implements RegisterEvent {
 }
 
 /// @nodoc
+abstract class $LastNameChangedCopyWith<$Res> {
+  factory $LastNameChangedCopyWith(
+          LastNameChanged value, $Res Function(LastNameChanged) then) =
+      _$LastNameChangedCopyWithImpl<$Res>;
+  $Res call({String name});
+}
+
+/// @nodoc
+class _$LastNameChangedCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res>
+    implements $LastNameChangedCopyWith<$Res> {
+  _$LastNameChangedCopyWithImpl(
+      LastNameChanged _value, $Res Function(LastNameChanged) _then)
+      : super(_value, (v) => _then(v as LastNameChanged));
+
+  @override
+  LastNameChanged get _value => super._value as LastNameChanged;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+  }) {
+    return _then(LastNameChanged(
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LastNameChanged
+    with DiagnosticableTreeMixin
+    implements LastNameChanged {
+  const _$LastNameChanged(this.name);
+
+  @override
+  final String name;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.lastNameChanged(name: $name)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.lastNameChanged'))
+      ..add(DiagnosticsProperty('name', name));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is LastNameChanged &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
+
+  @JsonKey(ignore: true)
+  @override
+  $LastNameChangedCopyWith<LastNameChanged> get copyWith =>
+      _$LastNameChangedCopyWithImpl<LastNameChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
+  }) {
+    return lastNameChanged(name);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (lastNameChanged != null) {
+      return lastNameChanged(name);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
+  }) {
+    return lastNameChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (lastNameChanged != null) {
+      return lastNameChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LastNameChanged implements RegisterEvent {
+  const factory LastNameChanged(String name) = _$LastNameChanged;
+
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LastNameChangedCopyWith<LastNameChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddressChangedCopyWith<$Res> {
+  factory $AddressChangedCopyWith(
+          AddressChanged value, $Res Function(AddressChanged) then) =
+      _$AddressChangedCopyWithImpl<$Res>;
+  $Res call({String address});
+}
+
+/// @nodoc
+class _$AddressChangedCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res>
+    implements $AddressChangedCopyWith<$Res> {
+  _$AddressChangedCopyWithImpl(
+      AddressChanged _value, $Res Function(AddressChanged) _then)
+      : super(_value, (v) => _then(v as AddressChanged));
+
+  @override
+  AddressChanged get _value => super._value as AddressChanged;
+
+  @override
+  $Res call({
+    Object? address = freezed,
+  }) {
+    return _then(AddressChanged(
+      address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AddressChanged with DiagnosticableTreeMixin implements AddressChanged {
+  const _$AddressChanged(this.address);
+
+  @override
+  final String address;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.addressChanged(address: $address)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.addressChanged'))
+      ..add(DiagnosticsProperty('address', address));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is AddressChanged &&
+            (identical(other.address, address) ||
+                const DeepCollectionEquality().equals(other.address, address)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(address);
+
+  @JsonKey(ignore: true)
+  @override
+  $AddressChangedCopyWith<AddressChanged> get copyWith =>
+      _$AddressChangedCopyWithImpl<AddressChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
+  }) {
+    return addressChanged(address);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (addressChanged != null) {
+      return addressChanged(address);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
+  }) {
+    return addressChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (addressChanged != null) {
+      return addressChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class AddressChanged implements RegisterEvent {
+  const factory AddressChanged(String address) = _$AddressChanged;
+
+  String get address => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AddressChangedCopyWith<AddressChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GetCitiesCopyWith<$Res> {
+  factory $GetCitiesCopyWith(GetCities value, $Res Function(GetCities) then) =
+      _$GetCitiesCopyWithImpl<$Res>;
+  $Res call({int page});
+}
+
+/// @nodoc
+class _$GetCitiesCopyWithImpl<$Res> extends _$RegisterEventCopyWithImpl<$Res>
+    implements $GetCitiesCopyWith<$Res> {
+  _$GetCitiesCopyWithImpl(GetCities _value, $Res Function(GetCities) _then)
+      : super(_value, (v) => _then(v as GetCities));
+
+  @override
+  GetCities get _value => super._value as GetCities;
+
+  @override
+  $Res call({
+    Object? page = freezed,
+  }) {
+    return _then(GetCities(
+      page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetCities with DiagnosticableTreeMixin implements GetCities {
+  const _$GetCities(this.page);
+
+  @override
+  final int page;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.getCities(page: $page)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.getCities'))
+      ..add(DiagnosticsProperty('page', page));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is GetCities &&
+            (identical(other.page, page) ||
+                const DeepCollectionEquality().equals(other.page, page)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(page);
+
+  @JsonKey(ignore: true)
+  @override
+  $GetCitiesCopyWith<GetCities> get copyWith =>
+      _$GetCitiesCopyWithImpl<GetCities>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
+  }) {
+    return getCities(page);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (getCities != null) {
+      return getCities(page);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
+  }) {
+    return getCities(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (getCities != null) {
+      return getCities(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetCities implements RegisterEvent {
+  const factory GetCities(int page) = _$GetCities;
+
+  int get page => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GetCitiesCopyWith<GetCities> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CitiesChangedCopyWith<$Res> {
+  factory $CitiesChangedCopyWith(
+          CitiesChanged value, $Res Function(CitiesChanged) then) =
+      _$CitiesChangedCopyWithImpl<$Res>;
+  $Res call({List<CityObj> cities});
+}
+
+/// @nodoc
+class _$CitiesChangedCopyWithImpl<$Res>
+    extends _$RegisterEventCopyWithImpl<$Res>
+    implements $CitiesChangedCopyWith<$Res> {
+  _$CitiesChangedCopyWithImpl(
+      CitiesChanged _value, $Res Function(CitiesChanged) _then)
+      : super(_value, (v) => _then(v as CitiesChanged));
+
+  @override
+  CitiesChanged get _value => super._value as CitiesChanged;
+
+  @override
+  $Res call({
+    Object? cities = freezed,
+  }) {
+    return _then(CitiesChanged(
+      cities == freezed
+          ? _value.cities
+          : cities // ignore: cast_nullable_to_non_nullable
+              as List<CityObj>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CitiesChanged with DiagnosticableTreeMixin implements CitiesChanged {
+  const _$CitiesChanged(this.cities);
+
+  @override
+  final List<CityObj> cities;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.citiesReceived(cities: $cities)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.citiesReceived'))
+      ..add(DiagnosticsProperty('cities', cities));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is CitiesChanged &&
+            (identical(other.cities, cities) ||
+                const DeepCollectionEquality().equals(other.cities, cities)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(cities);
+
+  @JsonKey(ignore: true)
+  @override
+  $CitiesChangedCopyWith<CitiesChanged> get copyWith =>
+      _$CitiesChangedCopyWithImpl<CitiesChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
+  }) {
+    return citiesReceived(cities);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (citiesReceived != null) {
+      return citiesReceived(cities);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
+  }) {
+    return citiesReceived(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (citiesReceived != null) {
+      return citiesReceived(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CitiesChanged implements RegisterEvent {
+  const factory CitiesChanged(List<CityObj> cities) = _$CitiesChanged;
+
+  List<CityObj> get cities => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CitiesChangedCopyWith<CitiesChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $IsFailureCopyWith<$Res> {
+  factory $IsFailureCopyWith(IsFailure value, $Res Function(IsFailure) then) =
+      _$IsFailureCopyWithImpl<$Res>;
+  $Res call({String error});
+}
+
+/// @nodoc
+class _$IsFailureCopyWithImpl<$Res> extends _$RegisterEventCopyWithImpl<$Res>
+    implements $IsFailureCopyWith<$Res> {
+  _$IsFailureCopyWithImpl(IsFailure _value, $Res Function(IsFailure) _then)
+      : super(_value, (v) => _then(v as IsFailure));
+
+  @override
+  IsFailure get _value => super._value as IsFailure;
+
+  @override
+  $Res call({
+    Object? error = freezed,
+  }) {
+    return _then(IsFailure(
+      error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$IsFailure with DiagnosticableTreeMixin implements IsFailure {
+  const _$IsFailure(this.error);
+
+  @override
+  final String error;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RegisterEvent.isFailure(error: $error)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RegisterEvent.isFailure'))
+      ..add(DiagnosticsProperty('error', error));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is IsFailure &&
+            (identical(other.error, error) ||
+                const DeepCollectionEquality().equals(other.error, error)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
+
+  @JsonKey(ignore: true)
+  @override
+  $IsFailureCopyWith<IsFailure> get copyWith =>
+      _$IsFailureCopyWithImpl<IsFailure>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int phone) isUserCreated,
+    required TResult Function(bool exist) changeUserStatus,
+    required TResult Function(int phone) createUser,
+    required TResult Function(int phone) numberPhoneChanged,
+    required TResult Function(String emailAddress) emailAddressChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String name) lastNameChanged,
+    required TResult Function(String address) addressChanged,
+    required TResult Function(int page) getCities,
+    required TResult Function(List<CityObj> cities) citiesReceived,
+    required TResult Function(String error) isFailure,
+  }) {
+    return isFailure(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int phone)? isUserCreated,
+    TResult Function(bool exist)? changeUserStatus,
+    TResult Function(int phone)? createUser,
+    TResult Function(int phone)? numberPhoneChanged,
+    TResult Function(String emailAddress)? emailAddressChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String name)? lastNameChanged,
+    TResult Function(String address)? addressChanged,
+    TResult Function(int page)? getCities,
+    TResult Function(List<CityObj> cities)? citiesReceived,
+    TResult Function(String error)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (isFailure != null) {
+      return isFailure(error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IsUserCreated value) isUserCreated,
+    required TResult Function(ChangeUserStatus value) changeUserStatus,
+    required TResult Function(CreateUser value) createUser,
+    required TResult Function(NumberPhoneChanged value) numberPhoneChanged,
+    required TResult Function(EmailAddressChanged value) emailAddressChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(LastNameChanged value) lastNameChanged,
+    required TResult Function(AddressChanged value) addressChanged,
+    required TResult Function(GetCities value) getCities,
+    required TResult Function(CitiesChanged value) citiesReceived,
+    required TResult Function(IsFailure value) isFailure,
+  }) {
+    return isFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IsUserCreated value)? isUserCreated,
+    TResult Function(ChangeUserStatus value)? changeUserStatus,
+    TResult Function(CreateUser value)? createUser,
+    TResult Function(NumberPhoneChanged value)? numberPhoneChanged,
+    TResult Function(EmailAddressChanged value)? emailAddressChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(LastNameChanged value)? lastNameChanged,
+    TResult Function(AddressChanged value)? addressChanged,
+    TResult Function(GetCities value)? getCities,
+    TResult Function(CitiesChanged value)? citiesReceived,
+    TResult Function(IsFailure value)? isFailure,
+    required TResult orElse(),
+  }) {
+    if (isFailure != null) {
+      return isFailure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class IsFailure implements RegisterEvent {
+  const factory IsFailure(String error) = _$IsFailure;
+
+  String get error => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $IsFailureCopyWith<IsFailure> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 class _$RegisterStateTearOff {
   const _$RegisterStateTearOff();
 
   _RegisterState call(
       {required int phone,
       required String name,
+      required String lastName,
+      required String address,
+      required bool isUserExists,
       required String emailAddress,
+      required List<CityObj> cities,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
           isUserCreatedFailureOrSuccess,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
           createUserFailureOrSuccess,
+      required Option<Either<ServerFailure, List<CityObj>>>
+          getCitiesFailureOrSuccess,
       String? error}) {
     return _RegisterState(
       phone: phone,
       name: name,
+      lastName: lastName,
+      address: address,
+      isUserExists: isUserExists,
       emailAddress: emailAddress,
+      cities: cities,
       isUserCreatedFailureOrSuccess: isUserCreatedFailureOrSuccess,
       createUserFailureOrSuccess: createUserFailureOrSuccess,
+      getCitiesFailureOrSuccess: getCitiesFailureOrSuccess,
       error: error,
     );
   }
@@ -823,11 +1972,17 @@ const $RegisterState = _$RegisterStateTearOff();
 mixin _$RegisterState {
   int get phone => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  bool get isUserExists => throw _privateConstructorUsedError;
   String get emailAddress => throw _privateConstructorUsedError;
+  List<CityObj> get cities => throw _privateConstructorUsedError;
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get isUserCreatedFailureOrSuccess => throw _privateConstructorUsedError;
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get createUserFailureOrSuccess => throw _privateConstructorUsedError;
+  Option<Either<ServerFailure, List<CityObj>>> get getCitiesFailureOrSuccess =>
+      throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -843,11 +1998,16 @@ abstract class $RegisterStateCopyWith<$Res> {
   $Res call(
       {int phone,
       String name,
+      String lastName,
+      String address,
+      bool isUserExists,
       String emailAddress,
+      List<CityObj> cities,
       Option<Either<ServerFailure, Map<String, dynamic>>>
           isUserCreatedFailureOrSuccess,
       Option<Either<ServerFailure, Map<String, dynamic>>>
           createUserFailureOrSuccess,
+      Option<Either<ServerFailure, List<CityObj>>> getCitiesFailureOrSuccess,
       String? error});
 }
 
@@ -864,9 +2024,14 @@ class _$RegisterStateCopyWithImpl<$Res>
   $Res call({
     Object? phone = freezed,
     Object? name = freezed,
+    Object? lastName = freezed,
+    Object? address = freezed,
+    Object? isUserExists = freezed,
     Object? emailAddress = freezed,
+    Object? cities = freezed,
     Object? isUserCreatedFailureOrSuccess = freezed,
     Object? createUserFailureOrSuccess = freezed,
+    Object? getCitiesFailureOrSuccess = freezed,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -878,10 +2043,26 @@ class _$RegisterStateCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      lastName: lastName == freezed
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      isUserExists: isUserExists == freezed
+          ? _value.isUserExists
+          : isUserExists // ignore: cast_nullable_to_non_nullable
+              as bool,
       emailAddress: emailAddress == freezed
           ? _value.emailAddress
           : emailAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      cities: cities == freezed
+          ? _value.cities
+          : cities // ignore: cast_nullable_to_non_nullable
+              as List<CityObj>,
       isUserCreatedFailureOrSuccess: isUserCreatedFailureOrSuccess == freezed
           ? _value.isUserCreatedFailureOrSuccess
           : isUserCreatedFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -890,6 +2071,10 @@ class _$RegisterStateCopyWithImpl<$Res>
           ? _value.createUserFailureOrSuccess
           : createUserFailureOrSuccess // ignore: cast_nullable_to_non_nullable
               as Option<Either<ServerFailure, Map<String, dynamic>>>,
+      getCitiesFailureOrSuccess: getCitiesFailureOrSuccess == freezed
+          ? _value.getCitiesFailureOrSuccess
+          : getCitiesFailureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<ServerFailure, List<CityObj>>>,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -908,11 +2093,16 @@ abstract class _$RegisterStateCopyWith<$Res>
   $Res call(
       {int phone,
       String name,
+      String lastName,
+      String address,
+      bool isUserExists,
       String emailAddress,
+      List<CityObj> cities,
       Option<Either<ServerFailure, Map<String, dynamic>>>
           isUserCreatedFailureOrSuccess,
       Option<Either<ServerFailure, Map<String, dynamic>>>
           createUserFailureOrSuccess,
+      Option<Either<ServerFailure, List<CityObj>>> getCitiesFailureOrSuccess,
       String? error});
 }
 
@@ -931,9 +2121,14 @@ class __$RegisterStateCopyWithImpl<$Res>
   $Res call({
     Object? phone = freezed,
     Object? name = freezed,
+    Object? lastName = freezed,
+    Object? address = freezed,
+    Object? isUserExists = freezed,
     Object? emailAddress = freezed,
+    Object? cities = freezed,
     Object? isUserCreatedFailureOrSuccess = freezed,
     Object? createUserFailureOrSuccess = freezed,
+    Object? getCitiesFailureOrSuccess = freezed,
     Object? error = freezed,
   }) {
     return _then(_RegisterState(
@@ -945,10 +2140,26 @@ class __$RegisterStateCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      lastName: lastName == freezed
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      isUserExists: isUserExists == freezed
+          ? _value.isUserExists
+          : isUserExists // ignore: cast_nullable_to_non_nullable
+              as bool,
       emailAddress: emailAddress == freezed
           ? _value.emailAddress
           : emailAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      cities: cities == freezed
+          ? _value.cities
+          : cities // ignore: cast_nullable_to_non_nullable
+              as List<CityObj>,
       isUserCreatedFailureOrSuccess: isUserCreatedFailureOrSuccess == freezed
           ? _value.isUserCreatedFailureOrSuccess
           : isUserCreatedFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -957,6 +2168,10 @@ class __$RegisterStateCopyWithImpl<$Res>
           ? _value.createUserFailureOrSuccess
           : createUserFailureOrSuccess // ignore: cast_nullable_to_non_nullable
               as Option<Either<ServerFailure, Map<String, dynamic>>>,
+      getCitiesFailureOrSuccess: getCitiesFailureOrSuccess == freezed
+          ? _value.getCitiesFailureOrSuccess
+          : getCitiesFailureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<ServerFailure, List<CityObj>>>,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -971,9 +2186,14 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
   const _$_RegisterState(
       {required this.phone,
       required this.name,
+      required this.lastName,
+      required this.address,
+      required this.isUserExists,
       required this.emailAddress,
+      required this.cities,
       required this.isUserCreatedFailureOrSuccess,
       required this.createUserFailureOrSuccess,
+      required this.getCitiesFailureOrSuccess,
       this.error});
 
   @override
@@ -981,7 +2201,15 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
   @override
   final String name;
   @override
+  final String lastName;
+  @override
+  final String address;
+  @override
+  final bool isUserExists;
+  @override
   final String emailAddress;
+  @override
+  final List<CityObj> cities;
   @override
   final Option<Either<ServerFailure, Map<String, dynamic>>>
       isUserCreatedFailureOrSuccess;
@@ -989,11 +2217,13 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
   final Option<Either<ServerFailure, Map<String, dynamic>>>
       createUserFailureOrSuccess;
   @override
+  final Option<Either<ServerFailure, List<CityObj>>> getCitiesFailureOrSuccess;
+  @override
   final String? error;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RegisterState(phone: $phone, name: $name, emailAddress: $emailAddress, isUserCreatedFailureOrSuccess: $isUserCreatedFailureOrSuccess, createUserFailureOrSuccess: $createUserFailureOrSuccess, error: $error)';
+    return 'RegisterState(phone: $phone, name: $name, lastName: $lastName, address: $address, isUserExists: $isUserExists, emailAddress: $emailAddress, cities: $cities, isUserCreatedFailureOrSuccess: $isUserCreatedFailureOrSuccess, createUserFailureOrSuccess: $createUserFailureOrSuccess, getCitiesFailureOrSuccess: $getCitiesFailureOrSuccess, error: $error)';
   }
 
   @override
@@ -1003,11 +2233,17 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
       ..add(DiagnosticsProperty('type', 'RegisterState'))
       ..add(DiagnosticsProperty('phone', phone))
       ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('lastName', lastName))
+      ..add(DiagnosticsProperty('address', address))
+      ..add(DiagnosticsProperty('isUserExists', isUserExists))
       ..add(DiagnosticsProperty('emailAddress', emailAddress))
+      ..add(DiagnosticsProperty('cities', cities))
       ..add(DiagnosticsProperty(
           'isUserCreatedFailureOrSuccess', isUserCreatedFailureOrSuccess))
       ..add(DiagnosticsProperty(
           'createUserFailureOrSuccess', createUserFailureOrSuccess))
+      ..add(DiagnosticsProperty(
+          'getCitiesFailureOrSuccess', getCitiesFailureOrSuccess))
       ..add(DiagnosticsProperty('error', error));
   }
 
@@ -1019,9 +2255,20 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
                 const DeepCollectionEquality().equals(other.phone, phone)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
+            (identical(other.address, address) ||
+                const DeepCollectionEquality()
+                    .equals(other.address, address)) &&
+            (identical(other.isUserExists, isUserExists) ||
+                const DeepCollectionEquality()
+                    .equals(other.isUserExists, isUserExists)) &&
             (identical(other.emailAddress, emailAddress) ||
                 const DeepCollectionEquality()
                     .equals(other.emailAddress, emailAddress)) &&
+            (identical(other.cities, cities) ||
+                const DeepCollectionEquality().equals(other.cities, cities)) &&
             (identical(other.isUserCreatedFailureOrSuccess,
                     isUserCreatedFailureOrSuccess) ||
                 const DeepCollectionEquality().equals(
@@ -1032,6 +2279,11 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
                 const DeepCollectionEquality().equals(
                     other.createUserFailureOrSuccess,
                     createUserFailureOrSuccess)) &&
+            (identical(other.getCitiesFailureOrSuccess,
+                    getCitiesFailureOrSuccess) ||
+                const DeepCollectionEquality().equals(
+                    other.getCitiesFailureOrSuccess,
+                    getCitiesFailureOrSuccess)) &&
             (identical(other.error, error) ||
                 const DeepCollectionEquality().equals(other.error, error)));
   }
@@ -1041,9 +2293,14 @@ class _$_RegisterState with DiagnosticableTreeMixin implements _RegisterState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(phone) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(lastName) ^
+      const DeepCollectionEquality().hash(address) ^
+      const DeepCollectionEquality().hash(isUserExists) ^
       const DeepCollectionEquality().hash(emailAddress) ^
+      const DeepCollectionEquality().hash(cities) ^
       const DeepCollectionEquality().hash(isUserCreatedFailureOrSuccess) ^
       const DeepCollectionEquality().hash(createUserFailureOrSuccess) ^
+      const DeepCollectionEquality().hash(getCitiesFailureOrSuccess) ^
       const DeepCollectionEquality().hash(error);
 
   @JsonKey(ignore: true)
@@ -1056,11 +2313,17 @@ abstract class _RegisterState implements RegisterState {
   const factory _RegisterState(
       {required int phone,
       required String name,
+      required String lastName,
+      required String address,
+      required bool isUserExists,
       required String emailAddress,
+      required List<CityObj> cities,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
           isUserCreatedFailureOrSuccess,
       required Option<Either<ServerFailure, Map<String, dynamic>>>
           createUserFailureOrSuccess,
+      required Option<Either<ServerFailure, List<CityObj>>>
+          getCitiesFailureOrSuccess,
       String? error}) = _$_RegisterState;
 
   @override
@@ -1068,13 +2331,24 @@ abstract class _RegisterState implements RegisterState {
   @override
   String get name => throw _privateConstructorUsedError;
   @override
+  String get lastName => throw _privateConstructorUsedError;
+  @override
+  String get address => throw _privateConstructorUsedError;
+  @override
+  bool get isUserExists => throw _privateConstructorUsedError;
+  @override
   String get emailAddress => throw _privateConstructorUsedError;
+  @override
+  List<CityObj> get cities => throw _privateConstructorUsedError;
   @override
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get isUserCreatedFailureOrSuccess => throw _privateConstructorUsedError;
   @override
   Option<Either<ServerFailure, Map<String, dynamic>>>
       get createUserFailureOrSuccess => throw _privateConstructorUsedError;
+  @override
+  Option<Either<ServerFailure, List<CityObj>>> get getCitiesFailureOrSuccess =>
+      throw _privateConstructorUsedError;
   @override
   String? get error => throw _privateConstructorUsedError;
   @override

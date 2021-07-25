@@ -24,15 +24,50 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
   Stream<MenuState> mapEventToState(
     MenuEvent event,
   ) async* {
-    yield* event.map(getAllMenus: (e) async* {
-      yield* _performGetAllMenus(
-        e.page,
-        _menuFacade.getAllMenus,
-      );
-    }, indexChanged: (e) async* { 
-      yield state.copyWith(index: e.index);
-     });
+    yield* event.map(
+      getAllMenus: (e) async* {
+        yield* _performGetAllMenus(
+          e.page,
+          _menuFacade.getAllMenus,
+        );
+      },
+      indexChanged: (e) async* {
+        yield state.copyWith(index: e.index);
+      },
+      getAllFoods: (e) async* {
+        yield* _performGetAllFoods(
+          e.page,
+          e.section,
+          _menuFacade.getAllFoods,
+        );
+      }, getAllExtras:(e) async* {
+        yield* _performGetAllExtras(
+          e.page,
+          _menuFacade.getAllExtras,
+        );
+      },
+    );
   }
+
+  Stream<MenuState> _performGetAllExtras(
+    int page,
+    Future<Either<ServerFailure, Map<String, dynamic>>> Function(
+            {@required int page})
+        forwardedCall,
+  ) async* {
+    Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;
+
+    yield state.copyWith(
+      extrasFailureOrSuccess: none(),
+    );
+
+    failureOrSuccess = await forwardedCall(page: page);
+
+    yield state.copyWith(
+      extrasFailureOrSuccess: optionOf(failureOrSuccess),
+    );
+  }
+
 
   Stream<MenuState> _performGetAllMenus(
     int page,
@@ -53,5 +88,23 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
     );
   }
 
-  
+  Stream<MenuState> _performGetAllFoods(
+    int page,
+    int section,
+    Future<Either<ServerFailure, Map<String, dynamic>>> Function(
+            {@required int page, @required int section})
+        forwardedCall,
+  ) async* {
+    Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;
+
+    yield state.copyWith(
+      foodsFailureOrSuccess: none(),
+    );
+
+    failureOrSuccess = await forwardedCall(page: page, section: section);
+
+    yield state.copyWith(
+      foodsFailureOrSuccess: optionOf(failureOrSuccess),
+    );
+  }
 }

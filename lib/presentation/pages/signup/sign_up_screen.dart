@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ze_traiteur/presentation/components/custom_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ze_traiteur/application/register/register_bloc.dart';
+import 'package:ze_traiteur/domain/entities/city_obj.dart';
+import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
+import 'package:ze_traiteur/presentation/components/show_toast.dart';
+import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
+import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -12,8 +18,17 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController firstNameLastNameController =
-  TextEditingController(text: "");
+  List<CityObj> allCities = [];
+  List<String> citiesByName = [];
+  String value = "Votre addresse";
+  int id = 0;
+  String errorMessage = "Error";
+  bool isFailure = false;
+  bool isRegistered = false;
+
+  TextEditingController lastNameController = TextEditingController(text: "");
+  TextEditingController firstNameController = TextEditingController(text: "");
+
   TextEditingController emailAddressController = TextEditingController(
     text: "",
   );
@@ -24,76 +39,252 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: kColorPrimary,
+        ),
+        body: SafeArea(child: LayoutBuilder(builder:
+            (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
+                  ),
+                  child: IntrinsicHeight(
+                      child: Center(
+                          child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: 30, bottom: 10, left: 10, right: 10),
+                              child: BlocProvider.value(
+                                  value: BlocProvider.of<RegisterBloc>(context)
+                                    ..add(RegisterEvent.getCities(1)),
+                                  child:
+                                      BlocListener<RegisterBloc, RegisterState>(
+                                          listener: (context, state) {
+                                    state.getCitiesFailureOrSuccess
+                                        .fold(() => null, (either) {
+                                      either.fold((failure) {
+                                        failure.map(
+                                          serverError: (_) => null,
+                                          apiFailure: (e) => showToast(e.msg!),
+                                        );
+                                      }, (success) {
+                                        allCities = success;
+                                      });
+                                    });
 
-      appBar: AppBar(
-        backgroundColor: kColorPrimary,
+                                    state.createUserFailureOrSuccess
+                                        .fold(() => null, (either) {
+                                      either.fold((failure) {
+                                        failure.map(
+                                            serverError: (_) => null,
+                                            apiFailure: (e) =>
+                                                {errorMessage = e.msg!});
+
+                                        /*setState(() {
+                                          
+                                        });*/
+
+                                        BlocProvider.of<RegisterBloc>(context)
+                                          ..add(RegisterEvent.isFailure(
+                                              errorMessage));
+                                      }, (success) {
+                                        _saveUserData(state);
+                                        isRegistered = true;
+                                     
+                                      });
+                                    });
+
+                                    if (state.error != "Error") {
+                                      showToast("Inscription reussie !");
+                                    }
+                                    if(isRegistered){
+                                         Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        Panier()));
+                                    }
+                                  }, child: BlocBuilder<RegisterBloc,
+                                                  RegisterState>(
+                                              builder: (context, state) {
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      child: Container(
+                                          height: size.height * 0.7,
+                                          width: size.width * 0.7,
+                                          margin: const EdgeInsets.only(
+                                              bottom: 6.0,
+                                              top: 6,
+                                              left: 6,
+                                              right: 6),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey,
+                                                offset:
+                                                    Offset(0.0, 1.0), //(x,y)
+                                                blurRadius: 6.0,
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              LabeledTextFormField(
+                                                  controller:
+                                                      lastNameController,
+                                                  hintText: "Nom*",
+                                                  enabled: true,
+                                                  title: "",
+                                                  onChanged: (value) {
+                                                    BlocProvider.of<
+                                                        RegisterBloc>(context)
+                                                      ..add(RegisterEvent
+                                                          .lastNameChanged(value
+                                                              .toString()));
+                                                  }),
+                                              LabeledTextFormField(
+                                                  controller:
+                                                      firstNameController,
+                                                  hintText: "Prenom*",
+                                                  enabled: true,
+                                                  title: "",
+                                                  onChanged: (value) {
+                                                    BlocProvider.of<
+                                                        RegisterBloc>(context)
+                                                      ..add(RegisterEvent
+                                                          .nameChanged(value
+                                                              .toString()));
+                                                  }),
+                                              LabeledTextFormField(
+                                                  controller:
+                                                      emailAddressController,
+                                                  hintText: "Addresse e-mail",
+                                                  enabled: true,
+                                                  title: "",
+                                                  onChanged: (value) {
+                                                    BlocProvider.of<
+                                                        RegisterBloc>(context)
+                                                      ..add(RegisterEvent
+                                                          .emailAddressChanged(
+                                                              value
+                                                                  .toString()));
+                                                  }),
+                                              LabeledTextFormField(
+                                                  controller:
+                                                      phoneNumberController,
+                                                  title: "",
+                                                  enabled: true,
+                                                  keyboardType:
+                                                      TextInputType.phone,
+                                                  hintText:
+                                                      "Numero de telephone*",
+                                                  onChanged: (value) {
+                                                    BlocProvider.of<
+                                                        RegisterBloc>(context)
+                                                      ..add(RegisterEvent
+                                                          .numberPhoneChanged(
+                                                              int.parse(
+                                                                  value)));
+                                                  }),
+                                              Container(
+                                                  width: double.infinity,
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                          child: ButtonTheme(
+                                                              alignedDropdown:
+                                                                  true,
+                                                              child:
+                                                                  new DropdownButton<
+                                                                      CityObj>(
+                                                                hint: Text(
+                                                                  value,
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyText2,
+                                                                ),
+                                                                items: allCities
+                                                                        .isNotEmpty
+                                                                    ? allCities.map(
+                                                                        (value) {
+                                                                        return new DropdownMenuItem<
+                                                                            CityObj>(
+                                                                          value:
+                                                                              value,
+                                                                          child:
+                                                                              new Text(value.name),
+                                                                        );
+                                                                      }).toList()
+                                                                    : <CityObj>[]
+                                                                        .map(
+                                                                            (value) {
+                                                                        return new DropdownMenuItem<
+                                                                            CityObj>(
+                                                                          value:
+                                                                              value,
+                                                                          child:
+                                                                              new Text(value.name),
+                                                                        );
+                                                                      }).toList(),
+                                                                onChanged:
+                                                                    (vl) {
+                                                                  setState(() {
+                                                                    value = vl!
+                                                                        .name;
+                                                                    id = vl.id;
+                                                                    BlocProvider.of<
+                                                                            RegisterBloc>(
+                                                                        context)
+                                                                      ..add(RegisterEvent
+                                                                          .addressChanged(
+                                                                              vl.name));
+                                                                  });
+                                                                },
+                                                              )))),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 20,
+                                                      right: 20,
+                                                      top: 20),
+                                                  child: TextButton(
+                                                    onPressed: _pressed,
+                                                    child: Text("S'inscrire"),
+                                                  )),
+                                            ],
+                                          )),
+                                    );
+                                  }))))))));
+        })));
+  }
+
+  void _pressed() {
+    BlocProvider.of<RegisterBloc>(context)..add(RegisterEvent.createUser(1));
+    if (errorMessage != "Error") {
+      if (errorMessage ==
+          '{"phone":["Client with this phone already exists."]}') {
+        errorMessage = "Numero de telephone existe deja.";
+      }
+      showToast(errorMessage);
+    }
+  }
+
+  void _saveUserData(RegisterState state) async {
+    print(state.phone);
+
+    Prefs.setString(Prefs.PHONE, state.phone.toString());
+  }
+
+  void _showToast(BuildContext context, String error) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(error),
+        action: SnackBarAction(
+            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
       ),
-
-        body: SafeArea(
-        child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-      return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: viewportConstraints.maxHeight,
-            ),
-            child: IntrinsicHeight(
-
-            child: Center(
-      child: Padding(
-          padding: EdgeInsets.only(top: 30, bottom: 10, left: 10, right: 10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(25.0),
-            child: Container(
-                height: size.height * 0.5,
-                width: size.width * 0.7,
-                margin: const EdgeInsets.only(
-                    bottom: 6.0, top: 6, left: 6, right: 6),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25.0),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 6.0,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    LabeledTextFormField(
-                        controller: firstNameLastNameController,
-                        hintText: "Nom et prenom*",
-                        enabled: true,
-                        title: "",
-                        onChanged: (value) {}),
-                    LabeledTextFormField(
-                        controller: emailAddressController,
-                        hintText: "Addresse e-mail",
-                        enabled: true,
-                        title: "",
-                        onChanged: (value) {}),
-                    LabeledTextFormField(
-                        controller: phoneNumberController,
-                        title: "",
-                        enabled: true,
-                        keyboardType: TextInputType.phone,
-                        hintText: "Numero de telephone*",
-                        onChanged: (value) {}),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                      child: CustomButton(
-                        titleColor: kColorPrimary,
-                        title: "S'inscrire",
-                        onPressed: () {
-                        },
-                      ),
-                    )
-                  ],
-                )),
-          ),
-    )))));}
-    )));
+    );
   }
 }

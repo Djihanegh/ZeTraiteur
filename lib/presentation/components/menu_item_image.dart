@@ -4,15 +4,26 @@ import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/pages/menu/menu_screen.dart';
 
 class MenuItemImage extends StatelessWidget {
-  final MenuItem menuItem;
-  final List<Food> extras;
-
-  const MenuItemImage({Key? key, required this.menuItem, required this.extras})
+  
+  List<int> sectionId;
+  String imageUrl;
+  String name;
+  int sectionLength;
+  List<String> sectionNames;
+  int menuId;
+  MenuItemImage(
+      {Key? key,
+      required this.sectionId,
+      required this.imageUrl,
+      required this.menuId,
+      required this.sectionNames,
+      required this.name,
+      required this.sectionLength})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-        final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return Column(children: [
       GestureDetector(
@@ -21,8 +32,15 @@ class MenuItemImage extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => MenuScreen(
-                        menuItem: menuItem,
-                        extras: extras
+                        //menuItem: menuItem, // IMAGE  & ID of section
+                        //  extras: extras,
+                        
+                        menuId: menuId,
+                        sectionNames: sectionNames,
+                        sectionId: sectionId,
+                        imageUrl: imageUrl,
+                        sectionLength: sectionLength,
+                        name: name,
                       )),
             );
           },
@@ -86,8 +104,9 @@ class MenuItemImage extends StatelessWidget {
         height: 0,
       ),
       Flexible(
-          child: Text(menuItem.name!.substring(0, 5), // TO DO
-              style: TextStyle(fontSize: 30), overflow: TextOverflow.ellipsis)),
+          child: Text(name.substring(0, 5), // TO DO
+              style: TextStyle(fontSize: 30),
+              overflow: TextOverflow.ellipsis)),
     ]);
   }
 }

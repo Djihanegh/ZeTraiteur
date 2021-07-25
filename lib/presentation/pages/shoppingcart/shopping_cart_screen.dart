@@ -3,12 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/application/order/order_bloc.dart';
 import 'package:ze_traiteur/application/register/register_bloc.dart';
+import 'package:ze_traiteur/domain/entities/city_obj.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
+import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/show_dialog.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
+import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/pages/signup/sign_up_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
@@ -18,25 +21,36 @@ class Panier extends StatefulWidget {
 }
 
 class _PanierState extends State<Panier> {
-  RegisterBloc? _registerBloc;
+  //RegisterBloc? _registerBloc;
   static String address = "";
-  static int phone=  775896545;
-
-  TextEditingController phoneEditingController =
-      TextEditingController(text: "$phone");
-  TextEditingController addressEditingController = TextEditingController(
-    text: address,
-  );
+  static String phone = ""; //775896545
   double totalPrice = 0.0;
   int foodIndex = 0;
   double totalCompoPrice = 0.0;
+  String value = "";
+  bool isLoading = false;
+  TextEditingController phoneEditingController =
+      TextEditingController(text: phone);
+  TextEditingController addressEditingController = TextEditingController(
+    text: address,
+  );
+  bool isUserExists = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    phone = Prefs.getString(Prefs.PHONE) ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
     List<Food> foods = [];
     List<Food> extras = [];
-    List<String> keys = [];
+    List<CityObj> allCities = [];
+    List<String> citiesByName = [];
     List<ShoppingCartLines> lines = [];
+    int index = 0;
 
     return Scaffold(
         appBar: AppBar(
@@ -53,39 +67,70 @@ class _PanierState extends State<Panier> {
         ),
         body: SafeArea(
             child: BlocProvider.value(
-                value: BlocProvider.of<RegisterBloc>(context),
+                value: BlocProvider.of<RegisterBloc>(context)
+                  ..add(RegisterEvent.getCities(1)),
                 child: BlocListener<RegisterBloc, RegisterState>(
-                    listener: (context, state) {
-                  state.isUserCreatedFailureOrSuccess.fold(
+                    listener: (context, registerState) {
+                  registerState.getCitiesFailureOrSuccess.fold(() => null,
+                      (either) {
+                    either.fold((failure) {
+                      failure.map(
+                        serverError: (_) => null,
+                        apiFailure: (e) => showToast(e.msg!),
+                      );
+                    }, (success) {
+                      allCities = success;
+
+                      citiesByName =
+                          List.generate(allCities.length, (index) => "");
+
+                      if (allCities.isNotEmpty) {
+                        for (int i = 0; i < allCities.length; i++) {
+                          citiesByName[i] = allCities[i].name;
+                        }
+                      }
+                    });
+                  });
+                  registerState.isUserCreatedFailureOrSuccess.fold(
                     () => null,
                     (either) {
                       either.fold(
                         (failure) {
                           failure.map(
-                            serverError: (_) => showToast("Server failure"),
-                            apiFailure: (e) {
-                              showDialogWidget("Vous n'avez pas de compte ", "",
-                                  " Creez en un.", SignUpScreen(), context);
-                            },
-                          );
+                              serverError: (_) =>
+                                  showToast("Server failure, try again later."),
+                              apiFailure: (e) {
+                                print("API FAILURE ");
+                                BlocProvider.of<RegisterBloc>(context)
+                                  ..add(RegisterEvent.changeUserStatus(false));
+
+                                setState(() {
+                                  isUserExists = false;
+                                });
+
+                              });
                         },
                         (success) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ConfirmationScreen(),
-                              ));
+                          print("SUCCESS");
+                          BlocProvider.of<RegisterBloc>(context)
+                            ..add(RegisterEvent.changeUserStatus(true));
+                          setState(() {
+                            print("TRUEE");
+                            isUserExists = true;
+                          });
                         },
                       );
                     },
                   );
+
+                  
                 }, child: BlocBuilder<RegisterBloc, RegisterState>(
-                        builder: (context, state) {
+                        builder: (context, registerState) {
                   return BlocProvider.value(
                       value: BlocProvider.of<OrderBloc>(context),
                       child: BlocListener<OrderBloc, OrderState>(
-                          listener: (context, state) {
-                        state.createOrderFailureOrSuccess.fold(
+                          listener: (context, orderState) {
+                        orderState.createOrderFailureOrSuccess.fold(
                           () => null,
                           (either) {
                             either.fold(
@@ -102,31 +147,66 @@ class _PanierState extends State<Panier> {
                           },
                         );
                       }, child: BlocBuilder<OrderBloc, OrderState>(
-                              builder: (context, state) {
-                        address = state.address;
-                        phone = state.phone;
+                              builder: (context, orderState) {
+                        value = orderState.address;
                         lines = [];
-                        lines.addAll(state.shoppingCartLines!);
-
-                        print("LEEEENGTH");
-                        print(lines.length);
+                        lines.addAll(orderState.shoppingCartLines!);
 
                         return ListView(children: [
-                          LabeledTextFormField(
-                              controller: addressEditingController,
-                              title: "Lieu de livraison",
-                              enabled: true,
-                              onChanged: (value) {
-                                BlocProvider.of<OrderBloc>(context)
-                                  ..add(OrderEvent.addressChanged(value));
-                              }),
+                          Padding(
+                              padding:
+                                  EdgeInsets.only(top: 20, left: 18, right: 8),
+                              child: Text(
+                                "Lieu de livraison:",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color(0xff575757),
+                                ),
+                              )),
+                          Container(
+                              width: double.infinity,
+                              child: DropdownButtonHideUnderline(
+                                  child: ButtonTheme(
+                                      alignedDropdown: true,
+                                      child: new DropdownButton<String>(
+                                        hint: Text(
+                                          value,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
+                                        ),
+                                        items: citiesByName.isNotEmpty
+                                            ? citiesByName.map((String value) {
+                                                return new DropdownMenuItem<
+                                                    String>(
+                                                  value: value,
+                                                  child: new Text(value),
+                                                );
+                                              }).toList()
+                                            : <String>[''].map((String value) {
+                                                return new DropdownMenuItem<
+                                                    String>(
+                                                  value: value,
+                                                  child: new Text(value),
+                                                );
+                                              }).toList(),
+                                        onChanged: (vl) {
+                                          setState(() {
+                                            value = vl!;
+                                            index = citiesByName.indexOf(value);
+                                            BlocProvider.of<OrderBloc>(context)
+                                              ..add(OrderEvent.addressChanged(
+                                                  value));
+                                          });
+                                        },
+                                      )))),
                           LabeledTextFormField(
                               controller: phoneEditingController,
                               title: "Numero de telephone",
                               enabled: true,
-                              hintText: "",
                               keyboardType: TextInputType.phone,
                               onChanged: (value) {
+                                phone = value;
                                 BlocProvider.of<OrderBloc>(context)
                                   ..add(OrderEvent.numberPhoneChanged(
                                       int.tryParse(value.toString()) ?? 0));
@@ -146,8 +226,6 @@ class _PanierState extends State<Panier> {
                                   itemBuilder: (context, index) {
                                     extras = [];
                                     foods = [];
-                                    totalPrice = 0.0;
-                                    totalCompoPrice = 0.0;
 
                                     extras.addAll(
                                         lines[index].composition!.extras);
@@ -155,6 +233,7 @@ class _PanierState extends State<Panier> {
                                         .composition!
                                         .selectedFoods!);
                                     foods.addAll(extras);
+                                    totalPrice = 0.0;
 
                                     totalPrice = totalPrice + totalCompoPrice;
 
@@ -173,12 +252,12 @@ class _PanierState extends State<Panier> {
                                                     Axis.horizontal,
                                                 itemCount: foods.length,
                                                 itemBuilder: (context, indexx) {
-                                                  print("AAAA");
-                                                  print(foods.length);
-
+                                                  totalCompoPrice = 0.0;
                                                   totalCompoPrice =
                                                       totalCompoPrice +
                                                           foods[indexx].price!;
+
+                                                  // print(totalCompoPrice);
 
                                                   return Text(
                                                       foods[indexx]
@@ -304,25 +383,103 @@ class _PanierState extends State<Panier> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         color: kColorPrimary),
-                                    height: 40,
+                                   // height: 40,
                                     width: double.infinity,
-                                    child: TextButton(
-                                        onPressed: () {
-                                          BlocProvider.of<RegisterBloc>(context)
-                                            ..add(RegisterEvent.isUserCreated(
-                                                state.phone));
-                                        },
-                                        child: Text("Passer ma commande",
-                                            style: GoogleFonts.lato(
+                                    child: isLoading
+                                        ? Center(
+                                            child: CircularProgressIndicator(
                                               color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ))),
+                                            ),
+                                          )
+                                        : TextButton(
+                                            onPressed: () async {
+                                              isLoading = true;
+
+                                              await _verifyUserExistence(
+                                                  orderState.phone);
+                                              print("11");
+
+                                              Future.delayed(
+                                                  const Duration(seconds: 10),
+                                                  () {
+                                                setState(() {
+                                                  if (value == '') {
+                                                    showToast(
+                                                        "L'addresse de livraison est obligatoire.");
+                                                    return;
+                                                  }
+                                                  if (!isUserExists) {
+                                                    print("YOOOOOOOOOOOOOOOO");
+                                                    isLoading = false;
+
+                                                    showToast(
+                                                        "Vous n'avez pas de compte.");
+
+                                                    // isLoading = false;
+                                                  } else if (isUserExists) {
+                                                    /* BlocProvider.of<OrderBloc>(
+                                                        context)
+                                                      ..add(OrderEvent
+                                                          .addressChanged(
+                                                              addressEditingController
+                                                                  .text));*/
+                                                    /* BlocProvider.of<OrderBloc>(
+                                                        context)
+                                                      ..add(OrderEvent
+                                                          .numberPhoneChanged(
+                                                              int.tryParse(value
+                                                                      .toString()) ??
+                                                                  0));*/
+                                                    isLoading = false;
+
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ConfirmationScreen(),
+                                                        ));
+                                                    // isLoading = false;
+                                                  }
+                                                  /* if (isUserExists) {
+      BlocProvider.of<OrderBloc>(context)
+        ..add(OrderEvent.addressChanged(addressEditingController.text));
+      BlocProvider.of<OrderBloc>(context)
+        ..add(
+            OrderEvent.numberPhoneChanged(int.tryParse(value.toString()) ?? 0));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ConfirmationScreen(),
+          ));
+    } else if (!isUserExists) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SignUpScreen(),
+          ));
+    } else {
+      print("ELSSSE");
+    }*/
+                                                });
+                                              });
+                                              print("AAAA");
+                                            },
+                                            child: Text("Passer ma commande",
+                                                style: GoogleFonts.lato(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                ))),
                                   ))
                             ],
                           )
                         ]);
                       })));
                 })))));
+  }
+
+  Future<void> _verifyUserExistence(int phone) async {
+    BlocProvider.of<RegisterBloc>(context)
+      ..add(RegisterEvent.isUserCreated(phone));
   }
 }

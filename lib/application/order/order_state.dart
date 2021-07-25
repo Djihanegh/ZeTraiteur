@@ -7,6 +7,7 @@ class OrderState with _$OrderState {
     required int extraId,
     required int menu,
     required int quantity,
+    required int page,
     required int index,
     required Map<int, int> foods,
     required List<int> extras,
@@ -24,19 +25,20 @@ class OrderState with _$OrderState {
   }) = _OrderState;
 
   factory OrderState.initial() => OrderState(
-      createOrderFailureOrSuccess: none(),
-      lines: [],
-      hasSentOrderToCart: false,
-      extraId: 0,
-      foodId: 0,
-      menu: 0,
-      quantity: 0,
-      index: 0,
-      extras: [],
-      foods: {},
-      address: '',
-      phone: 775916789,
-      selectedExtras: {},
-      selectedFood: {},
-    );
+        createOrderFailureOrSuccess: none(),
+        lines: [],
+        hasSentOrderToCart: false,
+        extraId: 0,
+        foodId: 0,
+        menu: 0,
+        quantity: 0,
+        page: 0,
+        index: 0,
+        extras: [],
+        foods: {},
+        address: '',
+        phone: 777896534,
+        selectedExtras: {},
+        selectedFood: {},
+      );
 }

@@ -1792,6 +1792,7 @@ class _$OrderStateTearOff {
       required int extraId,
       required int menu,
       required int quantity,
+      required int page,
       required int index,
       required Map<int, int> foods,
       required List<int> extras,
@@ -1810,6 +1811,7 @@ class _$OrderStateTearOff {
       extraId: extraId,
       menu: menu,
       quantity: quantity,
+      page: page,
       index: index,
       foods: foods,
       extras: extras,
@@ -1835,6 +1837,7 @@ mixin _$OrderState {
   int get extraId => throw _privateConstructorUsedError;
   int get menu => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
+  int get page => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
   Map<int, int> get foods => throw _privateConstructorUsedError;
   List<int> get extras => throw _privateConstructorUsedError;
@@ -1867,6 +1870,7 @@ abstract class $OrderStateCopyWith<$Res> {
       int extraId,
       int menu,
       int quantity,
+      int page,
       int index,
       Map<int, int> foods,
       List<int> extras,
@@ -1896,6 +1900,7 @@ class _$OrderStateCopyWithImpl<$Res> implements $OrderStateCopyWith<$Res> {
     Object? extraId = freezed,
     Object? menu = freezed,
     Object? quantity = freezed,
+    Object? page = freezed,
     Object? index = freezed,
     Object? foods = freezed,
     Object? extras = freezed,
@@ -1925,6 +1930,10 @@ class _$OrderStateCopyWithImpl<$Res> implements $OrderStateCopyWith<$Res> {
       quantity: quantity == freezed
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
               as int,
       index: index == freezed
           ? _value.index
@@ -1989,6 +1998,7 @@ abstract class _$OrderStateCopyWith<$Res> implements $OrderStateCopyWith<$Res> {
       int extraId,
       int menu,
       int quantity,
+      int page,
       int index,
       Map<int, int> foods,
       List<int> extras,
@@ -2020,6 +2030,7 @@ class __$OrderStateCopyWithImpl<$Res> extends _$OrderStateCopyWithImpl<$Res>
     Object? extraId = freezed,
     Object? menu = freezed,
     Object? quantity = freezed,
+    Object? page = freezed,
     Object? index = freezed,
     Object? foods = freezed,
     Object? extras = freezed,
@@ -2049,6 +2060,10 @@ class __$OrderStateCopyWithImpl<$Res> extends _$OrderStateCopyWithImpl<$Res>
       quantity: quantity == freezed
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
               as int,
       index: index == freezed
           ? _value.index
@@ -2110,6 +2125,7 @@ class _$_OrderState with DiagnosticableTreeMixin implements _OrderState {
       required this.extraId,
       required this.menu,
       required this.quantity,
+      required this.page,
       required this.index,
       required this.foods,
       required this.extras,
@@ -2131,6 +2147,8 @@ class _$_OrderState with DiagnosticableTreeMixin implements _OrderState {
   final int menu;
   @override
   final int quantity;
+  @override
+  final int page;
   @override
   final int index;
   @override
@@ -2159,7 +2177,7 @@ class _$_OrderState with DiagnosticableTreeMixin implements _OrderState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OrderState(foodId: $foodId, extraId: $extraId, menu: $menu, quantity: $quantity, index: $index, foods: $foods, extras: $extras, selectedExtras: $selectedExtras, selectedFood: $selectedFood, hasSentOrderToCart: $hasSentOrderToCart, phone: $phone, address: $address, createOrderFailureOrSuccess: $createOrderFailureOrSuccess, error: $error, lines: $lines, shoppingCartLines: $shoppingCartLines)';
+    return 'OrderState(foodId: $foodId, extraId: $extraId, menu: $menu, quantity: $quantity, page: $page, index: $index, foods: $foods, extras: $extras, selectedExtras: $selectedExtras, selectedFood: $selectedFood, hasSentOrderToCart: $hasSentOrderToCart, phone: $phone, address: $address, createOrderFailureOrSuccess: $createOrderFailureOrSuccess, error: $error, lines: $lines, shoppingCartLines: $shoppingCartLines)';
   }
 
   @override
@@ -2171,6 +2189,7 @@ class _$_OrderState with DiagnosticableTreeMixin implements _OrderState {
       ..add(DiagnosticsProperty('extraId', extraId))
       ..add(DiagnosticsProperty('menu', menu))
       ..add(DiagnosticsProperty('quantity', quantity))
+      ..add(DiagnosticsProperty('page', page))
       ..add(DiagnosticsProperty('index', index))
       ..add(DiagnosticsProperty('foods', foods))
       ..add(DiagnosticsProperty('extras', extras))
@@ -2200,6 +2219,8 @@ class _$_OrderState with DiagnosticableTreeMixin implements _OrderState {
             (identical(other.quantity, quantity) ||
                 const DeepCollectionEquality()
                     .equals(other.quantity, quantity)) &&
+            (identical(other.page, page) ||
+                const DeepCollectionEquality().equals(other.page, page)) &&
             (identical(other.index, index) ||
                 const DeepCollectionEquality().equals(other.index, index)) &&
             (identical(other.foods, foods) ||
@@ -2241,6 +2262,7 @@ class _$_OrderState with DiagnosticableTreeMixin implements _OrderState {
       const DeepCollectionEquality().hash(extraId) ^
       const DeepCollectionEquality().hash(menu) ^
       const DeepCollectionEquality().hash(quantity) ^
+      const DeepCollectionEquality().hash(page) ^
       const DeepCollectionEquality().hash(index) ^
       const DeepCollectionEquality().hash(foods) ^
       const DeepCollectionEquality().hash(extras) ^
@@ -2266,6 +2288,7 @@ abstract class _OrderState implements OrderState {
       required int extraId,
       required int menu,
       required int quantity,
+      required int page,
       required int index,
       required Map<int, int> foods,
       required List<int> extras,
@@ -2288,6 +2311,8 @@ abstract class _OrderState implements OrderState {
   int get menu => throw _privateConstructorUsedError;
   @override
   int get quantity => throw _privateConstructorUsedError;
+  @override
+  int get page => throw _privateConstructorUsedError;
   @override
   int get index => throw _privateConstructorUsedError;
   @override

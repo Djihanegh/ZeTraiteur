@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-
 class PostListItemShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color:  Colors.white,
+    final size = MediaQuery.of(context).size;
+
+    return Center(
+        child: Container(
+           decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+      width: size.width * 0.6,
+      height: size.height * 0.28,
+      margin: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(20),
       child: Shimmer.fromColors(
-        baseColor: Theme.of(context).primaryColor,
+        baseColor: Colors.grey[200]!,
         highlightColor: Colors.grey[100]!,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 19),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _header(),
-              _body(),
-            ],
-          ),
+        //child: Padding(
+        //padding: const EdgeInsets.symmetric(horizontal: 19),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // _header(),
+            _body(),
+          ],
         ),
+        //),
       ),
-    );
+    ));
   }
 
   Padding _header() {
@@ -80,6 +89,14 @@ class PostListItemShimmer extends StatelessWidget {
             height: 10,
           ),
           Container(
+            width: 180,
+            height: 8,
+            color: Colors.white,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
             width: 150,
             height: 8,
             color: Colors.white,
@@ -88,10 +105,30 @@ class PostListItemShimmer extends StatelessWidget {
             height: 10,
           ),
           Container(
-            width: 100,
+            width: 150,
             height: 8,
             color: Colors.white,
           ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: 180,
+            height: 8,
+            color: Colors.white,
+          ),
+            SizedBox(
+            height: 10,
+          ),
+            Container(
+            width: 150,
+            height: 8,
+            color: Colors.white,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+         
         ],
       ),
     );

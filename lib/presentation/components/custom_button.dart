@@ -6,7 +6,7 @@ class CustomButton extends StatelessWidget {
   final String? title;
   final Color? color;
   final Color? titleColor;
-  final Function onPressed;
+  final Function? onPressed;
   final EdgeInsets? padding;
 
   const CustomButton({
@@ -20,7 +20,8 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed: onPressed(),
+      onPressed: onPressed!(),
+
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
       ),

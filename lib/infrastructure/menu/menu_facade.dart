@@ -11,17 +11,13 @@ class MenuFacade implements IMenuFacade {
   int pages = 0;
   @override
   Future<Either<ServerFailure, Map<String, dynamic>>> getAllMenus(
-      { int? page}) async {
+      {int? page}) async {
     try {
-      print('TRYYY');
-      final result =
-          await getIt<ZeTraiteurApiService>().getAllMenus(page!);
-          final extras =
-          await getIt<ZeTraiteurApiService>().getAllExtras(page);
-      print(result.base.statusCode);
-      if (result.body != null && extras.body != null ) {
-       Map<String,dynamic> menus = result.body!;
-       menus["extras"] = extras.body ;
+      final result = await getIt<ZeTraiteurApiService>().getAllMenus(page!);
+      final extras = await getIt<ZeTraiteurApiService>().getAllExtras(page);
+      if (result.body != null && extras.body != null) {
+        Map<String, dynamic> menus = result.body!;
+        menus["extras"] = extras.body;
         pages++;
         return right(menus);
       } else {
@@ -35,15 +31,35 @@ class MenuFacade implements IMenuFacade {
     }
   }
 
-
-   @override
+  @override
   Future<Either<ServerFailure, Map<String, dynamic>>> getAllExtras(
-      { int? page}) async {
+      {int? page}) async {
     try {
-      print('TRYYY EXTRAS');
+      final result = await getIt<ZeTraiteurApiService>().getAllExtras(page!);
+      if (result.body != null) {
+        pages++;
+        return right(result.body!);
+      } else {
+        pages = 0;
+        return left(ServerFailure.apiFailure(msg: result.error.toString()));
+      }
+    } catch (e) {
+      print(e);
+      pages = 0;
+      return left(ServerFailure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, Map<String, dynamic>>> getAllFoods(
+      {int? page, int? section}) async {
+    try {
+      print("PAGGGGE $page   &&&&&& sectionId $section");
       final result =
-          await getIt<ZeTraiteurApiService>().getAllExtras(page!);
-      print(result.base.statusCode);
+          await getIt<ZeTraiteurApiService>().getAllFoods(page!, section!);
+
+      print("GET ALL FOODS");
+      print(result.body!["results"]);
       if (result.body != null) {
         pages++;
         return right(result.body!);

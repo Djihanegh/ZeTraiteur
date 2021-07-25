@@ -12,4 +12,5 @@ class OrderEvent with _$OrderEvent {
   const factory OrderEvent.sendCompleteOrderToCart(String menu) = SendCompleteOrderToCart;
   const factory OrderEvent.numberPhoneChanged(int phone) = NumberPhoneChanged;
   const factory OrderEvent.addressChanged(String address) = AddressChanged;
+
 }

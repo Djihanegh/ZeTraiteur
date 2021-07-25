@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/application/order/order_bloc.dart';
+import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
+import 'package:ze_traiteur/presentation/pages/shoppingcart/your_shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class ConfirmationScreen extends StatefulWidget {
@@ -19,8 +21,18 @@ class ConfirmationScreen extends StatefulWidget {
 
 class _ConfirmationScreenState extends State<ConfirmationScreen> {
   @override
+  void initState() {
+    super.initState();
+
+    //phone = Prefs.getString(Prefs.PHONE) ?? "775896545";
+    //address = Prefs.getString(Prefs.)
+  }
+
+  int phone = 0;
+  bool isLoading = false;
+
+  @override
   Widget build(BuildContext context) {
-    int phone = 0;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -57,8 +69,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   );
                 }, child: BlocBuilder<OrderBloc, OrderState>(
                         builder: (context, state) {
-                  phone = state.phone;
-
                   return Column(
                     children: [
                       Expanded(
@@ -67,13 +77,13 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                           title: "Lieu de livraison",
                           enabled: false,
                           initialValue: state.address,
+                          hintText: state.address,
                         ),
                         LabeledTextFormField(
                           title: "1er Numero de telephone",
                           enabled: false,
                           keyboardType: TextInputType.phone,
-                          initialValue:
-                              phone == 0 ? "" : state.phone.toString(),
+                          initialValue: state.phone.toString(),
                         ),
                         LabeledTextFormField(
                           title: "2eme Numero de telephone",
@@ -90,16 +100,31 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     color: kColorPrimary),
-                                height: 40,
+                                //height: 40,
                                 width: double.infinity,
-                                child: TextButton(
-                                    onPressed: null,
-                                    child: Text("Passer ma commande",
-                                        style: GoogleFonts.lato(
+                                child: isLoading
+                                    ? Center(
+                                        child: CircularProgressIndicator(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                        ))),
+                                        ),
+                                      )
+                                    : TextButton(
+                                        onPressed: () {
+                                          isLoading = false;
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  YourShoppingCartScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text("Passer ma commande",
+                                            style: GoogleFonts.lato(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ))),
                               )))
                     ],
                   );

@@ -11,7 +11,7 @@ abstract class User with _$User {
     @JsonKey(name: 'id') int? id,
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
-    @JsonKey(name: 'phone') String? phone,
+    @JsonKey(name: 'phone')  String? phone,
     @JsonKey(name: 'city_obj') CityObj? cityObj,
     List<Addresses>? addresses,
     String? email,

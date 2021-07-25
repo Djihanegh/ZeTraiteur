@@ -17,7 +17,7 @@ class _$ZeTraiteurApiService extends ZeTraiteurApiService {
   final definitionType = ZeTraiteurApiService;
 
   @override
-  Future<Response<Map<String, dynamic>>> register(User user) {
+  Future<Response<Map<String, dynamic>>> register(Map<String, dynamic> user) {
     final $url = 'http://159.65.25.199:8000/apis/clients/';
     final $body = user;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
@@ -43,6 +43,22 @@ class _$ZeTraiteurApiService extends ZeTraiteurApiService {
   @override
   Future<Response<Map<String, dynamic>>> getAllExtras(int page) {
     final $url = 'http://159.65.25.199:8000/apis/extras/';
+    final $params = <String, dynamic>{'page': page};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
+  }
+
+  @override
+  Future<Response<Map<String, dynamic>>> getAllFoods(int page, int section) {
+    final $url = 'http://159.65.25.199:8000/apis/foods/';
+    final $params = <String, dynamic>{'page': page, 'section': section};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
+  }
+
+  @override
+  Future<Response<Map<String, dynamic>>> getCities(int page) {
+    final $url = 'http://159.65.25.199:8000/apis/cities/';
     final $params = <String, dynamic>{'page': page};
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
