@@ -54,12 +54,9 @@ class MenuFacade implements IMenuFacade {
   Future<Either<ServerFailure, Map<String, dynamic>>> getAllFoods(
       {int? page, int? section}) async {
     try {
-      print("PAGGGGE $page   &&&&&& sectionId $section");
       final result =
           await getIt<ZeTraiteurApiService>().getAllFoods(page!, section!);
 
-      print("GET ALL FOODS");
-      print(result.body!["results"]);
       if (result.body != null) {
         pages++;
         return right(result.body!);

@@ -41,7 +41,6 @@ class RegisterFacade implements IRegisterFacade {
       final result = await getIt<ZeTraiteurApiService>().login(phone!);
       if (result.body!["error"] != "no such user") {
         print(result.body);
-        // != "no such user"
         return right(result.body!);
       } else {
         print("FAILURE");

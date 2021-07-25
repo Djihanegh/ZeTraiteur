@@ -33,6 +33,15 @@ class _$ZeTraiteurApiService extends ZeTraiteurApiService {
   }
 
   @override
+  Future<Response<Map<String, dynamic>>> createOrder(
+      Map<String, dynamic> body) {
+    final $url = 'http://159.65.25.199:8000/apis/orders/';
+    final $body = body;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
+  }
+
+  @override
   Future<Response<Map<String, dynamic>>> getAllMenus(int page) {
     final $url = 'http://159.65.25.199:8000/apis/menus/';
     final $params = <String, dynamic>{'page': page};

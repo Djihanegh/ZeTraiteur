@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
   static const String PHONE = "phone";
+  static const String ID = "id";
 
   static SharedPreferences? _prefs;
   static Map<String, dynamic> _memoryPrefs = Map<String, dynamic>();

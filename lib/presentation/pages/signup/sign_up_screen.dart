@@ -6,7 +6,6 @@ import 'package:ze_traiteur/domain/entities/city_obj.dart';
 import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
-import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
@@ -80,29 +79,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             apiFailure: (e) =>
                                                 {errorMessage = e.msg!});
 
-                                        /*setState(() {
-                                          
-                                        });*/
-
                                         BlocProvider.of<RegisterBloc>(context)
                                           ..add(RegisterEvent.isFailure(
                                               errorMessage));
                                       }, (success) {
-                                        _saveUserData(state);
+                                        print("SUCCES PHONE");
+                                        print(success["phone"]);
+                                        _saveUserData(state, success["id"]);
+
                                         isRegistered = true;
-                                     
                                       });
                                     });
 
                                     if (state.error != "Error") {
                                       showToast("Inscription reussie !");
                                     }
-                                    if(isRegistered){
-                                         Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        Panier()));
+                                    if (isRegistered) {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  Panier()));
                                     }
                                   }, child: BlocBuilder<RegisterBloc,
                                                   RegisterState>(
@@ -271,10 +267,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  void _saveUserData(RegisterState state) async {
-    print(state.phone);
-
+  void _saveUserData(RegisterState state, int id) async {
+    
     Prefs.setString(Prefs.PHONE, state.phone.toString());
+    Prefs.setInt(Prefs.ID, id);
   }
 
   void _showToast(BuildContext context, String error) {

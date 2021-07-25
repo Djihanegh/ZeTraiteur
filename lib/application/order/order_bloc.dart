@@ -63,6 +63,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       selectExtra: (e) async* {
         yield* _performSelectedExtra(e.extra, e.name);
       },
+      createOrder: (e) async* {
+        yield* _performCreateOrder(e.body, _orderFacade.createOrder);
+      },
     );
   }
 
@@ -85,6 +88,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     List<int> extraList = state.extras;
     int quantity = 1;
+    List<Lines> _lines = state.lines!;
 
     List<int> foods = [];
     foodsList.values.forEach((e) {
@@ -100,17 +104,25 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
       if (line.composition == composition) {
         quantity++;
+
+        yield state.copyWith(
+          createOrderFailureOrSuccess: none(),
+          quantity: quantity,
+        );
+        _lines.remove(composition);
+
         print(quantity);
       }
     }
 
     Lines line = Lines(quantity, composition);
 
-    List<Lines> _lines = state.lines!;
-
     _lines.add(line);
 
+    print(_lines);
+
     yield state.copyWith(
+        quantity: quantity,
         createOrderFailureOrSuccess: none(),
         lines: _lines,
         hasSentOrderToCart: true,
@@ -118,11 +130,27 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         extras: extraList);
 
     yield state.copyWith(
+        quantity: quantity,
         createOrderFailureOrSuccess: none(),
         lines: _lines,
         hasSentOrderToCart: false,
         foods: foodsList,
         extras: extraList);
+  }
+
+  Stream<OrderState> _performCreateOrder(
+    Map<String, dynamic> body,
+    Future<Either<ServerFailure, Map<String, dynamic>>> Function(
+            {required Map<String, dynamic> body})
+        forwardedCall,
+  ) async* {
+    Either<ServerFailure, Map<String, dynamic>> failureOrSuccess;
+
+    failureOrSuccess = await forwardedCall(body: body);
+
+    yield state.copyWith(
+      createOrderFailureOrSuccess: optionOf(failureOrSuccess),
+    );
   }
 
   Stream<OrderState> _performSendCompleteOrderToCart(

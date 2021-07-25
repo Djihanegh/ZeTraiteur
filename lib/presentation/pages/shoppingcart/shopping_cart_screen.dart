@@ -8,10 +8,8 @@ import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
 import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
-import 'package:ze_traiteur/presentation/components/show_dialog.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
-import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/pages/signup/sign_up_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
@@ -27,6 +25,8 @@ class _PanierState extends State<Panier> {
   double totalPrice = 0.0;
   int foodIndex = 0;
   double totalCompoPrice = 0.0;
+  double totalCompo = 0.0;
+  double totalCompoPrices = 0.0;
   String value = "";
   bool isLoading = false;
   TextEditingController phoneEditingController =
@@ -107,7 +107,6 @@ class _PanierState extends State<Panier> {
                                 setState(() {
                                   isUserExists = false;
                                 });
-
                               });
                         },
                         (success) {
@@ -122,8 +121,6 @@ class _PanierState extends State<Panier> {
                       );
                     },
                   );
-
-                  
                 }, child: BlocBuilder<RegisterBloc, RegisterState>(
                         builder: (context, registerState) {
                   return BlocProvider.value(
@@ -233,9 +230,13 @@ class _PanierState extends State<Panier> {
                                         .composition!
                                         .selectedFoods!);
                                     foods.addAll(extras);
-                                    totalPrice = 0.0;
+                                    /*    totalPrice = 0.0;
+                                  
 
-                                    totalPrice = totalPrice + totalCompoPrice;
+                                    totalCompoPrices =
+                                        totalCompoPrices + totalCompo;
+
+                                    totalPrice = totalPrice + totalCompoPrices;*/
 
                                     return Column(
                                       children: [
@@ -252,12 +253,12 @@ class _PanierState extends State<Panier> {
                                                     Axis.horizontal,
                                                 itemCount: foods.length,
                                                 itemBuilder: (context, indexx) {
-                                                  totalCompoPrice = 0.0;
+                                                  /*    totalCompoPrice = 0.0;
                                                   totalCompoPrice =
                                                       totalCompoPrice +
                                                           foods[indexx].price!;
-
-                                                  // print(totalCompoPrice);
+                                                  totalCompo = totalCompo +
+                                                      totalCompoPrice;*/
 
                                                   return Text(
                                                       foods[indexx]
@@ -279,7 +280,7 @@ class _PanierState extends State<Panier> {
                                             color: kColorPrimary,
                                           ),
                                         ),
-                                        Padding(
+                                        /* Padding(
                                             padding: EdgeInsets.only(right: 20),
                                             child: Row(
                                               mainAxisAlignment:
@@ -287,10 +288,10 @@ class _PanierState extends State<Panier> {
                                                       .spaceBetween,
                                               children: [
                                                 SizedBox(),
-                                                Text("$totalCompoPrice" + " DA",
+                                                Text("$totalPrice" + " DA",
                                                     style: GoogleFonts.lato())
                                               ],
-                                            ))
+                                            ))*/
                                       ],
                                     );
                                   })),
@@ -383,7 +384,7 @@ class _PanierState extends State<Panier> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         color: kColorPrimary),
-                                   // height: 40,
+                                    // height: 40,
                                     width: double.infinity,
                                     child: isLoading
                                         ? Center(
@@ -415,21 +416,15 @@ class _PanierState extends State<Panier> {
                                                     showToast(
                                                         "Vous n'avez pas de compte.");
 
-                                                    // isLoading = false;
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              SignUpScreen(),
+                                                        ));
+
                                                   } else if (isUserExists) {
-                                                    /* BlocProvider.of<OrderBloc>(
-                                                        context)
-                                                      ..add(OrderEvent
-                                                          .addressChanged(
-                                                              addressEditingController
-                                                                  .text));*/
-                                                    /* BlocProvider.of<OrderBloc>(
-                                                        context)
-                                                      ..add(OrderEvent
-                                                          .numberPhoneChanged(
-                                                              int.tryParse(value
-                                                                      .toString()) ??
-                                                                  0));*/
+                                                 
                                                     isLoading = false;
 
                                                     Navigator.push(
@@ -438,7 +433,6 @@ class _PanierState extends State<Panier> {
                                                           builder: (context) =>
                                                               ConfirmationScreen(),
                                                         ));
-                                                    // isLoading = false;
                                                   }
                                                   /* if (isUserExists) {
       BlocProvider.of<OrderBloc>(context)
