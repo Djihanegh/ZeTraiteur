@@ -8,6 +8,7 @@ import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
 import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
+import 'package:ze_traiteur/presentation/components/shopping_cart_listview.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
 import 'package:ze_traiteur/presentation/pages/signup/sign_up_screen.dart';
@@ -221,7 +222,7 @@ class _PanierState extends State<Panier> {
                                   shrinkWrap: true,
                                   itemCount: lines.length,
                                   itemBuilder: (context, index) {
-                                    extras = [];
+                                    /*extras = [];
                                     foods = [];
 
                                     extras.addAll(
@@ -293,7 +294,9 @@ class _PanierState extends State<Panier> {
                                               ],
                                             ))*/
                                       ],
-                                    );
+                                    );*/
+                                    return ShoppingCartListItem(
+                                        lines: lines[index]);
                                   })),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -384,7 +387,6 @@ class _PanierState extends State<Panier> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         color: kColorPrimary),
-                                    // height: 40,
                                     width: double.infinity,
                                     child: isLoading
                                         ? Center(
@@ -398,19 +400,19 @@ class _PanierState extends State<Panier> {
 
                                               await _verifyUserExistence(
                                                   orderState.phone);
-                                              print("11");
 
                                               Future.delayed(
                                                   const Duration(seconds: 10),
                                                   () {
                                                 setState(() {
                                                   if (value == '') {
+                                                    isLoading = false;
+
                                                     showToast(
                                                         "L'addresse de livraison est obligatoire.");
                                                     return;
                                                   }
                                                   if (!isUserExists) {
-                                                    print("YOOOOOOOOOOOOOOOO");
                                                     isLoading = false;
 
                                                     showToast(
@@ -422,9 +424,7 @@ class _PanierState extends State<Panier> {
                                                           builder: (context) =>
                                                               SignUpScreen(),
                                                         ));
-
                                                   } else if (isUserExists) {
-                                                 
                                                     isLoading = false;
 
                                                     Navigator.push(
@@ -434,29 +434,8 @@ class _PanierState extends State<Panier> {
                                                               ConfirmationScreen(),
                                                         ));
                                                   }
-                                                  /* if (isUserExists) {
-      BlocProvider.of<OrderBloc>(context)
-        ..add(OrderEvent.addressChanged(addressEditingController.text));
-      BlocProvider.of<OrderBloc>(context)
-        ..add(
-            OrderEvent.numberPhoneChanged(int.tryParse(value.toString()) ?? 0));
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ConfirmationScreen(),
-          ));
-    } else if (!isUserExists) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SignUpScreen(),
-          ));
-    } else {
-      print("ELSSSE");
-    }*/
                                                 });
                                               });
-                                              print("AAAA");
                                             },
                                             child: Text("Passer ma commande",
                                                 style: GoogleFonts.lato(
