@@ -3,9 +3,7 @@ import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class ShoppingCartButton extends StatefulWidget {
-  
-  const ShoppingCartButton({Key? key})
-      : super(key: key);
+  const ShoppingCartButton({Key? key}) : super(key: key);
 
   @override
   _ShoppingCartButtonState createState() => _ShoppingCartButtonState();
@@ -18,9 +16,9 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton> {
         padding: EdgeInsets.only(right: 15, top: 10),
         child: GestureDetector(
             onTap: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(builder: (context) => Panier()), //widget.extras , widget.foods
+                '/panier',
               );
             },
             child: Container(

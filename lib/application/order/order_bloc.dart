@@ -40,7 +40,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         yield* _performAddExtra(e.extraId);
       },
       foodChanged: (e) async* {
-        yield* _performFoodChanged(e.foodId);
+        yield* _performFoodChanged(e.foodId, e.index);
       },
       extraChanged: (e) async* {
         yield state.copyWith(extraId: e.extraId);
@@ -66,6 +66,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       createOrder: (e) async* {
         yield* _performCreateOrder(e.body, _orderFacade.createOrder);
       },
+      priceChanged: (e) async* {
+        //  double? price = state.price;
+
+        // price = price! + e.price;
+
+        yield state.copyWith(price: e.price);
+      },
     );
   }
 
@@ -75,8 +82,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   ) async* {
     Map<int, int> foodsList = state.foods;
 
+    print("ADDING FOOD");
+
     if (foodsList[index] != foodId) {
       foodsList[index] = foodId;
+
+      print("ADDDD FOOD");
+      print(foodsList[index]);
     }
     yield state.copyWith(createOrderFailureOrSuccess: none(), foods: foodsList);
   }
@@ -94,30 +106,43 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     foodsList.values.forEach((e) {
       foods.add(e);
     });
+    print("FOOOOOOOOOOOOOOODS");
+    print(foods);
 
     Composition composition = Composition(menuId, foods, extraList);
+    Lines? _line;
 
     for (Lines line in state.lines!) {
       quantity = line.quantity;
 
+      print("QUANTITYYYY");
+
       print(quantity);
 
+      print("LINNNNES");
+      print(state.lines!);
+
       if (line.composition == composition) {
+        print("EQUUUUUAAL");
+
+         _line = line;
         quantity++;
 
-        yield state.copyWith(
-          createOrderFailureOrSuccess: none(),
-          quantity: quantity,
-        );
-        _lines.remove(composition);
+      
 
-        print(quantity);
       }
     }
+
+    _lines.remove(_line);
+    print("AFTER REMOVE");
+
+    print(_lines);
+    print(quantity);
 
     Lines line = Lines(quantity, composition);
 
     _lines.add(line);
+    print("AFTER ADD");
 
     print(_lines);
 
@@ -189,7 +214,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     if (!extraList.contains(extraId)) {
       extraList.add(extraId);
     } else {
-      extraList.remove(extraId);
+      //extraList.remove(extraId);
     }
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), extras: extraList);
@@ -233,7 +258,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
   Stream<OrderState> _performFoodChanged(
     int foodId,
+    int index,
   ) async* {
+    print("FOOOOOOOD IDDS");
+    print(foodId);
+    print(index);
+    // _performAddFood(foodId, index);
     yield state.copyWith(createOrderFailureOrSuccess: none(), foodId: foodId);
   }
 }

@@ -4,6 +4,8 @@ import 'package:ze_traiteur/presentation/components/menu_item.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class HomeScreen extends StatefulWidget {
+      static String routeName = "/home";
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

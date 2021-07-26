@@ -7,6 +7,7 @@ class OrderState with _$OrderState {
     required int extraId,
     required int menu,
     required int quantity,
+    required double? price,
     required int page,
     required int index,
     required Map<int, int> foods,
@@ -18,7 +19,6 @@ class OrderState with _$OrderState {
     required String address,
     required Option<Either<ServerFailure, Map<String, dynamic>>>
         createOrderFailureOrSuccess,
-    
     final String? error,
     final List<Lines>? lines,
     final List<ShoppingCartLines>? shoppingCartLines,
@@ -38,6 +38,7 @@ class OrderState with _$OrderState {
         foods: {},
         address: '',
         phone: 777896534,
+        price: 0.0,
         selectedExtras: {},
         selectedFood: {},
       );

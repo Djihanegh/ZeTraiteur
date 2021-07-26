@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ze_traiteur/application/order/order_bloc.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
@@ -19,9 +21,7 @@ class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
   List<Food> foods = [];
   List<Food> extras = [];
   double totalCompoFoodPrice = 0.0;
-  double totalFoodPrice = 0.0;
-  double totalExtrasPrice = 0.0;
-  double totalCompoExtraPrice = 0.0;
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +39,9 @@ class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
     extras.addAll(widget.lines.composition!.extras);
     foods.addAll(widget.lines.composition!.selectedFoods!);
     foods.addAll(extras);
+
+    BlocProvider.of<OrderBloc>(context)
+        ..add(OrderEvent.priceChanged(totalCompoFoodPrice));
   }
 
   @override
@@ -50,18 +53,11 @@ class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
               style:
                   GoogleFonts.lato(fontWeight: FontWeight.w600, fontSize: 16)),
           subtitle: SizedBox(
-              height: 50,
+              height: 30,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: foods.length,
                 itemBuilder: (context, indexx) {
-                  /*    totalCompoPrice = 0.0;
-                                                  totalCompoPrice =
-                                                      totalCompoPrice +
-                                                          foods[indexx].price!;
-                                                  totalCompo = totalCompo +
-                                                      totalCompoPrice;*/
-
                   return Text(foods[indexx].name!.substring(0, 3),
                       style: GoogleFonts.lato());
                 },

@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 part 'composition.freezed.dart';
 part 'composition.g.dart';
 
@@ -13,4 +12,6 @@ class Composition with _$Composition {
   static const fromJsonFactory = _$CompositionFromJson;
   factory Composition.fromJson(Map<String, dynamic> json) =>
       _$CompositionFromJson(json);
+
+      
 }

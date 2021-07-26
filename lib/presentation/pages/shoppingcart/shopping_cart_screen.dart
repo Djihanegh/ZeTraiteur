@@ -15,6 +15,8 @@ import 'package:ze_traiteur/presentation/pages/signup/sign_up_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class Panier extends StatefulWidget {
+      static String routeName = "/panier";
+
   @override
   _PanierState createState() => _PanierState();
 }
@@ -111,11 +113,9 @@ class _PanierState extends State<Panier> {
                               });
                         },
                         (success) {
-                          print("SUCCESS");
                           BlocProvider.of<RegisterBloc>(context)
                             ..add(RegisterEvent.changeUserStatus(true));
                           setState(() {
-                            print("TRUEE");
                             isUserExists = true;
                           });
                         },
@@ -128,22 +128,7 @@ class _PanierState extends State<Panier> {
                       value: BlocProvider.of<OrderBloc>(context),
                       child: BlocListener<OrderBloc, OrderState>(
                           listener: (context, orderState) {
-                        orderState.createOrderFailureOrSuccess.fold(
-                          () => null,
-                          (either) {
-                            either.fold(
-                              (failure) {
-                                failure.map(
-                                  serverError: (_) => null,
-                                  apiFailure: (e) => showToast(""),
-                                );
-                              },
-                              (success) {
-                                showToast('');
-                              },
-                            );
-                          },
-                        );
+                     
                       }, child: BlocBuilder<OrderBloc, OrderState>(
                               builder: (context, orderState) {
                         value = orderState.address;
@@ -222,23 +207,41 @@ class _PanierState extends State<Panier> {
                                   shrinkWrap: true,
                                   itemCount: lines.length,
                                   itemBuilder: (context, index) {
+                                   //for (var line in lines) {
+                                     /* totalCompo = 0.0;
+                                      extras = [];
+                                      foods = [];
+                                      extras.addAll(lines[index].composition!.extras);
+                                      foods.addAll(
+                                          lines[index].composition!.selectedFoods!);
+                                      foods.addAll(extras);
+
+                                      for (var food in foods) {
+                                        totalCompo = totalCompo + food.price!;
+                                        print(totalCompo);
+                                      }
+                                      totalPrice = totalPrice + totalCompo;
+                                      print(totalPrice);*/
+                                  //  }
+                                    //totalPrice = 0.0;
+
+                                    // totalCompoPrices =
+                                    //     totalCompoPrices + totalCompo;
+                                    //totalPrice = totalPrice + totalCompoPrices;
+
+                                    //  for(var food in foods){
+                                    //    totalPrice = totalPrice + food.price!;
+                                    //  }
+
                                     /*extras = [];
                                     foods = [];
-
                                     extras.addAll(
                                         lines[index].composition!.extras);
                                     foods.addAll(lines[index]
                                         .composition!
                                         .selectedFoods!);
                                     foods.addAll(extras);
-                                    /*    totalPrice = 0.0;
-                                  
-
-                                    totalCompoPrices =
-                                        totalCompoPrices + totalCompo;
-
-                                    totalPrice = totalPrice + totalCompoPrices;*/
-
+                                    /*   */
                                     return Column(
                                       children: [
                                         ListTile(
@@ -260,7 +263,6 @@ class _PanierState extends State<Panier> {
                                                           foods[indexx].price!;
                                                   totalCompo = totalCompo +
                                                       totalCompoPrice;*/
-
                                                   return Text(
                                                       foods[indexx]
                                                           .name!
@@ -295,6 +297,7 @@ class _PanierState extends State<Panier> {
                                             ))*/
                                       ],
                                     );*/
+
                                     return ShoppingCartListItem(
                                         lines: lines[index]);
                                   })),
@@ -314,7 +317,7 @@ class _PanierState extends State<Panier> {
                                         style: GoogleFonts.lato(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16)),
-                                    Text(totalPrice.toString() + " DA",
+                                    Text("${totalPrice}" + " DA",
                                         style: GoogleFonts.lato(fontSize: 16))
                                   ],
                                 ),
@@ -418,21 +421,15 @@ class _PanierState extends State<Panier> {
                                                     showToast(
                                                         "Vous n'avez pas de compte.");
 
-                                                    Navigator.push(
+                                                    Navigator.pushNamed(
                                                         context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              SignUpScreen(),
-                                                        ));
+                                                        '/signup');
                                                   } else if (isUserExists) {
                                                     isLoading = false;
 
-                                                    Navigator.push(
+                                                    Navigator.pushNamed(
                                                         context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ConfirmationScreen(),
-                                                        ));
+                                                     '/confirmation_screen');
                                                   }
                                                 });
                                               });

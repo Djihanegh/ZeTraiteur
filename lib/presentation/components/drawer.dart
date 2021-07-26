@@ -56,20 +56,19 @@ class _DrawerPageState extends State<DrawerPage> {
                                 padding: EdgeInsets.only(left: 10, top: 10),
                                 child: TextButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => HomeScreen(),
-                                          ));
+                                      Navigator.pushNamed(context, '/home');
                                     },
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
                                         Container(
-                                          width: 24,
-                                          height: 24,
-                                          child: Icon(Icons.home , color: Colors.black,) ),
+                                            width: 24,
+                                            height: 24,
+                                            child: Icon(
+                                              Icons.home,
+                                              color: Colors.black,
+                                            )),
                                         SizedBox(
                                           width: 15,
                                         ),

@@ -63,7 +63,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                  //   color: Colors.red,
                                   height: 50,
                                   width:
                                       MediaQuery.of(context).size.width * 0.6,
@@ -92,7 +91,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                   )),
                               SizedBox(
                                 height: 50,
-                                //width: 30,
                                 child: Text(
                                   "$totalCompoFoodPrice DA",
                                   style: TextStyle(color: Colors.black),
@@ -154,14 +152,14 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           )
                         : SizedBox(
                             height: 50,
-                            child: Text("HHHH"),
+                            child: Text(""),
                           )
                   ],
                 ))),
         Positioned(
             top: 165,
-            left: MediaQuery.of(context).size.width * 0.6 / 1.58,
-            child: Container(
+            left: MediaQuery.of(context).size.width * 0.5 / 1.58,
+            child: Center(child:  Container(
               height: 50,
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -174,37 +172,10 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                 "$totalFoodPrice DA",
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
-            )),
+            ),)),
       ],
     );
   }
 }
 
 
-/*widget.extras!.length > 0
-                        ? ListTile(
-                            title: SizedBox(
-                                height: 100,
-                                child: ListView.separated(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 1, //widget.extras.length,
-                                  itemBuilder: (context, indexx) {
-                                    //  totalCompoPrice = 0.0;
-                                    // totalCompoPrice =
-                                    //     totalCompoPrice +
-                                    //      foods[indexx].price!;
-
-                                    // print(totalCompoPrice);
-
-                                    return Text(
-                                        "widget.extras[indexx].name!.substring(0, 3)",
-                                        style: GoogleFonts.lato());
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return Text(" - ");
-                                  },
-                                )),
-                            subtitle: Text(""),
-                            trailing: Text("750 DA"))
-                        : Text("")*/

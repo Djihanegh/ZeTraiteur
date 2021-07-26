@@ -16,6 +16,8 @@ import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MenuScreen extends StatefulWidget {
+  static String routeName = "/menu";
+
   final List<int> sectionId;
   final String imageUrl;
   final int sectionLength;
@@ -84,28 +86,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     }
   }
 
-  /*void _initScrollListener() {
-
-    _scrollController
-      ..addListener(() {
-        var triggerFetchMoreSize =
-            0.9 * _scrollController.position.maxScrollExtent;
-
-        if (!_loading &&
-            !_hasReachedEndOfResults &&
-            _scrollController.position.pixels > triggerFetchMoreSize) {
-          BlocProvider.of<MenuBloc>(context)
-          ..add(
-              MenuEvent.getAllFoods(_offset, widget.sectionId[selectedIndex]));
-          _loading = true;
-        }
-      });
-  }*/
 
   @override
   void initState() {
     super.initState();
-    // _initScrollListener();
     length = widget.sectionLength;
 
     foods = List.generate(length + 1, (index) => []);
@@ -138,11 +122,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 
   Future<bool> _refresh() {
-    //foods[selectedIndex].clear();
     _offset = 1;
     _hasReachedEndOfResults = false;
 
-    print(widget.sectionId[selectedIndex]);
     BlocProvider.of<MenuBloc>(context)
       ..add(MenuEvent.getAllFoods(_offset, widget.sectionId[selectedIndex]));
     _loading = true;
@@ -172,8 +154,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     );
                   },
                   (success) {
-                    print("SUCCCESSSSS  3333");
-
                     if (success['results'].isNotEmpty) {
                       setState(() {
                         if (!foods[selectedIndex]
@@ -200,8 +180,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     );
                   },
                   (success) {
-                    print("SUCCCESSSSS  EXTRAS");
-
                     if (success['results'].isNotEmpty) {
                       setState(() {
                         if (!extras.contains(success["results"])) {
@@ -227,7 +205,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                           setState(() {
                             if (foodId != 0) {
                               if (selectedIndex < i + 1) {
-                                addFood(foodId, selectedIndex);
+                                print("ADDD");
+                                print(foodId);
+                                print(selectedIndex);
+                                addFood(foodId, selectedIndex); // TODO
                               }
                             }
                             selectedIndex = i;
@@ -282,6 +263,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     if (foodId != 0) {
                       if (_list[selectedIndex] != foodId) {
                         _list[selectedIndex] = foodId;
+                        print("HELLLOOOOOOOOOOO");
+                        print(_list[selectedIndex]);
+                        addFood(_list[selectedIndex]!, selectedIndex);
                       }
                     }
                     selectedIndex = j;
@@ -318,7 +302,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         child: Padding(
             padding: EdgeInsets.all(15),
             child: length == 0
-                ? CircularProgressIndicator(color: kColorPrimary,)/*ListView.separated(
+                ? CircularProgressIndicator(
+                    color: kColorPrimary,
+                  )
+                /*ListView.separated(
                     physics: ScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -406,23 +393,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                 value: BlocProvider.of<OrderBloc>(context),
                 child: BlocListener<OrderBloc, OrderState>(
                     listener: (context, state) {
-                  state.createOrderFailureOrSuccess.fold(
-                    () => null,
-                    (either) {
-                      Navigator.pop(context);
-                      either.fold(
-                        (failure) {
-                          failure.map(
-                            serverError: (_) => null,
-                            apiFailure: (e) => showToast(""),
-                          );
-                        },
-                        (success) {
-                          showToast('');
-                        },
-                      );
-                    },
-                  );
                   if (state.hasSentOrderToCart) {
                     showToast("Votre commande est ajoutée au panier");
                     showDialogWidget(
@@ -512,10 +482,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
     return SafeArea(
         child: BlocProvider(
-            create: (_) => getIt<MenuBloc>(), 
-
-            child: BlocListener<MenuBloc, MenuState>(
-                listener: (context, state) {
+            create: (_) => getIt<MenuBloc>(),
+            child:
+                BlocListener<MenuBloc, MenuState>(listener: (context, state) {
               state.foodsFailureOrSuccess.fold(
                 () => PostListItemShimmer(),
                 (either) {
@@ -624,15 +593,21 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 
   void foodChanged(int i, int index) {
-    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.foodChanged(foodId));
-
     setState(() {
-      print("FOOOD ID   $foodId");
       foodId = foods[selectedIndex][index]["id"]; // TODO
     });
+
+    BlocProvider.of<OrderBloc>(context)
+      ..add(OrderEvent.foodChanged(foodId, index));
   }
 
   void addFood(int i, int index) {
+    print("IIIIII");
+    print(i);
+
+    print("INDEEEEX");
+    print(index);
+
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addFood(i, index));
   }
 
@@ -657,7 +632,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   void _onPressed(bool isActive, int i, Food extra, String name) {
     selectedExtra.add(extra);
     selectExtra(extra, name);
-    print(selectedExtra);
     addExtra(i);
   }
 

@@ -9,6 +9,8 @@ import 'package:ze_traiteur/presentation/pages/shoppingcart/your_shopping_cart_s
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class ConfirmationScreen extends StatefulWidget {
+    static String routeName = "/confirmation_screen";
+
   final String? address;
   final String? phoneNumber;
 
@@ -51,22 +53,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 value: BlocProvider.of<OrderBloc>(context),
                 child: BlocListener<OrderBloc, OrderState>(
                     listener: (context, state) {
-                  state.createOrderFailureOrSuccess.fold(
-                    () => null,
-                    (either) {
-                      either.fold(
-                        (failure) {
-                          failure.map(
-                            serverError: (_) => null,
-                            apiFailure: (e) => showToast(""),
-                          );
-                        },
-                        (success) {
-                          showToast('');
-                        },
-                      );
-                    },
-                  );
+                 
                 }, child: BlocBuilder<OrderBloc, OrderState>(
                         builder: (context, state) {
                   return Column(
@@ -100,7 +87,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     color: kColorPrimary),
-                                //height: 40,
                                 width: double.infinity,
                                 child: isLoading
                                     ? Center(
@@ -111,12 +97,9 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                     : TextButton(
                                         onPressed: () {
                                           isLoading = false;
-                                          Navigator.push(
+                                          Navigator.pushNamed(
                                             context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  YourShoppingCartScreen(),
-                                            ),
+                                           '/your_shopping_cart_screen'
                                           );
                                         },
                                         child: Text("Passer ma commande",

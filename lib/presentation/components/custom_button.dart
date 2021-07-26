@@ -29,15 +29,6 @@ class CustomButton extends StatelessWidget {
       child: Ink(
         decoration: BoxDecoration(
           color: kColorPrimary,
-
-          /*gradient: LinearGradient(
-            colors: [
-              color ?? kColorPrimary,
-              color ?? kColorPink,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),*/
           borderRadius: BorderRadius.circular(25),
         ),
         child: Container(

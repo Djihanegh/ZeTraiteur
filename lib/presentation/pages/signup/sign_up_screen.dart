@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/application/register/register_bloc.dart';
 import 'package:ze_traiteur/domain/entities/city_obj.dart';
 import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
@@ -10,6 +11,8 @@ import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class SignUpScreen extends StatefulWidget {
+      static String routeName = "/signup";
+
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
@@ -24,6 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String errorMessage = "Error";
   bool isFailure = false;
   bool isRegistered = false;
+  bool isLoading = false;
 
   TextEditingController lastNameController = TextEditingController(text: "");
   TextEditingController firstNameController = TextEditingController(text: "");
@@ -82,9 +86,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         BlocProvider.of<RegisterBloc>(context)
                                           ..add(RegisterEvent.isFailure(
                                               errorMessage));
+                                        isLoading = false;
                                       }, (success) {
-                                        print("SUCCES PHONE");
-                                        print(success["phone"]);
+                                        isLoading = false;
+
+                                        //Navigator.pop(context);
+
                                         _saveUserData(state, success["id"]);
 
                                         isRegistered = true;
@@ -92,14 +99,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     });
 
                                     if (state.error != "Error") {
+                                      isLoading = false;
+
                                       showToast("Inscription reussie !");
                                     }
-                                    if (isRegistered) {
+                                    /* if (isRegistered) {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
                                                   Panier()));
-                                    }
+                                    }*/
                                   }, child: BlocBuilder<RegisterBloc,
                                                   RegisterState>(
                                               builder: (context, state) {
@@ -245,9 +254,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       left: 20,
                                                       right: 20,
                                                       top: 20),
-                                                  child: TextButton(
-                                                    onPressed: _pressed,
-                                                    child: Text("S'inscrire"),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        color: kColorPrimary),
+                                                    width: double.infinity,
+                                                    child: isLoading
+                                                        ? Center(
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          )
+                                                        : TextButton(
+                                                            onPressed: () {
+                                                              isLoading = true;
+                                                              _pressed();
+                                                            },
+                                                            child: Text(
+                                                                "S'inscrire",
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .lato(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20,
+                                                                ))),
                                                   )),
                                             ],
                                           )),
@@ -257,18 +295,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _pressed() {
+    isLoading = true;
     BlocProvider.of<RegisterBloc>(context)..add(RegisterEvent.createUser(1));
     if (errorMessage != "Error") {
       if (errorMessage ==
           '{"phone":["Client with this phone already exists."]}') {
         errorMessage = "Numero de telephone existe deja.";
       }
+      isLoading = false;
       showToast(errorMessage);
     }
   }
 
   void _saveUserData(RegisterState state, int id) async {
-    
     Prefs.setString(Prefs.PHONE, state.phone.toString());
     Prefs.setInt(Prefs.ID, id);
   }

@@ -11,6 +11,8 @@ import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class YourShoppingCartScreen extends StatefulWidget {
+      static String routeName = "/your_shopping_cart_screen";
+
   @override
   _YourShoppingCartScreenState createState() => _YourShoppingCartScreenState();
 }
@@ -53,7 +55,7 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                         (failure) {
                           failure.map(
                             serverError: (_) => null,
-                            apiFailure: (e) => showToast(""),
+                            apiFailure: (e) => showToast(e.msg!),
                           );
                         },
                         (success) {
@@ -69,24 +71,21 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
 
                   return ListView(
                     children: [
-                      Expanded(
-                        child: SizedBox(
+                     // Expanded(
+                       // child:
+                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.8,
                           child: ListView.separated(
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount:  lines.length,
                             itemBuilder: (context, indexx) {
-                              /* totalCompoPrice =
-                                                    totalCompoPrice +
-                                                        foods[indexx].price!;
-
-                                                print(totalCompoPrice);*/
+                          
 
                               return CartItemWidget(
-                                  name: lines[0].composition!.menu!,
-                                  foods: lines[0].composition!.selectedFoods!,
-                                  extras: lines[0].composition!.extras);
+                                  name: lines[indexx].composition!.menu!,
+                                  foods: lines[indexx].composition!.selectedFoods!,
+                                  extras: lines[indexx].composition!.extras);
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
@@ -96,7 +95,7 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                             },
                           ),
                         ),
-                      ),
+                     // ),
                       Padding(
                           padding: EdgeInsets.only(
                               top: 0, left: 20, right: 20, bottom: 20),
@@ -107,6 +106,7 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                               child: TextButton(
                                 onPressed: () {
                                   int? clientId = Prefs.getInt(Prefs.ID);
+                                  print("CLIENTID $clientId");
                                   Map<String, dynamic> body = {
                                     "client": clientId,
                                     "lines": state.lines
