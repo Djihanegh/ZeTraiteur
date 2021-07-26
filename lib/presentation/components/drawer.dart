@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class DrawerPage extends StatefulWidget {
   @override
@@ -12,12 +13,13 @@ initState() {}
 class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    SizeConfig().init(context);
 
-    return _bodyWidget(size);
+
+    return _bodyWidget();
   }
 
-  Widget _bodyWidget(Size size) {
+  Widget _bodyWidget() {
     return Drawer(
         child: Container(
             color: Colors.white,

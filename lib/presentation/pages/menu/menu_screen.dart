@@ -14,6 +14,7 @@ import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class MenuScreen extends StatefulWidget {
   static String routeName = "/menu";
@@ -51,7 +52,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   double scrollOffset = 0.0;
 
   TabController? _tabController;
-  ScrollController? _scrollController; //= ScrollController();
+  ScrollController? _scrollController;
   bool _hasReachedEndOfResults = false;
 
   List<bool> _sectionSelected = List.generate(length + 1, (index) => false);
@@ -86,7 +87,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -110,32 +110,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     );
   }
 
-  Future<void> getFoods() async {
-    BlocProvider.of<MenuBloc>(context)
-      ..add(MenuEvent.getAllFoods(_offset, widget.sectionId[selectedIndex]));
-    _loading = true;
-  }
-
-  Future<void> getExtras() async {
-    BlocProvider.of<MenuBloc>(context)..add(MenuEvent.getAllExtras(_offset));
-    _loading = true;
-  }
-
-  Future<bool> _refresh() {
-    _offset = 1;
-    _hasReachedEndOfResults = false;
-
-    BlocProvider.of<MenuBloc>(context)
-      ..add(MenuEvent.getAllFoods(_offset, widget.sectionId[selectedIndex]));
-    _loading = true;
-    return Future.value(true);
-  }
-
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
+    SizeConfig().init(context);
     List<Widget> tabs = List.filled(length + 1, Container());
     int j = length;
 
@@ -197,7 +174,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           }, child: BlocBuilder<MenuBloc, MenuState>(builder: (context, state) {
             return Container(
                 height: 50,
-                width: width / 3,
+                width: SizeConfig.screenWidth! / 3,
                 child: GestureDetector(
                     onTap: () {
                       setState(() {
@@ -205,9 +182,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                           setState(() {
                             if (foodId != 0) {
                               if (selectedIndex < i + 1) {
-                                print("ADDD");
-                                print(foodId);
-                                print(selectedIndex);
                                 addFood(foodId, selectedIndex); // TODO
                               }
                             }
@@ -263,8 +237,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     if (foodId != 0) {
                       if (_list[selectedIndex] != foodId) {
                         _list[selectedIndex] = foodId;
-                        print("HELLLOOOOOOOOOOO");
-                        print(_list[selectedIndex]);
                         addFood(_list[selectedIndex]!, selectedIndex);
                       }
                     }
@@ -305,19 +277,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                 ? CircularProgressIndicator(
                     color: kColorPrimary,
                   )
-                /*ListView.separated(
-                    physics: ScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, index) {
-                      return ;
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 10,
-                      );
-                    },
-                    itemCount: 1)*/
                 : BlocProvider.value(
                     value: BlocProvider.of<MenuBloc>(context), //TODO
                     child: BlocListener<MenuBloc, MenuState>(
@@ -405,8 +364,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                 }, child: BlocBuilder<OrderBloc, OrderState>(
                         builder: (context, state) {
                   return ConstrainedBox(
-                      constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height),
+                      constraints:
+                          BoxConstraints(maxHeight: SizeConfig.screenHeight!),
                       child: Stack(
                         children: [
                           Positioned(
@@ -415,8 +374,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                             right: 0.0,
                             bottom: 0.0,
                             child: SizedBox(
-                                height: height * 0.3,
-                                width: MediaQuery.of(context).size.width,
+                                height: SizeConfig.screenHeight! * 0.3,
+                                width: SizeConfig.screenWidth!,
                                 child: ListView.separated(
                                     physics: ScrollPhysics(),
                                     scrollDirection: Axis.vertical,
@@ -453,10 +412,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                     })),
                           ),
                           Positioned(
-                              top: height * 0.5,
-                              left: width * 0.18,
-                              right: width * 0.18, // 80
-                              bottom: height * 0.41, // 295
+                              top: SizeConfig.screenHeight! * 0.5,
+                              left: SizeConfig.screenWidth! * 0.18,
+                              right: SizeConfig.screenWidth! * 0.18, // 80
+                              bottom: SizeConfig.screenHeight! * 0.41, // 295
                               child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25),
@@ -602,12 +561,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 
   void addFood(int i, int index) {
-    print("IIIIII");
-    print(i);
-
-    print("INDEEEEX");
-    print(index);
-
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addFood(i, index));
   }
 
@@ -624,6 +577,26 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.selectFood(name, food));
   }
 
+  Future<void> getFoods() async {
+    BlocProvider.of<MenuBloc>(context)
+      ..add(MenuEvent.getAllFoods(_offset, widget.sectionId[selectedIndex]));
+    _loading = true;
+  }
+
+  Future<void> getExtras() async {
+    BlocProvider.of<MenuBloc>(context)..add(MenuEvent.getAllExtras(_offset));
+    _loading = true;
+  }
+
+  Future<bool> _refresh() {
+    _offset = 1;
+    _hasReachedEndOfResults = false;
+
+    BlocProvider.of<MenuBloc>(context)
+      ..add(MenuEvent.getAllFoods(_offset, widget.sectionId[selectedIndex]));
+    _loading = true;
+    return Future.value(true);
+  }
   /*void extraChanged(int index) {
     BlocProvider.of<OrderBloc>(context)
      ..add(OrderEvent.extraChanged(widget.extras[index].id));   // TODO

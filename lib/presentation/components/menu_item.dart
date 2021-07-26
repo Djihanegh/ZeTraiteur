@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/application/menu/menu_bloc.dart';
-import 'package:ze_traiteur/domain/entities/food.dart';
-import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/components/item_shimmer.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 import '../../injection.dart';
 import 'menu_item_image.dart';
@@ -78,7 +77,6 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
                   if (success['results'].isNotEmpty) {
                     setState(() {
                       menus.addAll(success['results']);
-                     // extras.addAll(success['extras']['results']);
                     });
                   }
                   setState(() {
@@ -106,12 +104,7 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
   }
 
   Widget _menusList(MenuState state) {
-    final size = MediaQuery.of(context).size;
-
-   /* List<Food> list = [];
-    for (int i = 0; i < extras.length; i++) {
-      list.insert(i, Food.fromJson(extras[i]));
-    }*/
+    SizeConfig().init(context);
 
     return Stack(children: [
       Positioned.fill(
@@ -128,7 +121,7 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
       Positioned.fill(
         top: 200,
         bottom: 160,
-        left: size.width * 0.17,
+        left: SizeConfig.screenWidth! * 0.17,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           controller: _scrollController,
@@ -149,9 +142,8 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
             }
 
             return MenuItemImage(
-             // extras: list,
-             sectionNames: sections,
-              menuId:  menus[indexx]["id"],
+              sectionNames: sections,
+              menuId: menus[indexx]["id"],
               name: menus[indexx]["name"],
               sectionId: ids,
               imageUrl: menus[indexx]["image"],

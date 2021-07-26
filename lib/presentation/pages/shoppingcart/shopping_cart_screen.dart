@@ -10,8 +10,6 @@ import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/shopping_cart_listview.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
-import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
-import 'package:ze_traiteur/presentation/pages/signup/sign_up_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class Panier extends StatefulWidget {
@@ -22,9 +20,8 @@ class Panier extends StatefulWidget {
 }
 
 class _PanierState extends State<Panier> {
-  //RegisterBloc? _registerBloc;
   static String address = "";
-  static String phone = ""; //775896545
+  static String phone = ""; 
   double totalPrice = 0.0;
   int foodIndex = 0;
   double totalCompoPrice = 0.0;

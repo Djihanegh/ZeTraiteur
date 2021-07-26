@@ -9,9 +9,10 @@ import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class SignUpScreen extends StatefulWidget {
-      static String routeName = "/signup";
+  static String routeName = "/signup";
 
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -40,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   );
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    SizeConfig().init(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: kColorPrimary,
@@ -115,8 +116,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     return ClipRRect(
                                       borderRadius: BorderRadius.circular(25.0),
                                       child: Container(
-                                          height: size.height * 0.7,
-                                          width: size.width * 0.7,
+                                          height:
+                                              SizeConfig.screenHeight! * 0.7,
+                                          width: SizeConfig.screenWidth! * 0.7,
                                           margin: const EdgeInsets.only(
                                               bottom: 6.0,
                                               top: 6,

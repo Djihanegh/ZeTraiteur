@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 import '../../utils/constants.dart';
 
 class SplashScreen extends StatefulWidget {
-      static String routeName = "/splash_screen";
+  static String routeName = "/splash_screen";
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -11,15 +12,15 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    SizeConfig().init(context);
     return Scaffold(
         body: Stack(children: [
       Positioned.fill(
           child: Align(
               alignment: Alignment.center,
               child: Container(
-                height: size.height,
-                width: size.width,
+                height: SizeConfig.screenHeight!,
+                width: SizeConfig.screenWidth!,
                 child: Container(
                     height: 300,
                     width: 200,

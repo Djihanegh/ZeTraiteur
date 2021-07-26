@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String routeName = "/welcome_screen";
@@ -11,15 +12,15 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    SizeConfig().init(context);
 
     return Scaffold(
         body: Stack(
       children: [
         Positioned.fill(
           child: Container(
-            height: size.height,
-            width: size.width,
+            height: SizeConfig.screenHeight,
+            width: SizeConfig.screenWidth,
             child: Image.asset(
               "assets/images/welcome.png",
               fit: BoxFit.fill,

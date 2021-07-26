@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ze_traiteur/presentation/components/drawer.dart';
 import 'package:ze_traiteur/presentation/components/menu_item.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class HomeScreen extends StatefulWidget {
-      static String routeName = "/home";
+  static String routeName = "/home";
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -14,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    SizeConfig().init(context);
 
     return Scaffold(
         key: _scaffoldKey,
@@ -36,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Positioned.fill(
               child: Container(
-                height: size.height,
-                width: size.width,
+                height: SizeConfig.screenHeight!,
+                width: SizeConfig.screenWidth!,
                 child: Image.asset(
                   "assets/images/home.png",
                   fit: BoxFit.cover,

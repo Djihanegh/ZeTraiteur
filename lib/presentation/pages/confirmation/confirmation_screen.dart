@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/application/order/order_bloc.dart';
-import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
-import 'package:ze_traiteur/presentation/components/show_toast.dart';
-import 'package:ze_traiteur/presentation/pages/shoppingcart/your_shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class ConfirmationScreen extends StatefulWidget {

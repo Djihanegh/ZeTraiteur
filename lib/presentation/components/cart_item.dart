@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class CartItemWidget extends StatefulWidget {
   final String name;
@@ -36,6 +37,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Stack(
       children: [
         Padding(
@@ -64,8 +67,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                             children: [
                               SizedBox(
                                   height: 50,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
+                                  width: SizeConfig.screenWidth! * 0.6,
                                   child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: widget.foods.length,
@@ -111,9 +113,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                   children: [
                                     SizedBox(
                                         height: 50,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.6,
+                                        width: SizeConfig.screenWidth! * 0.6,
                                         child: ListView.separated(
                                           scrollDirection: Axis.horizontal,
                                           itemCount: widget.extras!.length,
@@ -158,24 +158,24 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                 ))),
         Positioned(
             top: 165,
-            left: MediaQuery.of(context).size.width * 0.5 / 1.58,
-            child: Center(child:  Container(
-              height: 50,
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  border: Border.all(color: Colors.black)),
-              child: Text(
-                "$totalFoodPrice DA",
-                style: TextStyle(fontSize: 18, color: Colors.white),
+            left: SizeConfig.screenWidth! * 0.5 / 1.58,
+            child: Center(
+              child: Container(
+                height: 50,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    border: Border.all(color: Colors.black)),
+                child: Text(
+                  "$totalFoodPrice DA",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
-            ),)),
+            )),
       ],
     );
   }
 }
-
-

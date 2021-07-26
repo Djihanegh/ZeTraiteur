@@ -9,6 +9,7 @@ import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/cart_item.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class YourShoppingCartScreen extends StatefulWidget {
       static String routeName = "/your_shopping_cart_screen";
@@ -27,9 +28,7 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
     double totalPrice = 0.0;
     double totalFoodsPrice = 0.0;
     double totalExtrasPrice = 0.0;
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
+   
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -74,7 +73,7 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                      // Expanded(
                        // child:
                          SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.8,
+                          height: SizeConfig.screenHeight!* 0.8,
                           child: ListView.separated(
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,

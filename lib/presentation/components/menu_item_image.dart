@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/pages/menu/menu_screen.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class MenuItemImage extends StatelessWidget {
   
@@ -23,8 +24,8 @@ class MenuItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
+    SizeConfig().init(context);
+ 
     return Column(children: [
       GestureDetector(
           onTap: () {
@@ -46,8 +47,8 @@ class MenuItemImage extends StatelessWidget {
           },
           child: Container(
               child: Container(
-                  width: size.width * 0.6,
-                  height: size.height * 0.28,
+                  width: SizeConfig.screenWidth! * 0.6,
+                  height: SizeConfig.screenHeight! * 0.28,
                   margin: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     color: Colors.white,

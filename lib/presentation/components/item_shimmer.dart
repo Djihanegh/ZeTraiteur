@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class PostListItemShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    SizeConfig().init(context);
 
     return Center(
         child: Container(
@@ -12,8 +13,8 @@ class PostListItemShimmer extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   ),
-      width: size.width * 0.6,
-      height: size.height * 0.28,
+      width: SizeConfig.screenWidth! * 0.6,
+      height: SizeConfig.screenHeight! * 0.28,
       margin: EdgeInsets.all(10.0),
       padding: EdgeInsets.all(20),
       child: Shimmer.fromColors(
