@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +14,7 @@ import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class YourShoppingCartScreen extends StatefulWidget {
-      static String routeName = "/your_shopping_cart_screen";
+  static String routeName = "/your_shopping_cart_screen";
 
   @override
   _YourShoppingCartScreenState createState() => _YourShoppingCartScreenState();
@@ -20,15 +22,25 @@ class YourShoppingCartScreen extends StatefulWidget {
 
 class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
   List<Lines>? lines;
+  List<Food> foods = [];
+  List<Food> extras = [];
+  double totalPrice = 0.0;
+  double totalFoodsPrice = 0.0;
+  double totalExtrasPrice = 0.0;
+  int? clientId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    clientId = Prefs.getInt(Prefs.ID);
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Food> foods = [];
-    List<Food> extras = [];
     List<ShoppingCartLines> lines = [];
-    double totalPrice = 0.0;
-    double totalFoodsPrice = 0.0;
-    double totalExtrasPrice = 0.0;
-   
+    foods = [];
+    extras = [];
+
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -53,9 +65,11 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                       either.fold(
                         (failure) {
                           failure.map(
-                            serverError: (_) => null,
-                            apiFailure: (e) => showToast(e.msg!),
-                          );
+                              serverError: (_) => null,
+                              apiFailure: (e) {
+                                print(e);
+                                showToast("Failure");
+                              });
                         },
                         (success) {
                           showToast('Commande reussie !');
@@ -65,36 +79,30 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                   );
                 }, child: BlocBuilder<OrderBloc, OrderState>(
                         builder: (context, state) {
-
                   lines = state.shoppingCartLines!;
 
                   return ListView(
                     children: [
-                     // Expanded(
-                       // child:
-                         SizedBox(
-                          height: SizeConfig.screenHeight!* 0.8,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount:  lines.length,
-                            itemBuilder: (context, indexx) {
-                          
-
-                              return CartItemWidget(
-                                  name: lines[indexx].composition!.menu!,
-                                  foods: lines[indexx].composition!.selectedFoods!,
-                                  extras: lines[indexx].composition!.extras);
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                width: 10,
-                              );
-                            },
-                          ),
+                      SizedBox(
+                        height: SizeConfig.screenHeight! * 0.8,
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: lines.length,
+                          itemBuilder: (context, indexx) {
+                            return CartItemWidget(
+                                name: lines[indexx].composition!.menu!,
+                                foods:
+                                    lines[indexx].composition!.selectedFoods!,
+                                extras: lines[indexx].composition!.extras);
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return SizedBox(
+                              width: 10,
+                            );
+                          },
                         ),
-                     // ),
+                      ),
                       Padding(
                           padding: EdgeInsets.only(
                               top: 0, left: 20, right: 20, bottom: 20),
@@ -104,8 +112,6 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                                   color: kColorPrimary),
                               child: TextButton(
                                 onPressed: () {
-                                  int? clientId = Prefs.getInt(Prefs.ID);
-                                  print("CLIENTID $clientId");
                                   Map<String, dynamic> body = {
                                     "client": clientId,
                                     "lines": state.lines
@@ -127,6 +133,3 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.createOrder(body));
   }
 }
-
- 
-

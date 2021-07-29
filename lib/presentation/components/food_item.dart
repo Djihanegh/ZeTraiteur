@@ -30,8 +30,6 @@ class _FoodItemState extends State<FoodItem> {
           value: widget.value,
           groupValue: _value,
           onChanged: (value) {
-            print(widget.value);
-            print(value);
             setState(() {
               _value = int.parse(value.toString());
             });

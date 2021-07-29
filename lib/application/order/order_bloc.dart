@@ -82,13 +82,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   ) async* {
     Map<int, int> foodsList = state.foods;
 
-    print("ADDING FOOD");
-
     if (foodsList[index] != foodId) {
       foodsList[index] = foodId;
-
-      print("ADDDD FOOD");
-      print(foodsList[index]);
     }
     yield state.copyWith(createOrderFailureOrSuccess: none(), foods: foodsList);
   }
@@ -106,8 +101,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     foodsList.values.forEach((e) {
       foods.add(e);
     });
-    print("FOOOOOOOOOOOOOOODS");
-    print(foods);
 
     Composition composition = Composition(menuId, foods, extraList);
     Lines? _line;
@@ -115,36 +108,17 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     for (Lines line in state.lines!) {
       quantity = line.quantity;
 
-      print("QUANTITYYYY");
-
-      print(quantity);
-
-      print("LINNNNES");
-      print(state.lines!);
-
       if (line.composition == composition) {
-        print("EQUUUUUAAL");
-
-         _line = line;
+        _line = line;
         quantity++;
-
-      
-
       }
     }
 
     _lines.remove(_line);
-    print("AFTER REMOVE");
-
-    print(_lines);
-    print(quantity);
 
     Lines line = Lines(quantity, composition);
 
     _lines.add(line);
-    print("AFTER ADD");
-
-    print(_lines);
 
     yield state.copyWith(
         quantity: quantity,
@@ -260,10 +234,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     int foodId,
     int index,
   ) async* {
-    print("FOOOOOOOD IDDS");
-    print(foodId);
-    print(index);
-    // _performAddFood(foodId, index);
     yield state.copyWith(createOrderFailureOrSuccess: none(), foodId: foodId);
   }
 }

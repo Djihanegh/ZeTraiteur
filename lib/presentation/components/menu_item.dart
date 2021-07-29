@@ -71,7 +71,7 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
               () => null,
               (either) => either.fold(
                 (failure) {
-                  showToast(failure.msg ?? "Failure");
+                  //showToast(failure.msg ?? "Failure");
                 },
                 (success) {
                   if (success['results'].isNotEmpty) {
@@ -90,12 +90,14 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
           return state.menusFailureOrSuccess.fold(
               () => PostListItemShimmer(),
               (either) => either.fold(
-                      (failure) => NoInternet(
-                            msg: failure.map(
-                              serverError: (_) => null,
-                              apiFailure: (e) => e.msg,
-                            ),
-                          ), (success) {
+                      (failure) => menus.isEmpty
+                          ? NoInternet(
+                              msg: failure.map(
+                                serverError: (_) => null,
+                                apiFailure: (e) => e.msg,
+                              ),
+                            )
+                          : _menusList(state), (success) {
                     return success['results'].isEmpty
                         ? showToast("Aucun resultat")
                         : _menusList(state);
@@ -152,7 +154,7 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
           },
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
-              width: 40,
+              width: 10,
             );
           },
         ),

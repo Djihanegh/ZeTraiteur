@@ -52,17 +52,17 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   double scrollOffset = 0.0;
 
   TabController? _tabController;
-  ScrollController? _scrollController;
+  //ScrollController? _scrollController;
   bool _hasReachedEndOfResults = false;
+  List<List> foods = [];
 
   List<bool> _sectionSelected = List.generate(length + 1, (index) => false);
-  List<int> radioButtonValues = List.filled(2, -1);
+  List<int> radioButtonValues = [];
   List<Food> selectedFood = [], selectedExtra = [];
   Map<int, int> _list = {};
-  List<List> foods = [];
   List extras = [];
 
-  _scrollListener() {
+  /*_scrollListener() {
     if (_scrollController!.offset >=
             _scrollController!.position.maxScrollExtent &&
         !_scrollController!.position.outOfRange) {
@@ -85,7 +85,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     if (_scrollController!.offset != 0.0) {
       scrollOffset = _scrollController!.offset;
     }
-  }
+  }*/
 
   @override
   void initState() {
@@ -100,8 +100,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
     getExtras();
 
-    _scrollController = ScrollController();
-    _scrollController!.addListener(_scrollListener);
+    //_scrollController = ScrollController();
+    //_scrollController!.addListener(_scrollListener);
 
     _tabController = new TabController(
       length: length + 1,
@@ -133,10 +133,13 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                   (success) {
                     if (success['results'].isNotEmpty) {
                       setState(() {
-                        if (!foods[selectedIndex]
-                            .contains(success["results"])) {
+                        if (foods[selectedIndex] != success["results"]) {
+                          foods[selectedIndex].clear();
                           foods[selectedIndex].addAll(success['results']);
                         }
+                        radioButtonValues =
+                            List.filled(foods[selectedIndex].length + 1, -1);
+                        ;
                       });
                     }
                     setState(() {
@@ -160,6 +163,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     if (success['results'].isNotEmpty) {
                       setState(() {
                         if (!extras.contains(success["results"])) {
+                          extras.clear();
                           extras.addAll(success['results']);
                         }
                       });
@@ -278,7 +282,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     color: kColorPrimary,
                   )
                 : BlocProvider.value(
-                    value: BlocProvider.of<MenuBloc>(context), //TODO
+                    value: BlocProvider.of<MenuBloc>(context),
                     child: BlocListener<MenuBloc, MenuState>(
                         listener: (context, state) {},
                         child: BlocBuilder<MenuBloc, MenuState>(
@@ -288,7 +292,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                   physics: ScrollPhysics(),
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
-                                  controller: _scrollController,
+                                  //controller: _scrollController,
                                   itemCount: foods[selectedIndex].length,
                                   itemBuilder: (BuildContext context, index) {
                                     return Container(
@@ -455,7 +459,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       );
                     },
                     (success) {
-                      print("SUCCCESSSSS  111");
                       if (_loading) {
                         showToast('Loading...');
                       }

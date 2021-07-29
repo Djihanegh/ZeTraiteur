@@ -7,7 +7,6 @@ import 'package:ze_traiteur/domain/entities/city_obj.dart';
 import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
-import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
@@ -99,11 +98,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       });
                                     });
 
-                                    if (state.error != "Error") {
-                                      isLoading = false;
-
-                                      showToast("Inscription reussie !");
-                                    }
                                     /* if (isRegistered) {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
@@ -149,8 +143,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     BlocProvider.of<
                                                         RegisterBloc>(context)
                                                       ..add(RegisterEvent
-                                                          .lastNameChanged(value
-                                                              .toString()));
+                                                          .lastNameChanged(
+                                                              value));
                                                   }),
                                               LabeledTextFormField(
                                                   controller:
@@ -162,8 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     BlocProvider.of<
                                                         RegisterBloc>(context)
                                                       ..add(RegisterEvent
-                                                          .nameChanged(value
-                                                              .toString()));
+                                                          .nameChanged(value));
                                                   }),
                                               LabeledTextFormField(
                                                   controller:
@@ -176,8 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         RegisterBloc>(context)
                                                       ..add(RegisterEvent
                                                           .emailAddressChanged(
-                                                              value
-                                                                  .toString()));
+                                                              value));
                                                   }),
                                               LabeledTextFormField(
                                                   controller:
@@ -275,6 +267,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             onPressed: () {
                                                               isLoading = true;
                                                               _pressed();
+                                                              if (isRegistered) {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              }
                                                             },
                                                             child: Text(
                                                                 "S'inscrire",
@@ -298,30 +294,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _pressed() {
     isLoading = true;
-    BlocProvider.of<RegisterBloc>(context)..add(RegisterEvent.createUser(1));
-    if (errorMessage != "Error") {
-      if (errorMessage ==
-          '{"phone":["Client with this phone already exists."]}') {
-        errorMessage = "Numero de telephone existe deja.";
-      }
-      isLoading = false;
-      showToast(errorMessage);
-    }
+    BlocProvider.of<RegisterBloc>(context)
+      ..add(RegisterEvent.createUser(1))
+      ..state.createUserFailureOrSuccess.fold(() => null, (either) {
+        either.fold((failure) {
+          failure.map(
+            serverError: (_) => null,
+            apiFailure: (e) => {
+              if (errorMessage != "Error")
+                {
+                  if (errorMessage ==
+                      '{"phone":["Client with this phone already exists."]}')
+                    {
+                      errorMessage = "Numero de telephone existe deja.",
+                    },
+                  isLoading = false,
+                  showToast(errorMessage),
+                }
+            },
+          );
+        }, (success) {
+          isLoading = false;
+
+          showToast("Inscription reussie !");
+        });
+      });
+
+    if (errorMessage != "Error") {}
   }
 
   void _saveUserData(RegisterState state, int id) async {
     Prefs.setString(Prefs.PHONE, state.phone.toString());
     Prefs.setInt(Prefs.ID, id);
-  }
-
-  void _showToast(BuildContext context, String error) {
-    final scaffold = ScaffoldMessenger.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: Text(error),
-        action: SnackBarAction(
-            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
   }
 }

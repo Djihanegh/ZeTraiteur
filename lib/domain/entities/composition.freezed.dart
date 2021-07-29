@@ -20,10 +20,13 @@ Composition _$CompositionFromJson(Map<String, dynamic> json) {
 class _$CompositionTearOff {
   const _$CompositionTearOff();
 
-  _Composition call(int menu, List<int> selected_foods, List<int> extras) {
+  _Composition call(
+      int menu,
+      @JsonKey(name: 'selected_foods') List<int> selectedFoods,
+      List<int> extras) {
     return _Composition(
       menu,
-      selected_foods,
+      selectedFoods,
       extras,
     );
   }
@@ -39,7 +42,8 @@ const $Composition = _$CompositionTearOff();
 /// @nodoc
 mixin _$Composition {
   int get menu => throw _privateConstructorUsedError;
-  List<int> get selected_foods => throw _privateConstructorUsedError;
+  @JsonKey(name: 'selected_foods')
+  List<int> get selectedFoods => throw _privateConstructorUsedError;
   List<int> get extras => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +57,10 @@ abstract class $CompositionCopyWith<$Res> {
   factory $CompositionCopyWith(
           Composition value, $Res Function(Composition) then) =
       _$CompositionCopyWithImpl<$Res>;
-  $Res call({int menu, List<int> selected_foods, List<int> extras});
+  $Res call(
+      {int menu,
+      @JsonKey(name: 'selected_foods') List<int> selectedFoods,
+      List<int> extras});
 }
 
 /// @nodoc
@@ -67,7 +74,7 @@ class _$CompositionCopyWithImpl<$Res> implements $CompositionCopyWith<$Res> {
   @override
   $Res call({
     Object? menu = freezed,
-    Object? selected_foods = freezed,
+    Object? selectedFoods = freezed,
     Object? extras = freezed,
   }) {
     return _then(_value.copyWith(
@@ -75,9 +82,9 @@ class _$CompositionCopyWithImpl<$Res> implements $CompositionCopyWith<$Res> {
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
               as int,
-      selected_foods: selected_foods == freezed
-          ? _value.selected_foods
-          : selected_foods // ignore: cast_nullable_to_non_nullable
+      selectedFoods: selectedFoods == freezed
+          ? _value.selectedFoods
+          : selectedFoods // ignore: cast_nullable_to_non_nullable
               as List<int>,
       extras: extras == freezed
           ? _value.extras
@@ -94,7 +101,10 @@ abstract class _$CompositionCopyWith<$Res>
           _Composition value, $Res Function(_Composition) then) =
       __$CompositionCopyWithImpl<$Res>;
   @override
-  $Res call({int menu, List<int> selected_foods, List<int> extras});
+  $Res call(
+      {int menu,
+      @JsonKey(name: 'selected_foods') List<int> selectedFoods,
+      List<int> extras});
 }
 
 /// @nodoc
@@ -110,7 +120,7 @@ class __$CompositionCopyWithImpl<$Res> extends _$CompositionCopyWithImpl<$Res>
   @override
   $Res call({
     Object? menu = freezed,
-    Object? selected_foods = freezed,
+    Object? selectedFoods = freezed,
     Object? extras = freezed,
   }) {
     return _then(_Composition(
@@ -118,9 +128,9 @@ class __$CompositionCopyWithImpl<$Res> extends _$CompositionCopyWithImpl<$Res>
           ? _value.menu
           : menu // ignore: cast_nullable_to_non_nullable
               as int,
-      selected_foods == freezed
-          ? _value.selected_foods
-          : selected_foods // ignore: cast_nullable_to_non_nullable
+      selectedFoods == freezed
+          ? _value.selectedFoods
+          : selectedFoods // ignore: cast_nullable_to_non_nullable
               as List<int>,
       extras == freezed
           ? _value.extras
@@ -133,7 +143,8 @@ class __$CompositionCopyWithImpl<$Res> extends _$CompositionCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Composition implements _Composition {
-  _$_Composition(this.menu, this.selected_foods, this.extras);
+  _$_Composition(this.menu, @JsonKey(name: 'selected_foods') this.selectedFoods,
+      this.extras);
 
   factory _$_Composition.fromJson(Map<String, dynamic> json) =>
       _$_$_CompositionFromJson(json);
@@ -141,13 +152,14 @@ class _$_Composition implements _Composition {
   @override
   final int menu;
   @override
-  final List<int> selected_foods;
+  @JsonKey(name: 'selected_foods')
+  final List<int> selectedFoods;
   @override
   final List<int> extras;
 
   @override
   String toString() {
-    return 'Composition(menu: $menu, selected_foods: $selected_foods, extras: $extras)';
+    return 'Composition(menu: $menu, selectedFoods: $selectedFoods, extras: $extras)';
   }
 
   @override
@@ -156,9 +168,9 @@ class _$_Composition implements _Composition {
         (other is _Composition &&
             (identical(other.menu, menu) ||
                 const DeepCollectionEquality().equals(other.menu, menu)) &&
-            (identical(other.selected_foods, selected_foods) ||
+            (identical(other.selectedFoods, selectedFoods) ||
                 const DeepCollectionEquality()
-                    .equals(other.selected_foods, selected_foods)) &&
+                    .equals(other.selectedFoods, selectedFoods)) &&
             (identical(other.extras, extras) ||
                 const DeepCollectionEquality().equals(other.extras, extras)));
   }
@@ -167,7 +179,7 @@ class _$_Composition implements _Composition {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(menu) ^
-      const DeepCollectionEquality().hash(selected_foods) ^
+      const DeepCollectionEquality().hash(selectedFoods) ^
       const DeepCollectionEquality().hash(extras);
 
   @JsonKey(ignore: true)
@@ -182,8 +194,10 @@ class _$_Composition implements _Composition {
 }
 
 abstract class _Composition implements Composition {
-  factory _Composition(int menu, List<int> selected_foods, List<int> extras) =
-      _$_Composition;
+  factory _Composition(
+      int menu,
+      @JsonKey(name: 'selected_foods') List<int> selectedFoods,
+      List<int> extras) = _$_Composition;
 
   factory _Composition.fromJson(Map<String, dynamic> json) =
       _$_Composition.fromJson;
@@ -191,7 +205,8 @@ abstract class _Composition implements Composition {
   @override
   int get menu => throw _privateConstructorUsedError;
   @override
-  List<int> get selected_foods => throw _privateConstructorUsedError;
+  @JsonKey(name: 'selected_foods')
+  List<int> get selectedFoods => throw _privateConstructorUsedError;
   @override
   List<int> get extras => throw _privateConstructorUsedError;
   @override

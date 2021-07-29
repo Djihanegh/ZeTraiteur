@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 
 class ShoppingCartButton extends StatefulWidget {
@@ -18,7 +17,7 @@ class _ShoppingCartButtonState extends State<ShoppingCartButton> {
             onTap: () {
               Navigator.pushNamed(
                 context,
-                '/panier',
+                "/panier",
               );
             },
             child: Container(

@@ -34,46 +34,7 @@ class PostListItemShimmer extends StatelessWidget {
     ));
   }
 
-  Padding _header() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  height: 8,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: 50,
-                  height: 8,
-                  color: Colors.white,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Padding _body() {
     return Padding(

@@ -22,7 +22,7 @@ class NoInternet extends StatelessWidget {
         children: <Widget>[
           Center(
             child: Image.asset(
-              'assets/images/icon_wifi.png',
+              'assets/images/error.jpeg',
               width: 150,
             ),
           ),

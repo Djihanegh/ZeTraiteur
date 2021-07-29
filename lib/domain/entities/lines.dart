@@ -7,12 +7,16 @@ part 'lines.g.dart';
 
 @freezed
 class Lines with _$Lines {
- 
   factory Lines(
-      int quantity,
-      Composition composition,
+    int quantity,
+    Composition composition,
   ) = _Lines;
   static const fromJsonFactory = _$LinesFromJson;
-  factory Lines.fromJson(Map<String, dynamic> json) =>
-      _$LinesFromJson(json);
+  factory Lines.fromJson(Map<String, dynamic> json) => _$LinesFromJson(json);
+  Map<String, dynamic> toJson() {
+    return {
+      "quantity": this.quantity,
+      "composition": this.composition,
+    };
+  }
 }

@@ -12,9 +12,9 @@ class OrderFacade implements IOrderFacade {
   Future<Either<ServerFailure, Map<String, dynamic>>> createOrder(
       {Map<String, dynamic>? body}) async {
     try {
-      final result = await getIt<ZeTraiteurApiService>().createOrder(body!);
+      Map<String, dynamic> data = body!;
+      final result = await getIt<ZeTraiteurApiService>().createOrder(data);
       if (result.statusCode == 201) {
-        print("HHHHHHHHHHHHHHHHHHHHHHHHHH");
         return right(result.body!);
       } else {
         return left(ServerFailure.apiFailure(msg: result.error.toString()));

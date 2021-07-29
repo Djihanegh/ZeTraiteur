@@ -17,6 +17,6 @@ _$_Composition _$_$_CompositionFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_CompositionToJson(_$_Composition instance) =>
     <String, dynamic>{
       'menu': instance.menu,
-      'selected_foods': instance.selected_foods,
+      'selected_foods': instance.selectedFoods,
       'extras': instance.extras,
     };

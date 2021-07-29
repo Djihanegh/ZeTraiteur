@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class DrawerPage extends StatefulWidget {
@@ -14,7 +13,6 @@ class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
 
     return _bodyWidget();
   }
@@ -58,6 +56,7 @@ class _DrawerPageState extends State<DrawerPage> {
                                 padding: EdgeInsets.only(left: 10, top: 10),
                                 child: TextButton(
                                     onPressed: () {
+                                      Navigator.pop(context);
                                       Navigator.pushNamed(context, '/home');
                                     },
                                     child: Row(

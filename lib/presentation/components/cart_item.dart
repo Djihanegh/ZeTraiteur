@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
-import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class CartItemWidget extends StatefulWidget {

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ze_traiteur/domain/entities/food.dart';
-import 'package:ze_traiteur/domain/entities/menu_item.dart';
 import 'package:ze_traiteur/presentation/pages/menu/menu_screen.dart';
 import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
 class MenuItemImage extends StatelessWidget {
-  
   List<int> sectionId;
   String imageUrl;
   String name;
@@ -25,7 +22,7 @@ class MenuItemImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
- 
+
     return Column(children: [
       GestureDetector(
           onTap: () {
@@ -33,9 +30,6 @@ class MenuItemImage extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => MenuScreen(
-                        //menuItem: menuItem, // IMAGE  & ID of section
-                        //  extras: extras,
-                        
                         menuId: menuId,
                         sectionNames: sectionNames,
                         sectionId: sectionId,
@@ -63,7 +57,7 @@ class MenuItemImage extends StatelessWidget {
                         child: Stack(
                           children: <Widget>[
                             // TO DO
-                            /*  Image(
+                            /*Image(
                                   image: CachedNetworkImageProvider(
                                       item['image']
                                       /*imageUrl: item['image'],
@@ -92,12 +86,12 @@ class MenuItemImage extends StatelessWidget {
                               );
                             },*/
                                       )),*/
-                            /*  Image.network(
-                                item['image'] ?? '',
-                                fit: BoxFit.cover,
-                                width: 1000.0,
-                                height: 1000.0,
-                              ),*/
+                            /* Image.network(
+                              imageUrl,
+                              fit: BoxFit.cover,
+                              width: 1000.0,
+                              height: 1000.0,
+                            ),*/
                           ],
                         )),
                   )))),

@@ -6,7 +6,7 @@ part 'composition.g.dart';
 class Composition with _$Composition {
   factory Composition(
     int menu,
-    List<int> selected_foods,
+   @JsonKey(name: 'selected_foods') List<int> selectedFoods,
     List<int> extras,
   ) = _Composition;
   static const fromJsonFactory = _$CompositionFromJson;
