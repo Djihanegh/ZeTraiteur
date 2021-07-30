@@ -182,7 +182,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           }, child: BlocBuilder<MenuBloc, MenuState>(builder: (context, state) {
             return Container(
                 height: 50,
-                width: SizeConfig.screenWidth! / 3,
+                width: SizeConfig.screenWidth! / 4,
                 child: GestureDetector(
                     onTap: () {
                       setState(() {
@@ -235,11 +235,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     },
                     child: new Container(
                       height: 60,
-                      width: 80,
                       child: new Tab(
                         child: Container(
                           height: 35,
-                          width: 60,
                           decoration: BoxDecoration(
                               color: selectedIndex == i
                                   ? kColorPrimary
