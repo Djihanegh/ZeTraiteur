@@ -7,6 +7,7 @@ import 'package:ze_traiteur/domain/entities/city_obj.dart';
 import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
+import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
@@ -28,6 +29,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isFailure = false;
   bool isRegistered = false;
   bool isLoading = false;
+  final page = Panier();
+  bool isLaunched = false;
 
   TextEditingController lastNameController = TextEditingController(text: "");
   TextEditingController firstNameController = TextEditingController(text: "");
@@ -90,20 +93,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       }, (success) {
                                         isLoading = false;
 
-                                        //Navigator.pop(context);
-
                                         _saveUserData(state, success["id"]);
+
+                                        if (!isLaunched) {
+                                          showToast("Inscription reussie !");
+                                          Navigator.pop(context);
+                                          Navigator.of(context).pushNamed(
+                                            '/confirmation_screen',
+                                          );
+
+                                          isLaunched = true;
+                                        }
 
                                         isRegistered = true;
                                       });
                                     });
-
-                                    /* if (isRegistered) {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  Panier()));
-                                    }*/
                                   }, child: BlocBuilder<RegisterBloc,
                                                   RegisterState>(
                                               builder: (context, state) {
@@ -267,10 +271,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                             onPressed: () {
                                                               isLoading = true;
                                                               _pressed();
-                                                              if (isRegistered) {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              }
                                                             },
                                                             child: Text(
                                                                 "S'inscrire",
@@ -315,8 +315,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
         }, (success) {
           isLoading = false;
-
-          showToast("Inscription reussie !");
         });
       });
 

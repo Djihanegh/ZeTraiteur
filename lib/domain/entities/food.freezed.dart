@@ -27,7 +27,8 @@ class _$FoodTearOff {
       String? image,
       String? description,
       double? price,
-      @JsonKey(name: 'discount_price') double? discountPrice) {
+      @JsonKey(name: 'discount_price') double? discountPrice,
+      @JsonKey(name: 'delivery_fee') double? deliveryFee) {
     return _Food(
       name,
       id,
@@ -36,6 +37,7 @@ class _$FoodTearOff {
       description,
       price,
       discountPrice,
+      deliveryFee,
     );
   }
 
@@ -57,6 +59,8 @@ mixin _$Food {
   double? get price => throw _privateConstructorUsedError;
   @JsonKey(name: 'discount_price')
   double? get discountPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_fee')
+  double? get deliveryFee => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,7 +78,8 @@ abstract class $FoodCopyWith<$Res> {
       String? image,
       String? description,
       double? price,
-      @JsonKey(name: 'discount_price') double? discountPrice});
+      @JsonKey(name: 'discount_price') double? discountPrice,
+      @JsonKey(name: 'delivery_fee') double? deliveryFee});
 }
 
 /// @nodoc
@@ -94,6 +99,7 @@ class _$FoodCopyWithImpl<$Res> implements $FoodCopyWith<$Res> {
     Object? description = freezed,
     Object? price = freezed,
     Object? discountPrice = freezed,
+    Object? deliveryFee = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -124,6 +130,10 @@ class _$FoodCopyWithImpl<$Res> implements $FoodCopyWith<$Res> {
           ? _value.discountPrice
           : discountPrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      deliveryFee: deliveryFee == freezed
+          ? _value.deliveryFee
+          : deliveryFee // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -140,7 +150,8 @@ abstract class _$FoodCopyWith<$Res> implements $FoodCopyWith<$Res> {
       String? image,
       String? description,
       double? price,
-      @JsonKey(name: 'discount_price') double? discountPrice});
+      @JsonKey(name: 'discount_price') double? discountPrice,
+      @JsonKey(name: 'delivery_fee') double? deliveryFee});
 }
 
 /// @nodoc
@@ -161,6 +172,7 @@ class __$FoodCopyWithImpl<$Res> extends _$FoodCopyWithImpl<$Res>
     Object? description = freezed,
     Object? price = freezed,
     Object? discountPrice = freezed,
+    Object? deliveryFee = freezed,
   }) {
     return _then(_Food(
       name == freezed
@@ -191,6 +203,10 @@ class __$FoodCopyWithImpl<$Res> extends _$FoodCopyWithImpl<$Res>
           ? _value.discountPrice
           : discountPrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      deliveryFee == freezed
+          ? _value.deliveryFee
+          : deliveryFee // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -198,8 +214,15 @@ class __$FoodCopyWithImpl<$Res> extends _$FoodCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Food implements _Food {
-  _$_Food(this.name, this.id, this.section, this.image, this.description,
-      this.price, @JsonKey(name: 'discount_price') this.discountPrice);
+  _$_Food(
+      this.name,
+      this.id,
+      this.section,
+      this.image,
+      this.description,
+      this.price,
+      @JsonKey(name: 'discount_price') this.discountPrice,
+      @JsonKey(name: 'delivery_fee') this.deliveryFee);
 
   factory _$_Food.fromJson(Map<String, dynamic> json) =>
       _$_$_FoodFromJson(json);
@@ -219,10 +242,13 @@ class _$_Food implements _Food {
   @override
   @JsonKey(name: 'discount_price')
   final double? discountPrice;
+  @override
+  @JsonKey(name: 'delivery_fee')
+  final double? deliveryFee;
 
   @override
   String toString() {
-    return 'Food(name: $name, id: $id, section: $section, image: $image, description: $description, price: $price, discountPrice: $discountPrice)';
+    return 'Food(name: $name, id: $id, section: $section, image: $image, description: $description, price: $price, discountPrice: $discountPrice, deliveryFee: $deliveryFee)';
   }
 
   @override
@@ -245,7 +271,10 @@ class _$_Food implements _Food {
                 const DeepCollectionEquality().equals(other.price, price)) &&
             (identical(other.discountPrice, discountPrice) ||
                 const DeepCollectionEquality()
-                    .equals(other.discountPrice, discountPrice)));
+                    .equals(other.discountPrice, discountPrice)) &&
+            (identical(other.deliveryFee, deliveryFee) ||
+                const DeepCollectionEquality()
+                    .equals(other.deliveryFee, deliveryFee)));
   }
 
   @override
@@ -257,7 +286,8 @@ class _$_Food implements _Food {
       const DeepCollectionEquality().hash(image) ^
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(price) ^
-      const DeepCollectionEquality().hash(discountPrice);
+      const DeepCollectionEquality().hash(discountPrice) ^
+      const DeepCollectionEquality().hash(deliveryFee);
 
   @JsonKey(ignore: true)
   @override
@@ -278,7 +308,8 @@ abstract class _Food implements Food {
       String? image,
       String? description,
       double? price,
-      @JsonKey(name: 'discount_price') double? discountPrice) = _$_Food;
+      @JsonKey(name: 'discount_price') double? discountPrice,
+      @JsonKey(name: 'delivery_fee') double? deliveryFee) = _$_Food;
 
   factory _Food.fromJson(Map<String, dynamic> json) = _$_Food.fromJson;
 
@@ -297,6 +328,9 @@ abstract class _Food implements Food {
   @override
   @JsonKey(name: 'discount_price')
   double? get discountPrice => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'delivery_fee')
+  double? get deliveryFee => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$FoodCopyWith<_Food> get copyWith => throw _privateConstructorUsedError;

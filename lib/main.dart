@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,8 @@ import 'package:injectable/injectable.dart';
 import 'package:ze_traiteur/application/register/register_bloc.dart';
 import 'package:ze_traiteur/injection.dart';
 import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
+import 'package:ze_traiteur/presentation/pages/splash/splash_screen.dart';
+import 'package:ze_traiteur/presentation/pages/welcome/welcome_screen.dart';
 import 'package:ze_traiteur/presentation/routes/routes.dart';
 
 import 'application/menu/menu_bloc.dart';

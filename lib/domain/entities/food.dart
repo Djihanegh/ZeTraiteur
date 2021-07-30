@@ -13,7 +13,8 @@ class Food with _$Food {
       String? image,
       String? description,
       double? price,
-      @JsonKey(name: 'discount_price') double? discountPrice) = _Food;
+      @JsonKey(name: 'discount_price') double? discountPrice,
+      @JsonKey(name: 'delivery_fee') double? deliveryFee) = _Food;
   static const fromJsonFactory = _$FoodFromJson;
   factory Food.fromJson(Map<String, dynamic> json) => _$FoodFromJson(json);
 }

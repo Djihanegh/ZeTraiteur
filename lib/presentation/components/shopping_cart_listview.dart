@@ -41,7 +41,7 @@ class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
     foods.addAll(extras);
 
     BlocProvider.of<OrderBloc>(context)
-        ..add(OrderEvent.priceChanged(totalCompoFoodPrice));
+      ..add(OrderEvent.priceChanged(totalCompoFoodPrice));
   }
 
   @override
@@ -58,8 +58,7 @@ class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
                 scrollDirection: Axis.horizontal,
                 itemCount: foods.length,
                 itemBuilder: (context, indexx) {
-                  return Text(foods[indexx].name!.substring(0, 3),
-                      style: GoogleFonts.lato());
+                  return Text(foods[indexx].name!, style: GoogleFonts.lato());
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return SizedBox(
@@ -67,9 +66,16 @@ class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
                   );
                 },
               )),
-          trailing: Icon(
-            Icons.mode_edit,
-            color: kColorPrimary,
+          trailing: IconButton(
+            icon: Icon(
+              Icons.delete,
+              color: kColorPrimary,
+            ),
+            onPressed: () {
+              print("AAAA");
+              BlocProvider.of<OrderBloc>(context)
+                  .add(OrderEvent.deleteLine(widget.lines));
+            },
           ),
         ),
         Padding(

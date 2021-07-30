@@ -99,7 +99,7 @@ class MenuItemImage extends StatelessWidget {
         height: 0,
       ),
       Flexible(
-          child: Text(name.substring(0, 5), // TO DO
+          child: Text(name, // TO DO
               style: TextStyle(fontSize: 30),
               overflow: TextOverflow.ellipsis)),
     ]);

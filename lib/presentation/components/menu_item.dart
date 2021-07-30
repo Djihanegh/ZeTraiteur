@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:ze_traiteur/application/menu/menu_bloc.dart';
+import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/presentation/components/item_shimmer.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
@@ -17,7 +20,9 @@ class MenuItemWidget extends StatefulWidget {
   }
 }
 
-class _MenuItemWidgetState extends State<MenuItemWidget> {
+class _MenuItemWidgetState extends State<MenuItemWidget>
+   // with AutomaticKeepAliveClientMixin<MenuItemWidget> 
+    {
   late List menus = [];
   late List extras = [];
 
@@ -52,6 +57,38 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
     }
   }
 
+  static const _pageSize = 25;
+
+  /* final PagingController<int, Food> _pagingController =
+      PagingController(firstPageKey: 1);
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+    super.initState();
+  }
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final newItems = await Dio().get(
+        'http://159.65.25.199:8000/apis/menus?page=$pageKey',
+      );
+      final isLastPage = newItems.data["results"].length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems.data["results"]);
+      } else {
+        final nextPageKey = pageKey + newItems.data["results"].length;
+        _pagingController.appendPage(newItems.data["results"], nextPageKey.toInt());
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
+  }
+*/
+//  @override
+  //bool get wantKeepAlive => true;
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -70,9 +107,7 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
             state.menusFailureOrSuccess.fold(
               () => null,
               (either) => either.fold(
-                (failure) {
-                  //showToast(failure.msg ?? "Failure");
-                },
+                (failure) {},
                 (success) {
                   if (success['results'].isNotEmpty) {
                     setState(() {
@@ -124,7 +159,21 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
         top: 200,
         bottom: 160,
         left: SizeConfig.screenWidth! * 0.17,
-        child: ListView.separated(
+        child:
+            /* Expanded(
+            child: NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (!_loading && scrollInfo.metrics.pixels ==
+                    scrollInfo.metrics.maxScrollExtent) {
+                 //_loadData();
+                  // start loading data
+                  setState(() {
+                    _loading = true;
+                  });
+                }
+              },
+              child: */
+            ListView.separated(
           scrollDirection: Axis.horizontal,
           controller: _scrollController,
           physics: AlwaysScrollableScrollPhysics(),
@@ -157,8 +206,18 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
               width: 10,
             );
           },
+          // ))
         ),
       ),
+      _loading
+          ? Container(
+              height: _loading ? 50.0 : 0,
+              color: Colors.transparent,
+              child: Center(
+                child: new CircularProgressIndicator(),
+              ),
+            )
+          : Container()
     ]);
   }
 

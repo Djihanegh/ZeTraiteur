@@ -58,7 +58,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         yield* _performSendCompleteOrderToCart(e.menu);
       },
       selectFood: (e) async* {
-        yield* _performSelectedFood(e.food, e.name);
+        yield* _performSelectedFood(e.food, e.name, e.selectedIndex);
       },
       selectExtra: (e) async* {
         yield* _performSelectedExtra(e.extra, e.name);
@@ -67,11 +67,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         yield* _performCreateOrder(e.body, _orderFacade.createOrder);
       },
       priceChanged: (e) async* {
-        //  double? price = state.price;
-
-        // price = price! + e.price;
-
         yield state.copyWith(price: e.price);
+      },
+      deleteLine: (e) async* {
+        yield* _performDeleteLine(e.line);
+      },
+      deliveryFeeChanged: (e) async* {
+        yield state.copyWith(deliveryFee: e.deliveryFee);
       },
     );
   }
@@ -137,6 +139,28 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         extras: extraList);
   }
 
+  Stream<OrderState> _performDeleteLine(
+    ShoppingCartLines line,
+  ) async* {
+    List<ShoppingCartLines> _lines = state.shoppingCartLines ?? [];
+
+    if (_lines.contains(line)) {
+      _lines.remove(line);
+      print(_lines);
+    }
+
+    yield state.copyWith(
+        createOrderFailureOrSuccess: none(),
+        shoppingCartLines: _lines,
+        hasSentOrderToCart: false,
+        isLineDeleted: true);
+    yield state.copyWith(
+        createOrderFailureOrSuccess: none(),
+        shoppingCartLines: _lines,
+        hasSentOrderToCart: false,
+        isLineDeleted: false);
+  }
+
   Stream<OrderState> _performCreateOrder(
     Map<String, dynamic> body,
     Future<Either<ServerFailure, Map<String, dynamic>>> Function(
@@ -161,7 +185,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     List<Food> foods = foodsList[menu]!;
 
-    List<Food> extras = extraList[menu]!;
+    List<Food> extras = extraList[menu] ?? [];
 
     ShoppingCartComposition composition =
         ShoppingCartComposition(menu, foods, extras);
@@ -187,8 +211,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     if (!extraList.contains(extraId)) {
       extraList.add(extraId);
+      print(extraList);
     } else {
-      //extraList.remove(extraId);
+      extraList.remove(extraId);
+      print(extraList);
     }
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), extras: extraList);
@@ -202,30 +228,49 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     if (!extraList.containsKey(name)) {
       extraList[name] = [];
+
+      List<Food>? food = extraList[name];
+      food!.add(extra);
+
+      extraList[name] = food;
+      print(extraList[name]);
+    } else {
+      if (!extraList[name]!.contains(extra)) {
+        extraList[name]!.add(extra);
+      } else {
+        extraList[name]!.remove(extra);
+        print(extraList[name]);
+      }
     }
-
-    List<Food>? food = extraList[name];
-    food!.add(extra);
-
-    extraList[name] = food;
 
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), selectedExtras: extraList);
   }
 
   Stream<OrderState> _performSelectedFood(
-    Food food,
-    String name,
-  ) async* {
+      Food food, String name, int selectedIndex) async* {
     Map<String, List<Food>> foodList = state.selectedFood;
 
     if (!foodList.containsKey(name)) {
+      print(name);
       foodList[name] = [];
-    }
-    List<Food>? _food = foodList[name];
-    _food!.add(food);
 
-    foodList[name] = _food;
+      List<Food>? _food = foodList[name];
+      _food!.add(food);
+
+      foodList[name] = _food;
+    } else {
+      List<Food>? temp = foodList[name];
+
+      if (temp!.length > selectedIndex) {
+        temp[selectedIndex] = food;
+      } else {
+        temp.add(food);
+      }
+
+      foodList[name] = temp;
+      print(foodList);
+    }
     yield state.copyWith(
         createOrderFailureOrSuccess: none(), selectedFood: foodList);
   }

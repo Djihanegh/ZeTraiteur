@@ -15,6 +15,7 @@ _$_Food _$_$_FoodFromJson(Map<String, dynamic> json) {
     json['description'] as String?,
     (json['price'] as num?)?.toDouble(),
     (json['discount_price'] as num?)?.toDouble(),
+    (json['delivery_fee'] as num?)?.toDouble(),
   );
 }
 
@@ -26,4 +27,5 @@ Map<String, dynamic> _$_$_FoodToJson(_$_Food instance) => <String, dynamic>{
       'description': instance.description,
       'price': instance.price,
       'discount_price': instance.discountPrice,
+      'delivery_fee': instance.deliveryFee,
     };
