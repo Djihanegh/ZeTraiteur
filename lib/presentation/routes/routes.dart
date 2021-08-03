@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:ze_traiteur/presentation/pages/confirmation/confirmation_screen.dart';
+import 'package:ze_traiteur/presentation/pages/facture/facture_screen.dart';
 import 'package:ze_traiteur/presentation/pages/home/home_screen.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/shopping_cart_screen.dart';
 import 'package:ze_traiteur/presentation/pages/shoppingcart/your_shopping_cart_screen.dart';
@@ -16,4 +17,5 @@ final Map<String, WidgetBuilder> routes = {
   YourShoppingCartScreen.routeName: (context) => YourShoppingCartScreen(),
   SplashScreen.routeName: (context) => SplashScreen(),
   WelcomeScreen.routeName: (context) => WelcomeScreen(),
+
 };

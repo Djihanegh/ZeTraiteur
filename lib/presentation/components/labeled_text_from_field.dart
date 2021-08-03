@@ -31,6 +31,7 @@ class LabeledTextFormField extends StatelessWidget {
     this.onEdit,
     this.validator,
   });
+
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -10,6 +10,7 @@ import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
 import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/cart_item.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
+import 'package:ze_traiteur/presentation/pages/facture/facture_screen.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
@@ -28,6 +29,10 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
   double totalFoodsPrice = 0.0;
   double totalExtrasPrice = 0.0;
   int? clientId = 0;
+  bool isOrderCreated = false;
+  Map<String,dynamic> result = {};
+
+  //bool isLoading = false;
 
   @override
   void initState() {
@@ -37,6 +42,7 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //isLoading = false;
     List<ShoppingCartLines> lines = [];
     foods = [];
     extras = [];
@@ -72,7 +78,9 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                               });
                         },
                         (success) {
-                          showToast('Commande reussie !');
+                          //   isLoading = false;
+                          isOrderCreated = true;
+                          result = success ;
                         },
                       );
                     },
@@ -110,20 +118,44 @@ class _YourShoppingCartScreenState extends State<YourShoppingCartScreen> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: kColorPrimary),
-                              child: TextButton(
-                                onPressed: () {
+                              child: //isLoading ?
+                                  TextButton(
+                                onPressed: () async {
+                                  //  isLoading = true;
                                   Map<String, dynamic> body = {
                                     "client": clientId,
                                     "lines": state.lines
                                   };
-                                  _createOrder(body);
+                                 await _createOrder(body);
+
+
+                                  if (isOrderCreated) {
+                                    showToast("Commande reussie!");
+
+                                    setState(() {
+                                      isOrderCreated = false;
+                                    });
+
+                                    print(body);
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => FactureScreen(body: result)),
+                                    );
+
+                                  }
                                 },
                                 child: Text(
                                   "Valider",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18),
                                 ),
-                              )))
+                              ) /*: Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ) */
+                              ))
                     ],
                   );
                 })))));

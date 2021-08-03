@@ -5,9 +5,11 @@ class FoodItem extends StatefulWidget {
   final String name;
   final String image;
   final int value;
+
   const FoodItem(
       {Key? key, required this.name, required this.image, required this.value})
       : super(key: key);
+
   @override
   _FoodItemState createState() => _FoodItemState();
 }

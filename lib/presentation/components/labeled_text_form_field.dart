@@ -33,6 +33,7 @@ class LabeledTextFormField extends StatelessWidget {
     this.onEdit,
     this.validator,
   });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -83,13 +84,8 @@ class LabeledTextFormField extends StatelessWidget {
                     cursorColor: kColorPrimary,
                     cursorWidth: 1,
                     onFieldSubmitted: (value) => onChanged!(value),
+                    onChanged: (value) => onChanged!(value),
                   )),
-             /* Expanded(
-                child: Icon(
-                  Icons.mode_edit,
-                  color: kColorPrimary,
-                ),
-              )*/
             ],
           )
         ],

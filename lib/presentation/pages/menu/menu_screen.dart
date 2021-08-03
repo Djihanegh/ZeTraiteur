@@ -35,6 +35,7 @@ class MenuScreen extends StatefulWidget {
       required this.sectionLength,
       required this.name})
       : super(key: key);
+
   @override
   _MenuScreenState createState() => _MenuScreenState();
 }
@@ -47,11 +48,13 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       _offset = 1;
 
   static int length = 0;
+  int numberOfOrder = 0;
 
   bool _loading = true;
   double scrollOffset = 0.0;
 
   TabController? _tabController;
+
   //ScrollController? _scrollController;
   bool _hasReachedEndOfResults = false;
   List<List> foods = [];
@@ -62,6 +65,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   List<Food> selectedFood = [], selectedExtra = [];
   Map<int, int> _list = {};
   List extras = [];
+  bool isActive = false;
 
   /*_scrollListener() {
     if (_scrollController!.offset >=
@@ -96,10 +100,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     foods = List.generate(length + 1, (index) => []);
     _list = Map<int, int>.fromIterable(foods, key: (e) => 0, value: (e) => 0);
     _sectionSelected = List.generate(length + 1, (index) => false);
-    selectedFood = List.generate(
-        length, (index) => Food("", 1, 0, " ", "", 0.0, 0.0, 0.0));
+    //selectedFood = List.generate(length, (index) => Food("", 1, 0, " ", "", 0.0, 0.0, 0.0));
 
-    radioButtonValues = List.filled(50, -1);
+    radioButtonValues = List.filled(0, -1);
 
     getFoods();
 
@@ -113,6 +116,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       vsync: this,
       initialIndex: selectedIndex,
     );
+
+    BlocProvider.of<OrderBloc>(context)
+      ..add(OrderEvent.reinitializeExtraAndFood());
   }
 
   @override
@@ -137,7 +143,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     );
                   },
                   (success) {
-                    print("YYYYYY");
                     if (success['results'].isNotEmpty) {
                       setState(() {
                         if (foods[selectedIndex] != success["results"]) {
@@ -146,6 +151,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                         }
                       });
                     }
+
+                    radioButtonValues = List.filled(foods.length, -1);
+
                     setState(() {
                       _loading = false;
                     });
@@ -182,21 +190,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           }, child: BlocBuilder<MenuBloc, MenuState>(builder: (context, state) {
             return Container(
                 height: 50,
-                width: SizeConfig.screenWidth! / 4,
                 child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        print("SECTION INDEX $_sectionIndex");
-                        print("SELECTEDINDEX $selectedIndex");
-                        print("I $i");
-                        //  print(_sectionSelected[selectedIndex - 1]);
-
                         if (_sectionSelected[selectedIndex] == true) {
-                          //&&
-                          // selectedIndex < index + 1
-                          print("GOING");
-                          // print(_sectionSelected[_sectionIndex]);
-
                           setState(() {
                             if (foodId != 0) {
                               if (selectedIndex < i + 1) {
@@ -208,26 +205,14 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                             _tabController?.animateTo(i);
                             _sectionIndex++;
 
-                            print("SECTION INDEX $_sectionIndex");
-                            print("SELECTEDINDEX $selectedIndex");
-                            print("I $i");
-
                             _refresh();
                           });
                         } else if (_sectionSelected[selectedIndex - 1] ==
-                                true // &&
-                            //selectedIndex > index
-                            ) {
-                          // _sectionIndex > i
-                          print("BACK");
-
+                            true) {
                           _sectionIndex--;
                           selectedIndex = i;
                           index = i;
                           _tabController?.animateTo(i);
-                          print("SECTION INDEX $_sectionIndex");
-                          print("SELECTEDINDEX $selectedIndex");
-                          print("I $i");
 
                           _refresh();
                         }
@@ -261,33 +246,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         width: 70,
         child: GestureDetector(
             onTap: () {
-              print("HELO");
               setState(() {
-                /* if (_sectionSelected[j - 1] == true) {
-                  setState(() {
-                    if (foodId != 0) {
-                      if (_list[selectedIndex] != foodId) {
-                        _list[selectedIndex] = foodId;
-                        addFood(_list[selectedIndex]!, selectedIndex);
-                      }
-                    }
-                    selectedIndex = j;
-                    _tabController?.animateTo(j);
-                    _sectionIndex++;
-                  });
-                }else {
-                  print("UUUU");
-                  _tabController?.animateTo(selectedIndex);
-                }*/
-
-                print("SECTION INDEX $_sectionIndex");
-                print("SELECTEDINDEX $selectedIndex");
-                print("JJJJJJJ $j");
                 if (_sectionSelected[selectedIndex] == true &&
                     selectedIndex <= j + 1) {
-                  print("GOING");
-                  //print(_sectionSelected[_sectionIndex]);
-
                   setState(() {
                     if (foodId != 0) {
                       if (selectedIndex < j + 1) {
@@ -298,27 +259,12 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     index = j;
                     _tabController?.animateTo(j);
                     _sectionIndex++;
-
-                    print("SECTION INDEX $_sectionIndex");
-                    print("SELECTEDINDEX $selectedIndex");
-                    print("JJJJJJJJ $j");
-
-                    // _refresh();
                   });
                 } else if (_sectionSelected[selectedIndex - 1] == true &&
                     _sectionIndex > j) {
-                  print("BACK");
-                  print(_sectionSelected[_sectionIndex - 1]);
-
-                  //  _sectionIndex--;
                   selectedIndex = j;
                   index = j;
                   _tabController?.animateTo(j);
-                  print("SECTION INDEX $_sectionIndex");
-                  print("SELECTEDINDEX $selectedIndex");
-                  print("JJJJJJ $j");
-
-                  // _refresh();
                 }
               });
             },
@@ -376,7 +322,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                           onTap: () {},
                                           child: ListTile(
                                             title: Text(foods[selectedIndex]
-                                                [index]["name"]), // TODO
+                                                [index]["name"]),
                                             //leading: Image.network(widget.image),
                                             trailing: Radio(
                                               activeColor: kColorPrimary,
@@ -385,36 +331,24 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                                   selectedIndex],
                                               onChanged: (value) {
                                                 setState(() {
-                                                  print("SELECTED INDEX");
-                                                  print(selectedIndex);
-                                                  print("SECTION");
-                                                  print(_sectionIndex);
-                                                  print("IIII");
-                                                  print(i);
-
                                                   Food food = Food.fromJson(
                                                       foods[selectedIndex]
                                                           [index]);
 
-                                                  print(foods[selectedIndex]
-                                                      [index]);
-
                                                   selectFood(food, widget.name,
                                                       selectedIndex);
-                                                  selectedFood[selectedIndex] =
-                                                      food; //   selectedFood.insert(food);
-                                                  print(selectedFood);
+
+                                                  selectedFood.add(food);
+                                                  print(food);
+
                                                   radioButtonValues[
                                                           selectedIndex] = // i
                                                       int.parse(
                                                           value.toString());
-                                                  print(radioButtonValues);
                                                   foodChanged(i, index);
                                                   _sectionSelected[
                                                           selectedIndex] =
                                                       true; // _sectionIndex
-
-                                                  print(_sectionSelected);
                                                 });
                                               },
                                             ),
@@ -453,6 +387,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                         HomeScreen(),
                         context);
                   }
+
+                  numberOfOrder = state.numberOfOrder;
                 }, child: BlocBuilder<OrderBloc, OrderState>(
                         builder: (context, state) {
                   return ConstrainedBox(
@@ -487,13 +423,13 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                                             // TODO
                                             //leading: Image.network(widget.image),
                                             trailing: CustomRadioButton(
-                                                isActive: false,
+                                                isActive: isActive,
                                                 onPressed: _onPressed,
+                                                index: numberOfOrder,
                                                 id: extras[index]["id"],
                                                 extra: Food.fromJson(
                                                     extras[index]),
-                                                name: widget.name // TODO
-                                                )),
+                                                name: widget.name)),
                                       );
                                     },
                                     separatorBuilder:
@@ -506,16 +442,53 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                           Positioned(
                               top: SizeConfig.screenHeight! * 0.5,
                               left: SizeConfig.screenWidth! * 0.18,
-                              right: SizeConfig.screenWidth! * 0.18, // 80
-                              bottom: SizeConfig.screenHeight! * 0.41, // 295
+                              right: SizeConfig.screenWidth! * 0.18,
+                              bottom: SizeConfig.screenHeight! * 0.41,
                               child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25),
                                       color: kColorPrimary),
                                   child: TextButton(
                                     onPressed: () {
-                                      createOrder(widget.menuId);
-                                      createCompleteOrder(widget.name);
+                                      print("SSSSSS");
+                                      print(selectedFood.length);
+                                      print("AAAA");
+                                      print(length);
+                                    if (selectedFood.length < length) {
+                                        showToast(
+                                            "Veuillez selectionner un plat svp");
+                                        setState(() {
+                                          for (int i = 0;
+                                          i < radioButtonValues.length;
+                                          i++) {
+                                            radioButtonValues[i] = -1;
+                                          }
+                                        });
+                                        selectedFood.clear();
+
+                                        return;
+                                      }else {
+                                      numberOfOrderChanged(state);
+                                        createOrder(
+                                          widget.menuId,
+                                          state.numberOfOrder,
+                                        );
+                                        createCompleteOrder(
+                                            widget.name, state.numberOfOrder);
+                                      setState(() {
+                                        for (int i = 0;
+                                        i < radioButtonValues.length;
+                                        i++) {
+                                          radioButtonValues[i] = -1;
+                                        }
+                                      });
+
+                                      reinitializeRadioBtnValues();
+
+                                     // reinitializeFoodAndExtra();
+
+                                       selectedFood.clear();
+                                     }
                                     },
                                     child: Text(
                                       "Ajouter au panier",
@@ -550,14 +523,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       if (_loading) {
                         showToast('Loading...');
                       }
-
-                      //_refresh();
-
-                      setState(() {
-                        /* BlocProvider.of<MenuBloc>(context)
-                          ..add(MenuEvent.indexChanged(
-                              success["results"].length));*/
-                      });
                     },
                   );
                 },
@@ -642,14 +607,23 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
             }))));
   }
 
+  void reinitializeFoodAndExtra() {
+    BlocProvider.of<OrderBloc>(context)
+        .add(OrderEvent.reinitializeExtraAndFood());
+  }
+
   void foodChanged(int i, int index) {
     setState(() {
       foodId = foods[selectedIndex][index]["id"];
-      print("FFOOD ID $foodId");
     });
 
     BlocProvider.of<OrderBloc>(context)
       ..add(OrderEvent.foodChanged(foodId, index));
+  }
+
+  void reinitializeRadioBtnValues() {
+    BlocProvider.of<OrderBloc>(context)
+        .add(OrderEvent.reinitializeRadioBtnValues(false));
   }
 
   void addFood(int i, int index) {
@@ -657,25 +631,29 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 
   void addExtra(int i) {
-    print("ID $i");
     BlocProvider.of<OrderBloc>(context)..add(OrderEvent.addExtra(i));
   }
 
-  void selectExtra(Food extra, String name) {
-    print(name);
-    print(extra);
+  void numberOfOrderChanged(OrderState state) {
     BlocProvider.of<OrderBloc>(context)
-      ..add(OrderEvent.selectExtra(name, extra));
+        .add(OrderEvent.numberOfOrderChanged(state.numberOfOrder));
+  }
+
+  void selectExtra(Food extra, String name, int index) {
+    BlocProvider.of<OrderBloc>(context)
+      ..add(OrderEvent.selectExtra(name, extra, numberOfOrder));
   }
 
   void selectFood(Food food, String name, int selectedIndex) {
     BlocProvider.of<OrderBloc>(context)
-      ..add(OrderEvent.selectFood(name, food, selectedIndex));
+      ..add(OrderEvent.selectFood(
+          name, food, numberOfOrder)); //TODO SELECTEDINDEX
   }
 
   Future<void> getFoods() async {
     BlocProvider.of<MenuBloc>(context)
       ..add(MenuEvent.getAllFoods(_offset, widget.sectionId[selectedIndex]));
+
     _loading = true;
   }
 
@@ -693,24 +671,21 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     _loading = true;
     return Future.value(true);
   }
-  /* void extraChanged(int index) {
-    BlocProvider.of<OrderBloc>(context)
-     ..add(OrderEvent.extraChanged(widget.extras[index].id));   // TODO
-  }*/
 
-  void _onPressed(bool isActive, int i, Food extra, String name) {
+  void _onPressed(bool isActive, int i, Food extra, String name, int index) {
     _sectionSelected[selectedIndex] = true;
     selectedExtra.add(extra);
-    selectExtra(extra, name);
+    selectExtra(extra, name, numberOfOrder);
     addExtra(i);
   }
 
-  void createOrder(int id) {
-    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.sendOrderToCart(id));
+  void createOrder(int menuId, int index) {
+    BlocProvider.of<OrderBloc>(context)
+      ..add(OrderEvent.sendOrderToCart(menuId, numberOfOrder));
   }
 
-  void createCompleteOrder(String menu) {
+  void createCompleteOrder(String menu, int index) {
     BlocProvider.of<OrderBloc>(context)
-      ..add(OrderEvent.sendCompleteOrderToCart(menu));
+      ..add(OrderEvent.sendCompleteOrderToCart(menu, numberOfOrder));
   }
 }

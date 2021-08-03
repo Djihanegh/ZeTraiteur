@@ -22,6 +22,8 @@ class RegisterFacade implements IRegisterFacade {
         "phone": phone,
         "email": user.email,
       };
+
+
       final result = await getIt<ZeTraiteurApiService>().register(map);
       if (result.statusCode == 201) {
         return right(result.body!);

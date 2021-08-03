@@ -2,32 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ze_traiteur/application/order/order_bloc.dart';
+import 'package:ze_traiteur/domain/entities/facture.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
 import 'package:ze_traiteur/presentation/utils/size_config.dart';
 
-class ShoppingCartListItem extends StatefulWidget {
-  final ShoppingCartLines lines;
+class FactureListItem extends StatefulWidget {
+  final Facture lines;
   final int index;
   final int quantity;
 
-  final VoidCallback onPressed;
-
-  ShoppingCartListItem(
+  FactureListItem(
       {Key? key,
       required this.lines,
       required this.index,
-      required this.onPressed,
       required this.quantity})
       : super(key: key);
 
   @override
-  _ShoppingCartListItemState createState() => _ShoppingCartListItemState();
+  _FactureListItemState createState() => _FactureListItemState();
 }
 
-class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
+class _FactureListItemState extends State<FactureListItem> {
   List<Food> foods = [];
   List<Food> extras = [];
   double totalCompoFoodPrice = 0.0;
@@ -55,7 +53,7 @@ class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
           return Column(
             children: [
               ListTile(
-                title: Text("${widget.lines.composition!.menu}",
+                title: Text("",
                     style: GoogleFonts.lato(
                         fontWeight: FontWeight.w600, fontSize: 16)),
                 subtitle: SizedBox(
@@ -79,7 +77,7 @@ class _ShoppingCartListItemState extends State<ShoppingCartListItem> {
                       Icons.delete,
                       color: kColorPrimary,
                     ),
-                    onPressed: widget.onPressed),
+                    onPressed: () {}),
               ),
               Padding(
                   padding: EdgeInsets.only(right: 20, left: 20, bottom: 20),

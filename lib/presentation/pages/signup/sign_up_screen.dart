@@ -31,6 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isLoading = false;
   final page = Panier();
   bool isLaunched = false;
+  String lastName = "";
 
   TextEditingController lastNameController = TextEditingController(text: "");
   TextEditingController firstNameController = TextEditingController(text: "");
@@ -41,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController phoneNumberController = TextEditingController(
     text: "",
   );
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -144,11 +146,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   enabled: true,
                                                   title: "",
                                                   onChanged: (value) {
+                                                    setState(() {
+                                                      lastName = value;
+                                                    });
+
                                                     BlocProvider.of<
                                                         RegisterBloc>(context)
                                                       ..add(RegisterEvent
                                                           .lastNameChanged(
-                                                              value));
+                                                              lastName));
                                                   }),
                                               LabeledTextFormField(
                                                   controller:
@@ -157,6 +163,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   enabled: true,
                                                   title: "",
                                                   onChanged: (value) {
+                                                    print(value);
+
                                                     BlocProvider.of<
                                                         RegisterBloc>(context)
                                                       ..add(RegisterEvent
@@ -169,6 +177,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   enabled: true,
                                                   title: "",
                                                   onChanged: (value) {
+                                                    print(value);
+
                                                     BlocProvider.of<
                                                         RegisterBloc>(context)
                                                       ..add(RegisterEvent
@@ -294,6 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _pressed() {
     isLoading = true;
+
     BlocProvider.of<RegisterBloc>(context)
       ..add(RegisterEvent.createUser(1))
       ..state.createUserFailureOrSuccess.fold(() => null, (either) {
@@ -323,6 +334,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _saveUserData(RegisterState state, int id) async {
     Prefs.setString(Prefs.PHONE, state.phone.toString());
+    Prefs.setString(Prefs.ADDRESS, state.address);
     Prefs.setInt(Prefs.ID, id);
   }
 }

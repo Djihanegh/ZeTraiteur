@@ -9,10 +9,10 @@ class PostListItemShimmer extends StatelessWidget {
 
     return Center(
         child: Container(
-           decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
       width: SizeConfig.screenWidth! * 0.6,
       height: SizeConfig.screenHeight! * 0.28,
       margin: EdgeInsets.all(10.0),
@@ -33,8 +33,6 @@ class PostListItemShimmer extends StatelessWidget {
       ),
     ));
   }
-
-
 
   Padding _body() {
     return Padding(
@@ -79,10 +77,10 @@ class PostListItemShimmer extends StatelessWidget {
             height: 8,
             color: Colors.white,
           ),
-            SizedBox(
+          SizedBox(
             height: 10,
           ),
-            Container(
+          Container(
             width: 150,
             height: 8,
             color: Colors.white,
@@ -90,7 +88,6 @@ class PostListItemShimmer extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-         
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:ze_traiteur/application/order/order_bloc.dart';
 import 'package:ze_traiteur/application/register/register_bloc.dart';
 import 'package:ze_traiteur/domain/entities/city_obj.dart';
 import 'package:ze_traiteur/domain/entities/food.dart';
+import 'package:ze_traiteur/domain/entities/lines.dart';
 import 'package:ze_traiteur/domain/entities/shopping_cart_lines.dart';
 import 'package:ze_traiteur/infrastructure/core/pref_manager.dart';
 import 'package:ze_traiteur/presentation/components/labeled_text_form_field.dart';
@@ -24,15 +25,20 @@ class _PanierState extends State<Panier> {
   static String phone = "";
   double totalPrice = 0.0;
   int foodIndex = 0;
-  double totalCompoPrice = 0.0;
-  double totalCompo = 0.0;
-  double totalCompoPrices = 0.0;
+  double totalCompoPrice = 0.0,
+      totalCompo = 0.0,
+      totalCompoPrices = 0.0,
+      total = 0.0;
+
   int deliveryFee = 0;
   String value = "";
   bool isLoading = false;
   List<Food> foods = [];
   List<Food> extras = [];
-  int index = 0;
+  int index = 0, _index = 0;
+
+  //String _address = "";
+  List<String> citiesByName = [];
 
   TextEditingController phoneEditingController =
       TextEditingController(text: phone);
@@ -40,24 +46,27 @@ class _PanierState extends State<Panier> {
     text: address,
   );
   bool isUserExists = false;
+  List<ShoppingCartLines> shoppingCartLines = [];
+  List<Lines> lines = [];
 
   @override
   void initState() {
     super.initState();
 
     phone = Prefs.getString(Prefs.PHONE) ?? "";
+    address = Prefs.getString(Prefs.ADDRESS) ?? "";
   }
 
-  void _saveUserData(int id, String numberPhone) async {
+  void _saveUserData(int id, String numberPhone, String address) async {
     Prefs.setString(Prefs.PHONE, numberPhone.toString());
+    Prefs.setString(Prefs.ADDRESS, address);
     Prefs.setInt(Prefs.ID, id);
   }
 
   @override
   Widget build(BuildContext context) {
     List<CityObj> allCities = [];
-    List<String> citiesByName = [];
-    List<ShoppingCartLines> lines = [];
+
     foods = [];
     extras = [];
     index = 0;
@@ -86,7 +95,7 @@ class _PanierState extends State<Panier> {
                     either.fold((failure) {
                       failure.map(
                         serverError: (_) => null,
-                        apiFailure: (e) => showToast(e.msg!),
+                        apiFailure: (e) => showToast(e.msg ?? ""),
                       );
                     }, (success) {
                       allCities = success;
@@ -110,21 +119,21 @@ class _PanierState extends State<Panier> {
                               serverError: (_) =>
                                   showToast("Server failure, try again later."),
                               apiFailure: (e) {
-                                BlocProvider.of<RegisterBloc>(context)
-                                  ..add(RegisterEvent.changeUserStatus(false));
-
                                 setState(() {
                                   isUserExists = false;
                                 });
+                                BlocProvider.of<RegisterBloc>(context)
+                                  ..add(RegisterEvent.changeUserStatus(false));
                               });
                         },
                         (success) {
-                          _saveUserData(success["id"], success["phone"]);
-                          BlocProvider.of<RegisterBloc>(context)
-                            ..add(RegisterEvent.changeUserStatus(true));
                           setState(() {
                             isUserExists = true;
                           });
+                          _saveUserData(success["id"], success["phone"],
+                              success["address"]);
+                          BlocProvider.of<RegisterBloc>(context)
+                            ..add(RegisterEvent.changeUserStatus(true));
                         },
                       );
                     },
@@ -135,35 +144,37 @@ class _PanierState extends State<Panier> {
                       value: BlocProvider.of<OrderBloc>(context),
                       child: BlocListener<OrderBloc, OrderState>(
                           listener: (context, orderState) {
-                        if (orderState.isLineDeleted) {
-                          if (lines.isNotEmpty) {
-                            lines.remove(lines[index]);
-                          }
-                        }
+                        /*if(orderState.isLineDeleted){
+                              lines.clear();
+                              lines.insertAll(0,orderState.lines ?? []);
+                              shoppingCartLines.clear();
+                              shoppingCartLines.insertAll(0,orderState.shoppingCartLines ?? []);
+                            }*/
 
                         if (orderState.address != "") {
-                          deliveryFee = allCities[index].deliveryFee;
-                          BlocProvider.of<OrderBloc>(context).add(OrderEvent.deliveryFeeChanged(deliveryFee));
-                         // totalPrice =
-                           //   totalPrice + allCities[index].deliveryFee;
+                          //   deliveryFee = allCities[index].deliveryFee;
+                          //   BlocProvider.of<OrderBloc>(context).add(OrderEvent.deliveryFeeChanged(deliveryFee));
+
                         }
                       }, child: BlocBuilder<OrderBloc, OrderState>(
                               builder: (context, orderState) {
                         value = orderState.address;
-                        lines = [];
-                        lines.addAll(orderState.shoppingCartLines ?? []);
-                       
-                        totalPrice = 0.0;
+                        lines.clear();
+                        lines.insertAll(0, orderState.lines ?? []);
+                        shoppingCartLines.clear();
+                        shoppingCartLines.insertAll(
+                            0, orderState.shoppingCartLines ?? []);
 
-                        if (lines.isNotEmpty) {
-                          print("LINES");
-                          for (var line in lines) {
+                        totalPrice = 0.0;
+                        total = 0.0;
+
+                        if (shoppingCartLines.isNotEmpty) {
+                          for (var line in shoppingCartLines) {
                             totalCompo = 0.0;
                             extras = [];
                             foods = [];
-                            extras.addAll(lines[index].composition!.extras);
-                            foods.addAll(
-                                lines[index].composition!.selectedFoods!);
+                            extras.addAll(line.composition!.extras);
+                            foods.addAll(line.composition!.selectedFoods!);
                             foods.addAll(extras);
 
                             int i = 0;
@@ -172,8 +183,15 @@ class _PanierState extends State<Panier> {
                               i++;
                             }
 
-                            totalPrice =
-                                totalPrice + totalCompo; // ADD DELIVERY FEE
+                            if (line.quantity > 1) {
+                              totalCompo = totalCompo * line.quantity;
+                            }
+
+                            totalPrice = totalPrice + totalCompo;
+
+                            total = totalPrice + orderState.deliveryFee;
+                            BlocProvider.of<OrderBloc>(context)
+                                .add(OrderEvent.priceChanged(total));
                           }
                         }
 
@@ -222,6 +240,23 @@ class _PanierState extends State<Panier> {
                                             BlocProvider.of<OrderBloc>(context)
                                               ..add(OrderEvent.addressChanged(
                                                   value));
+                                            deliveryFee =
+                                                allCities[index].deliveryFee;
+
+                                            BlocProvider.of<OrderBloc>(context)
+                                                .add(OrderEvent
+                                                    .deliveryFeeChanged(
+                                                        deliveryFee));
+
+                                            total = totalPrice +
+                                                orderState.deliveryFee;
+                                            BlocProvider.of<OrderBloc>(context)
+                                                .add(OrderEvent.priceChanged(
+                                                    total));
+
+                                            setState(() {
+                                              //totalPrice = totalPrice + deliveryFee ;
+                                            });
                                           });
                                         },
                                       )))),
@@ -231,10 +266,13 @@ class _PanierState extends State<Panier> {
                               enabled: true,
                               keyboardType: TextInputType.phone,
                               onChanged: (value) {
-                                phone = value;
+                                setState(() {
+                                  phone = value;
+                                });
+
                                 BlocProvider.of<OrderBloc>(context)
                                   ..add(OrderEvent.numberPhoneChanged(
-                                      int.tryParse(value.toString()) ?? 0));
+                                      int.tryParse(phone) ?? 0));
                               }),
                           Padding(
                             padding:
@@ -243,15 +281,23 @@ class _PanierState extends State<Panier> {
                                 style: GoogleFonts.lato(
                                     fontWeight: FontWeight.w400, fontSize: 16)),
                           ),
-                          lines.length > 0
+                          shoppingCartLines.length > 0
                               ? SizedBox(
                                   height: 200,
                                   child: ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount: lines.length,
-                                      itemBuilder: (context, index) {
+                                      itemCount: shoppingCartLines.length,
+                                      itemBuilder: (context, indexx) {
                                         return ShoppingCartListItem(
-                                            lines: lines[index]);
+                                          quantity: shoppingCartLines[indexx]
+                                              .quantity,
+                                          key: ValueKey(indexx),
+                                          onPressed: () => delete(
+                                              shoppingCartLines[indexx],
+                                              indexx),
+                                          index: indexx,
+                                          lines: shoppingCartLines[indexx],
+                                        );
                                       }))
                               : Column(children: [
                                   SizedBox(
@@ -290,8 +336,6 @@ class _PanierState extends State<Panier> {
                                   ],
                                 ),
                               ),
-                              // lines.length > 0
-                              //  ? foods[index].deliveryFee != null
                               Padding(
                                   padding: EdgeInsets.only(
                                       top: 20, left: 18, right: 20),
@@ -304,13 +348,12 @@ class _PanierState extends State<Panier> {
                                               fontWeight: FontWeight.w600,
                                               fontSize: 16)),
                                       Text(
-                                          orderState.deliveryFee.toString() +
+                                          orderState.deliveryFee
+                                                  .toString() + // TODO
                                               "DA",
                                           style: GoogleFonts.lato(fontSize: 16))
                                     ],
                                   )),
-                              //   : Container()
-                              //: Container(),
                               Padding(
                                   padding: EdgeInsets.only(
                                       top: 10, left: 18, right: 20, bottom: 10),
@@ -335,7 +378,7 @@ class _PanierState extends State<Panier> {
                                                 fontSize: 20),
                                           ),
                                           Text(
-                                            totalPrice.toString() + " DA",
+                                            "${total}" + " DA",
                                             style: GoogleFonts.lato(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
@@ -361,10 +404,10 @@ class _PanierState extends State<Panier> {
                                               isLoading = true;
 
                                               await _verifyUserExistence(
-                                                  orderState.phone);
+                                                  int.tryParse(phone)!);
 
                                               Future.delayed(
-                                                  const Duration(seconds: 10),
+                                                  const Duration(seconds: 15),
                                                   () {
                                                 setState(() {
                                                   if (value == '') {
@@ -405,8 +448,47 @@ class _PanierState extends State<Panier> {
                 })))));
   }
 
+  void delete(
+    ShoppingCartLines lines,
+    int index,
+  ) {
+    BlocProvider.of<OrderBloc>(context)
+      ..add(OrderEvent.deleteLine(lines, index));
+
+    BlocProvider.of<OrderBloc>(context)..add(OrderEvent.foodPriceChanged(true));
+  }
+
   Future<void> _verifyUserExistence(int phone) async {
     BlocProvider.of<RegisterBloc>(context)
-      ..add(RegisterEvent.isUserCreated(phone));
+      ..add(RegisterEvent.isUserCreated(phone))
+      ..state.isUserCreatedFailureOrSuccess.fold(
+        () => null,
+        (either) {
+          either.fold(
+            (failure) {
+              failure.map(
+                  serverError: (_) =>
+                      showToast("Server failure, try again later."),
+                  apiFailure: (e) {
+                    BlocProvider.of<RegisterBloc>(context)
+                      ..add(RegisterEvent.changeUserStatus(false));
+
+                    setState(() {
+                      isUserExists = false;
+                    });
+                  });
+            },
+            (success) {
+              _saveUserData(
+                  success["id"], success["phone"], success["address"]);
+              BlocProvider.of<RegisterBloc>(context)
+                ..add(RegisterEvent.changeUserStatus(true));
+              setState(() {
+                isUserExists = true;
+              });
+            },
+          );
+        },
+      );
   }
 }

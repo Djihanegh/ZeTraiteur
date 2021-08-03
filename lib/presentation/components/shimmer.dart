@@ -6,6 +6,7 @@ class PostListShimmer extends StatelessWidget {
   final int? length;
 
   const PostListShimmer({Key? key, this.length}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(

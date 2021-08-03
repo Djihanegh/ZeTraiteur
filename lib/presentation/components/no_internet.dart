@@ -5,12 +5,13 @@ import '../utils/constants.dart';
 
 class NoInternet extends StatelessWidget {
   final String? msg;
+
   //final Function onPressed;
 
   const NoInternet({
     Key? key,
     this.msg,
-  //  required this.onPressed,
+    //  required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -20,12 +21,12 @@ class NoInternet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Center(
+          /*Center(
             child: Image.asset(
-              'assets/images/error.jpeg',
+              "assets/images/error.jpg",
               width: 150,
             ),
-          ),
+          ),*/
           SizedBox(
             height: 35,
           ),

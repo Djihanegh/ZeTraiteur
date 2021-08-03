@@ -17,11 +17,11 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.padding,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: onPressed!(),
-
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
       ),

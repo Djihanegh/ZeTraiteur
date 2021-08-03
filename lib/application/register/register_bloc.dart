@@ -68,6 +68,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       isUserExists:  false
     );
 
+    print(state.emailAddress);
+    print(state.lastName);
+    print(state.name);
+
     failureOrSuccess = await forwardedCall(
         user: User(
             email: state.emailAddress,

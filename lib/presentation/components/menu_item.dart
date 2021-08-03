@@ -1,8 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:ze_traiteur/application/menu/menu_bloc.dart';
-import 'package:ze_traiteur/domain/entities/food.dart';
 import 'package:ze_traiteur/presentation/components/item_shimmer.dart';
 import 'package:ze_traiteur/presentation/components/show_toast.dart';
 import 'package:ze_traiteur/presentation/utils/constants.dart';
@@ -20,9 +17,9 @@ class MenuItemWidget extends StatefulWidget {
   }
 }
 
-class _MenuItemWidgetState extends State<MenuItemWidget>
-   // with AutomaticKeepAliveClientMixin<MenuItemWidget> 
-    {
+class _MenuItemWidgetState extends State<
+    MenuItemWidget> // with AutomaticKeepAliveClientMixin<MenuItemWidget>
+{
   late List menus = [];
   late List extras = [];
 

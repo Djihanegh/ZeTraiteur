@@ -21,6 +21,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
   double totalFoodPrice = 0.0;
   double totalExtrasPrice = 0.0;
   double totalCompoExtraPrice = 0.0;
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +55,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Text(widget.name.substring(0, 3)), Text("")],
+                        children: [Text(widget.name), Text("")],
                       ),
                     ),
                     Padding(
@@ -80,9 +81,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
 
                                       // print(totalCompoPrice);
 
-                                      return Text(
-                                          widget.foods[index].name!
-                                              .substring(0, 3),
+                                      return Text(widget.foods[index].name!,
                                           style: GoogleFonts.lato());
                                     },
                                     separatorBuilder:
@@ -129,8 +128,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                             // print(totalCompoPrice);
 
                                             return Text(
-                                                widget.extras![index].name!
-                                                    .substring(0, 3),
+                                                widget.extras![index].name!,
                                                 style: GoogleFonts.lato());
                                           },
                                           separatorBuilder:
