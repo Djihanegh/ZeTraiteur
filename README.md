@@ -1,7 +1,6 @@
 # ze_traiteur
 
-A new Flutter project.
-
+Custom food ordering app.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
