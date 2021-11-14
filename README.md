@@ -2,7 +2,7 @@
 
 Custom food ordering app.
 ## Flutter DDD architecture example
-Ze traiteur is a simple food ordering app, i used the **DDD** architecture, **BloC pattern** as state management, **Injectable** , **choppper** **get_it** and **freezed**.
+Ze traiteur is a simple food ordering app backed by a django backend, i used the **DDD** architecture, **BloC pattern** as state management, **Injectable** , **choppper** **get_it** and **freezed**.
 
 This project is a starting point for a Flutter application.
 
