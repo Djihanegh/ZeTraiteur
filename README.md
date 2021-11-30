@@ -3,7 +3,7 @@
 Custom food ordering app.
 ## Flutter food ordering app
 Ze traiteur is a simple food ordering app backed by a django backend.
-i used the **DDD** architecture, **BloC pattern** as state management.
+i used **BloC pattern** as state management.
 
 ## technologies used:
 
